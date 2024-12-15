@@ -61,7 +61,6 @@ public class Lotto : MonoBehaviour
     [SerializeField] private Button _lottoInfoUpdateButton;
 
     [Header("당첨 정보")]
-    [SerializeField] private TMP_Text _maxResultText;
     [SerializeField] private NumberInfo _lotto1Info;
     [SerializeField] private NumberInfo _lotto2Info;
     [SerializeField] private NumberInfo _lotto3Info;
@@ -75,8 +74,6 @@ public class Lotto : MonoBehaviour
     private void Start()
     {
         Loading(false);
-
-        _maxResultText.text = "";
 
         //# 버튼 바인딩
         _rouletteButton.onClick.AddListener(() =>
@@ -206,7 +203,6 @@ public class Lotto : MonoBehaviour
 
     private void StartRoulette(NumberInfo lottoInfo)
     {
-        _maxResultText.text = string.Empty;
         _rouletteButton.interactable = false;
 
         List<int> liMyNumber = new List<int>(6);
@@ -245,24 +241,6 @@ public class Lotto : MonoBehaviour
                 for (int i = 0; i < liMyNumber.Count; i++)
                 {
                     lottoInfo.liNumberButton[i].SetText($"{liMyNumber[i]}");
-                }
-
-                var result = CheckFirstResult(liMyNumber);
-                if (result.Item1 == Fail_Rank || result.Item2 == null)
-                {
-                    _maxResultText.text = string.Empty;
-                }
-                else
-                {
-                    long won = 0;
-                    if (result.Item2.firstWinamnt != 0)
-                        won = result.Item2.firstWinamnt;
-                    else
-                        won = result.Item2.totSellamnt;
-
-                    _maxResultText.text =
-                    $"{result.Item2.drwNoDate} {result.Item2.drwNo}회차\n" +
-                    $"{result.Item1}등 당첨! 금액 : {won.ToString("N0")}";
                 }
             });
     }
