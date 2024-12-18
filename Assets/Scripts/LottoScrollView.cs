@@ -1,4 +1,6 @@
+using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LottoScrollView : PoolingScrollView<LottoScrollViewItem, LottoResponse>
 {

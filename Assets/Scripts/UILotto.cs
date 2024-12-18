@@ -1,12 +1,22 @@
+using System.Collections.Generic;
+using TMPro;
+using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UILotto : MonoBehaviour
 {
-    [SerializeField] private Lotto lotto;
+    [SerializeField] int index;
+    [SerializeField] private Button lastRoundButton;
     [SerializeField] private LottoScrollView scrollView;
 
-    public void View()
+    public void Init(List<LottoResponse> liLottoResponse)
     {
-        scrollView.SetItemList(lotto.LottoResponseList);
+        lastRoundButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            scrollView.SetScrollPosition(index);
+        }).AddTo(this);
+
+        scrollView.SetItemList(liLottoResponse);
     }
 }

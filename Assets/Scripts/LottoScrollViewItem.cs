@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LottoScrollViewItem : MonoBehaviour
 {
+    [SerializeField] private TMP_Text _roundText;
     [SerializeField] List<ButtonEx> _liButtonEx = new List<ButtonEx>();
 
     int _index;
@@ -13,6 +15,7 @@ public class LottoScrollViewItem : MonoBehaviour
         _index = index;
         _lottoResponse = lottoResponse;
 
+        _roundText.SetText($"{lottoResponse.drwNo}È¸Â÷");
         _liButtonEx[0].SetText($"{lottoResponse.drwtNo1}");
         _liButtonEx[1].SetText($"{lottoResponse.drwtNo2}");
         _liButtonEx[2].SetText($"{lottoResponse.drwtNo3}");

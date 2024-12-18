@@ -88,8 +88,8 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
     [Space]
 
     private Vector2 _prevScrollPosition = Vector2.zero;
-    private GameObject _objContent;
-    private RectTransform _rtContent;
+    private GameObject _contentObject;
+    private RectTransform _contentRectTransform;
     private RectTransform _rtViewPort;
     private CanvasGroup _canvasGroupContent;
     private ScrollRect _scrollRect;
@@ -152,7 +152,7 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
     {
         get
         {
-            return _rtContent.rect.width;
+            return _contentRectTransform.rect.width;
         }
     }
 
@@ -160,7 +160,7 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
     {
         get
         {
-            return _rtContent.rect.height;
+            return _contentRectTransform.rect.height;
         }
     }
 
@@ -196,11 +196,11 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
         if (_rtViewPort == null)
             _rtViewPort = _scrollRect.viewport;
 
-        if (_objContent == null)
-            _objContent = _scrollRect.content.gameObject;
+        if (_contentObject == null)
+            _contentObject = _scrollRect.content.gameObject;
 
-        if (_rtContent == null)
-            _rtContent = _scrollRect.content.GetComponent<RectTransform>();
+        if (_contentRectTransform == null)
+            _contentRectTransform = _scrollRect.content.GetComponent<RectTransform>();
 
         if (_canvasGroupContent = null)
             _canvasGroupContent = _scrollRect.content.GetComponent<CanvasGroup>();
@@ -244,26 +244,61 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
         _liData.Clear();
         _liData.AddRange(dataList);
 
-        // 아이템 크기 설정
+        switch (_scrollDirection)
+        {
+            case PoolingScrollViewDirection.Vertical:
+                {
+                    _scrollRect.horizontal = false;
+                    _scrollRect.vertical = true;
+                }
+                break;
+            case PoolingScrollViewDirection.Horizontal:
+                {
+                    _scrollRect.horizontal = true;
+                    _scrollRect.vertical = false;
+                }
+                break;
+        }
+
+        //# 아이템 크기 설정
         SetItemSize();
 
-        // 행 갯수 설정
+        //# 행 갯수 설정
         SetRowCount();
 
-        // 열 갯수 설정
+        //# 열 갯수 설정
         SetColumnCount();
 
-        // 아이템 풀링 갯수 설정
+        //# 아이템 풀링 갯수 설정
         SetPoolItemCount();
 
-        // Content 오브젝트 설정
+        //# Content 오브젝트 설정
         SetContentTransform();
 
-        // 풀링 오브젝트 생성
+        //# 풀링 오브젝트 생성
         CreatePoolingObject();
 
-        // 아이템 초기화
+        //# 아이템 초기화
         InitItem();
+    }
+
+    public void SetScrollPosition(int index)
+    {
+        var pos = GetItemPosition(index - 1);
+
+        switch (_scrollDirection)
+        {
+            case PoolingScrollViewDirection.Vertical:
+                {
+                    _contentRectTransform.anchoredPosition = new Vector2(_contentRectTransform.anchoredPosition.x, -pos.y);
+                }
+                break;
+            case PoolingScrollViewDirection.Horizontal:
+                {
+                    _contentRectTransform.anchoredPosition = new Vector2(-pos.x, _contentRectTransform.anchoredPosition.y);
+                }
+                break;
+        }
     }
 
     public void Refresh()
@@ -275,14 +310,14 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
     {
         _liData.Clear();
         _liPoolItem.Clear();
-        if (_objContent)
+        if (_contentObject)
         {
-            int childCount = _objContent.transform.childCount;
+            int childCount = _contentObject.transform.childCount;
             GameObject[] children = new GameObject[childCount];
 
             for (int i = 0; i < childCount; i++)
             {
-                children[i] = _objContent.transform.GetChild(i).gameObject;
+                children[i] = _contentObject.transform.GetChild(i).gameObject;
             }
 
             foreach (var child in children)
@@ -358,32 +393,32 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
         {
             case PoolingScrollViewDirection.Vertical:
                 {
-                    // 스트레치 앵커로 설정
-                    _rtContent.anchorMax = new Vector2(.5f, 1f);
-                    _rtContent.anchorMin = new Vector2(.5f, 1f);
-                    _rtContent.pivot = new Vector2(.5f, 1f);
+                    //# 스트레치 앵커로 설정
+                    _contentRectTransform.anchorMax = new Vector2(.5f, 1f);
+                    _contentRectTransform.anchorMin = new Vector2(.5f, 1f);
+                    _contentRectTransform.pivot = new Vector2(.5f, 1f);
 
-                    // 사이즈 재설정
-                    _rtContent.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _rtViewPort.rect.width);
-                    _rtContent.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ScrollViewHeight);
+                    //# 사이즈 재설정
+                    _contentRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _rtViewPort.rect.width);
+                    _contentRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ScrollViewHeight);
 
-                    // 컨텐츠 최상단으로 이동
-                    _rtContent.anchoredPosition = Vector2.zero;
+                    //# 컨텐츠 최상단으로 이동
+                    _contentRectTransform.anchoredPosition = Vector2.zero;
                 }
                 break;
             case PoolingScrollViewDirection.Horizontal:
                 {
-                    // 스트레치 앵커로 설정
-                    _rtContent.anchorMax = new Vector2(0f, .5f);
-                    _rtContent.anchorMin = new Vector2(0f, .5f);
-                    _rtContent.pivot = new Vector2(0f, .5f);
+                    //# 스트레치 앵커로 설정
+                    _contentRectTransform.anchorMax = new Vector2(0f, .5f);
+                    _contentRectTransform.anchorMin = new Vector2(0f, .5f);
+                    _contentRectTransform.pivot = new Vector2(0f, .5f);
 
-                    // 사이즈 재설정
-                    _rtContent.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, ScrollViewWidth);
-                    _rtContent.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _rtViewPort.rect.height);
+                    //# 사이즈 재설정
+                    _contentRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, ScrollViewWidth);
+                    _contentRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _rtViewPort.rect.height);
 
-                    // 컨텐츠 최상단으로 이동
-                    _rtContent.anchoredPosition = Vector2.zero;
+                    //# 컨텐츠 최상단으로 이동
+                    _contentRectTransform.anchoredPosition = Vector2.zero;
                 }
                 break;
         }
@@ -415,8 +450,6 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
 
         float diff = ContentHeight - ItemsHeight;
 
-        Debug.Log($"GetItemHorizontalPosition {index} H {ContentHeight} - {_calcRowCount} * {_itemSize.y} + {(_calcRowCount - 1)} * {_itemGap.y}");
-        Debug.Log($"GetItemHorizontalPosition {index} W {ContentWidth} - {ItemsWidth}");
         switch (_align)
         {
             case PoolingScrollViewAlign.LeftOrTop:
@@ -441,7 +474,6 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
 
         y *= -1;
 
-        // 열 인덱스
         int colIndex = index / _calcRowCount;
 
         float x = colIndex * _itemSize.x;
@@ -453,7 +485,6 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
 
     private Vector2 GetItemVerticalPosition(int index)
     {
-        // 열 인덱스
         int colIndex = index % _calcColumnCount;
 
         float x = colIndex * _itemSize.x;
@@ -483,7 +514,6 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
                 break;
         }
 
-        // 행 인덱스
         int rowIndex = index / _calcColumnCount;
 
         float y = rowIndex * _itemSize.y;
@@ -503,14 +533,14 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
             case PoolingScrollViewDirection.Vertical:
                 {
                     float scrollRectY = _rtViewPort.rect.size.y;
-                    rect.Set(_rtContent.anchoredPosition.x, -1 * (_rtContent.anchoredPosition.y + scrollRectY), ContentWidth, scrollRectY + _itemSize.y);
+                    rect.Set(_contentRectTransform.anchoredPosition.x, -1 * (_contentRectTransform.anchoredPosition.y + scrollRectY), ContentWidth, scrollRectY + _itemSize.y);
                 }
                 break;
             case PoolingScrollViewDirection.Horizontal:
                 {
                     float scrollRectX = _rtViewPort.rect.size.x;
                     float scrollRectY = _rtViewPort.rect.size.y;
-                    rect.Set(-1 * _rtContent.anchoredPosition.x, -1 * (_rtContent.anchoredPosition.y + scrollRectY), scrollRectX + _itemSize.x, ContentHeight);
+                    rect.Set(-1 * _contentRectTransform.anchoredPosition.x, -1 * (_contentRectTransform.anchoredPosition.y + scrollRectY), scrollRectX + _itemSize.x, ContentHeight);
                 }
                 break;
         }
@@ -555,8 +585,6 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
             return;
 
         Rect contentRect = GetViewConentRect();
-
-        // 영역검사할 컨텐츠 사각형의 위아래로 마진추가
         Rect itemRect = new Rect();
 
         switch (direction)
@@ -610,12 +638,12 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
     {
         _liPoolItem.Clear();
 
-        // 생성된 풀링 오브젝트 가져옴
-        int childCount = _objContent.transform.childCount;
+        //# 생성된 풀링 오브젝트 가져옴
+        int childCount = _contentObject.transform.childCount;
         GameObject[] arrChildObj = new GameObject[childCount];
         for (int i = 0; i < childCount; ++i)
         {
-            arrChildObj[i] = _objContent.transform.GetChild(i).gameObject;
+            arrChildObj[i] = _contentObject.transform.GetChild(i).gameObject;
         }
 
         Rect contentRect = GetViewConentRect();
@@ -625,7 +653,7 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
             Vector2 itemPosition = GetItemPosition(_);
             itemRect.Set(itemPosition.x, itemPosition.y, _itemSize.x, _itemSize.y);
 
-            // Content와 겹치는 여부 반환
+            //# Content와 겹치는 여부 반환
             return contentRect.Overlaps(itemRect);
         });
 
@@ -675,13 +703,13 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
 
     private void CreatePoolingObject()
     {
-        int diff = _poolItemCount - _objContent.transform.childCount;
+        int diff = _poolItemCount - _contentObject.transform.childCount;
         diff = Mathf.Min(diff, _liData.Count); // 필요한 만큼만 풀을 만들자
         if (diff > 0)
         {
             for (int i = 0; i < diff; ++i)
             {
-                GameObject obj = Instantiate(_origin, _objContent.transform);
+                GameObject obj = Instantiate(_origin, _contentObject.transform);
                 InitPoolingObject(obj.GetComponent<TItem>());
             }
         }

@@ -48,7 +48,7 @@ public class Lotto : MonoBehaviour
     const string Local_LottoDataFile = "lotto.json";
     const int Fail_Rank = 6;
 
-    [SerializeField] private UILotto _uiLotto;
+    [SerializeField] private Transform _uiParent;
 
     [Header("로딩")]
     [SerializeField] private GameObject _loadingPageObject;
@@ -74,8 +74,10 @@ public class Lotto : MonoBehaviour
 
     public List<LottoResponse> LottoResponseList => _lilottoResponse;
 
-    private void Start()
+    private async void Start()
     {
+        await ResourceManager.Instance.Init();
+
         Loading(false);
 
         //# 버튼 바인딩
@@ -86,7 +88,19 @@ public class Lotto : MonoBehaviour
             StartRoulette(_lotto3Info);
             StartRoulette(_lotto4Info);
             StartRoulette(_lotto5Info);
-            _uiLotto.View();
+
+            ResourceManager.Instance.LoadUI(CommonEnum.EUI.UILotto, (ui) =>
+            {
+                ui.transform.SetParent(_uiParent);
+                var rectTransform = ui.GetComponent<RectTransform>();
+                rectTransform.anchoredPosition3D = Vector3.zero;
+                rectTransform.localScale = Vector3.one;
+                UILotto uiLotto = ui.GetComponent<UILotto>();
+                if (uiLotto != null)
+                {
+                    uiLotto.Init(_lilottoResponse);
+                }
+            });
         });
         _customImageButton.onClick.AddListener(PickImage);
         _lottoInfoUpdateButton.onClick.AddListener(() => Loading(true));
