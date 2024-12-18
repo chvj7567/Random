@@ -48,6 +48,8 @@ public class Lotto : MonoBehaviour
     const string Local_LottoDataFile = "lotto.json";
     const int Fail_Rank = 6;
 
+    [SerializeField] private UILotto _uiLotto;
+
     [Header("·Îµù")]
     [SerializeField] private GameObject _loadingPageObject;
     [SerializeField] private Image _loadingImage;
@@ -70,6 +72,7 @@ public class Lotto : MonoBehaviour
     string _lottoURL = "www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=";
     List<LottoResponse> _lilottoResponse = new List<LottoResponse>();
 
+    public List<LottoResponse> LottoResponseList => _lilottoResponse;
 
     private void Start()
     {
@@ -83,6 +86,7 @@ public class Lotto : MonoBehaviour
             StartRoulette(_lotto3Info);
             StartRoulette(_lotto4Info);
             StartRoulette(_lotto5Info);
+            _uiLotto.View();
         });
         _customImageButton.onClick.AddListener(PickImage);
         _lottoInfoUpdateButton.onClick.AddListener(() => Loading(true));
