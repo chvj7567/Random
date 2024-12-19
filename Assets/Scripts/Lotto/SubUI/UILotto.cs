@@ -18,13 +18,12 @@ public class UILotto : UIBase
     [SerializeField] private Button _bottomButton;
     [SerializeField] private LottoScrollView scrollView;
 
-    public override void InitArg(UIArg arg)
+    public override void InitUI(UIArg arg)
     {
-        _arg = arg as UILottoArg;
-    }
+        base.InitUI(arg);
 
-    private void Start()
-    {
+        _arg = arg as UILottoArg;
+
         _topButton.OnClickAsObservable().Subscribe(_ =>
         {
             scrollView.SetScrollPosition(1);

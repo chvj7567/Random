@@ -12,7 +12,7 @@ public abstract class UIBase : MonoBehaviour
 
     protected CompositeDisposable closeDisposable = new CompositeDisposable();
 
-    private void Awake()
+    public virtual void InitUI(UIArg arg)
     {
         if (_backgroundButton)
         {
@@ -31,10 +31,8 @@ public abstract class UIBase : MonoBehaviour
         }
     }
 
-    public virtual void InitArg(UIArg arg) { }
-
     public virtual void Close()
     {
-        closeDisposable.Dispose();
+        closeDisposable.Clear();
     }
 }

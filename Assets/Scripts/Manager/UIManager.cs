@@ -6,6 +6,8 @@ using UnityEngine;
 public class UIManager : Singletone<UIManager>
 {
     const string MyCanvasName = "UICanvas";
+    bool _initialize = false;
+
     Transform _rootTransform;
 
     LinkedList<UIBase> _liCurrentUI = new LinkedList<UIBase>();
@@ -13,6 +15,11 @@ public class UIManager : Singletone<UIManager>
 
     public async Task<bool> Init()
     {
+        if (_initialize)
+            return false;
+
+        _initialize = true;
+
         TaskCompletionSource<bool> initComplete = new TaskCompletionSource<bool>();
 
         if (_rootTransform == null)
@@ -20,6 +27,7 @@ public class UIManager : Singletone<UIManager>
             ResourceManager.Instance.LoadGameObject(MyCanvasName, (obj) =>
             {
                 _rootTransform = obj.transform;
+                DontDestroyOnLoad(_rootTransform);
                 
                 initComplete.SetResult(true);
             });
@@ -37,7 +45,7 @@ public class UIManager : Singletone<UIManager>
         //# 해당 UI가 한 번이라도 열린 적이 있다면 캐싱하고 있는 UI 재사용
         if (_dicCashingUI.TryGetValue(uiType, out var uiBase))
         {
-            uiBase.InitArg(arg);
+            uiBase.InitUI(arg);
             uiBase.gameObject.SetActive(true);
             _liCurrentUI.AddLast(uiBase);
         }
@@ -63,7 +71,7 @@ public class UIManager : Singletone<UIManager>
                 if (uiBase == null)
                     return;
 
-                uiBase.InitArg(arg);
+                uiBase.InitUI(arg);
                 _liCurrentUI.AddLast(uiBase);
                 _dicCashingUI.Add(uiType, uiBase);
             });

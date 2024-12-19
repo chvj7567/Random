@@ -9,6 +9,8 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.IO;
 using UniRx;
+using UnityEngine.SceneManagement;
+
 
 
 #if PLATFORM_ANDROID
@@ -44,11 +46,14 @@ public class NumberInfo
     public List<ButtonEx> liNumberButton;
 }
 
-public class Lotto : MonoBehaviour
+public class LottoScene : MonoBehaviour
 {
     const string Image_Path = "Roulette";
     const string Local_LottoDataFile = "lotto.json";
     const int Fail_Rank = 6;
+
+    [Header("메뉴 버튼")]
+    [SerializeField] private Button _menuButton;
 
     [Header("로딩")]
     [SerializeField] private GameObject _loadingPageObject;
@@ -75,14 +80,15 @@ public class Lotto : MonoBehaviour
 
     public List<LottoResponse> LottoResponseList => _lilottoResponse;
 
-    private async void Start()
+    private void Start()
     {
-        await ResourceManager.Instance.Init();
-        await UIManager.Instance.Init();
-
         Loading(false);
 
-        //# 버튼 바인딩
+        _menuButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            SceneManager.LoadScene(0);
+        }).AddTo(this);
+
         _rouletteButton.OnClickAsObservable().Subscribe(_ =>
         {
             StartRoulette(_lotto1Info);
@@ -90,10 +96,10 @@ public class Lotto : MonoBehaviour
             StartRoulette(_lotto3Info);
             StartRoulette(_lotto4Info);
             StartRoulette(_lotto5Info);
-        });
+        }).AddTo(this);
 
-        _customImageButton.OnClickAsObservable().Subscribe(_ => PickImage());
-        _lottoInfoUpdateButton.OnClickAsObservable().Subscribe(_ => Loading(true));
+        _customImageButton.OnClickAsObservable().Subscribe(_ => PickImage()).AddTo(this);
+        _lottoInfoUpdateButton.OnClickAsObservable().Subscribe(_ => Loading(true)).AddTo(this);
         _viewWinningNumberButton.OnClickAsObservable().Subscribe(_ =>
         {
             if (_lilottoResponse.Count > 0)
@@ -103,7 +109,7 @@ public class Lotto : MonoBehaviour
                     liLottoResponse = _lilottoResponse,
                 });
             }
-        });
+        }).AddTo(this);
 
         //# 룰렛 이미지 설정
         //# 사용자가 커스텀한 룰렛 이미지가 있으면 바로 설정

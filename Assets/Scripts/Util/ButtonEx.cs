@@ -1,14 +1,18 @@
+using System;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
 public class ButtonEx : MonoBehaviour
 {
-    [SerializeField] TMP_Text _text;
+    private Button _button;
+    private TMP_Text _text;
 
     private void Awake()
     {
+        _button = GetComponent<Button>();
         _text = GetComponentInChildren<TMP_Text>();
     }
 
@@ -18,5 +22,13 @@ public class ButtonEx : MonoBehaviour
             return;
 
         _text.text = text;
+    }
+
+    public void OnClick(Action callback)
+    {
+        _button.OnClickAsObservable().Subscribe(_ =>
+        {
+            callback?.Invoke();
+        }).AddTo(this);
     }
 }

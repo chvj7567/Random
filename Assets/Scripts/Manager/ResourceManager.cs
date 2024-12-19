@@ -10,12 +10,18 @@ using UnityEngine.ResourceManagement.ResourceLocations;
 public class ResourceManager : Singletone<ResourceManager>
 {
     const string LableName = "Resource";
+    bool _initialize = false;
 
     //# 에셋 이름, 에셋 경로
     Dictionary<string, IResourceLocation> _dicAssetInfo = new Dictionary<string, IResourceLocation>();
 
     public async Task<bool> Init()
     {
+        if (_initialize)
+            return false;
+
+        _initialize = true;
+
         TaskCompletionSource<bool> initComplete = new TaskCompletionSource<bool>();
 
         Addressables.InitializeAsync().Completed += (handle) =>

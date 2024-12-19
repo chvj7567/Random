@@ -6,4 +6,11 @@ public class CommonEnum
     {
         UILotto,
     }
+
+    public enum EMenu
+    {
+        RandomNumber,
+        Lotto,
+        CustomRandom,
+    }
 }
