@@ -7,8 +7,10 @@ public class UIArg { }
 
 public abstract class UIBase : MonoBehaviour
 {
-    [SerializeField] Button _backgroundButton;
-    [SerializeField] Button _backButton;
+    [SerializeField] private Button _backgroundButton;
+    [SerializeField] private Button _backButton;
+
+    protected CompositeDisposable closeDisposable = new CompositeDisposable();
 
     private void Awake()
     {
@@ -17,7 +19,7 @@ public abstract class UIBase : MonoBehaviour
             _backgroundButton.OnClickAsObservable().Subscribe(_ =>
             {
                 UIManager.Instance.CloseUI(this);
-            });
+            }).AddTo(closeDisposable);
         }
 
         if (_backButton)
@@ -25,11 +27,14 @@ public abstract class UIBase : MonoBehaviour
             _backButton.OnClickAsObservable().Subscribe(_ =>
             {
                 UIManager.Instance.CloseUI(this);
-            });
+            }).AddTo(closeDisposable);
         }
     }
 
     public virtual void InitArg(UIArg arg) { }
 
-    public virtual void Close() { }
+    public virtual void Close()
+    {
+        closeDisposable.Dispose();
+    }
 }

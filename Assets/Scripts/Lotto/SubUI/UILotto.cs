@@ -18,8 +18,6 @@ public class UILotto : UIBase
     [SerializeField] private Button _bottomButton;
     [SerializeField] private LottoScrollView scrollView;
 
-    CompositeDisposable _disposable = new CompositeDisposable();
-
     public override void InitArg(UIArg arg)
     {
         _arg = arg as UILottoArg;
@@ -30,12 +28,12 @@ public class UILotto : UIBase
         _topButton.OnClickAsObservable().Subscribe(_ =>
         {
             scrollView.SetScrollPosition(1);
-        }).AddTo(_disposable);
+        }).AddTo(closeDisposable);
 
         _bottomButton.OnClickAsObservable().Subscribe(_ =>
         {
             scrollView.SetScrollPosition(_arg.liLottoResponse.Count);
-        }).AddTo(_disposable);
+        }).AddTo(closeDisposable);
 
         scrollView.SetItemList(_arg.liLottoResponse);
     }
