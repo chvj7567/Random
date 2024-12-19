@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UniRx;
 using UniRx.Triggers;
 using System.Linq;
+using DG.Tweening;
 
 public enum PoolingScrollViewDirection
 {
@@ -90,7 +91,7 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
     private Vector2 _prevScrollPosition = Vector2.zero;
     private GameObject _contentObject;
     private RectTransform _contentRectTransform;
-    private RectTransform _rtViewPort;
+    private RectTransform _viewPortRectTransform;
     private CanvasGroup _canvasGroupContent;
     private ScrollRect _scrollRect;
 
@@ -193,8 +194,8 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
         if (_scrollRect == null)
             _scrollRect = GetComponent<ScrollRect>();
 
-        if (_rtViewPort == null)
-            _rtViewPort = _scrollRect.viewport;
+        if (_viewPortRectTransform == null)
+            _viewPortRectTransform = _scrollRect.viewport;
 
         if (_contentObject == null)
             _contentObject = _scrollRect.content.gameObject;
@@ -282,23 +283,37 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
         InitItem();
     }
 
-    public void SetScrollPosition(int index)
+    public void SetScrollPosition(int index, float duration = 1f)
     {
         var pos = GetItemPosition(index - 1);
 
+        float x = _contentRectTransform.anchoredPosition.x;
+        float y = _contentRectTransform.anchoredPosition.y;
+
+        //# 최대 스크롤 위치 값 계산
         switch (_scrollDirection)
         {
             case PoolingScrollViewDirection.Vertical:
                 {
-                    _contentRectTransform.anchoredPosition = new Vector2(_contentRectTransform.anchoredPosition.x, -pos.y);
+                    float tempY = Mathf.Min(ContentHeight - _viewPortRectTransform.rect.height, -pos.y);
+                    if (tempY < 0)
+                        tempY = 0;
+                    y = tempY;
                 }
                 break;
             case PoolingScrollViewDirection.Horizontal:
                 {
-                    _contentRectTransform.anchoredPosition = new Vector2(-pos.x, _contentRectTransform.anchoredPosition.y);
+                    float tempX = Mathf.Min(ContentHeight - _viewPortRectTransform.rect.width, -pos.x);
+                    if (tempX < 0)
+                        tempX = 0;
+                    x = tempX;
                 }
                 break;
         }
+
+        //# 즉시 이동 시 풀링이 제대로 되지 않음
+        //_contentRectTransform.anchoredPosition = new Vector2(x, y);
+        _contentRectTransform.DOAnchorPos(new Vector2(x, y), duration);
     }
 
     public void Refresh()
@@ -341,7 +356,7 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
     {
         if (_columnCount <= 0)
         {
-            float width = _rtViewPort.rect.width - (_padding.left + _padding.right);
+            float width = _viewPortRectTransform.rect.width - (_padding.left + _padding.right);
             _calcColumnCount = Mathf.Max(1, Mathf.FloorToInt(width / (_itemSize.x + _itemGap.x)));
         }
         else
@@ -354,7 +369,7 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
     {
         if (_rowCount <= 0)
         {
-            float width = _rtViewPort.rect.height - (_padding.top + _padding.bottom);
+            float width = _viewPortRectTransform.rect.height - (_padding.top + _padding.bottom);
             _calcRowCount = Mathf.Max(1, Mathf.FloorToInt(width / (_itemSize.y + _itemGap.y)));
         }
         else
@@ -371,14 +386,14 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
             {
                 case PoolingScrollViewDirection.Vertical:
                     {
-                        int line = Mathf.RoundToInt(_rtViewPort.rect.size.y / _itemSize.y);
+                        int line = Mathf.RoundToInt(_viewPortRectTransform.rect.size.y / _itemSize.y);
                         line += 2;
                         _poolItemCount = line * _calcColumnCount;
                     }
                     break;
                 case PoolingScrollViewDirection.Horizontal:
                     {
-                        int line = Mathf.RoundToInt(_rtViewPort.rect.size.x / _itemSize.x);
+                        int line = Mathf.RoundToInt(_viewPortRectTransform.rect.size.x / _itemSize.x);
                         line += 2;
                         _poolItemCount = line * _calcRowCount;
                     }
@@ -399,7 +414,7 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
                     _contentRectTransform.pivot = new Vector2(.5f, 1f);
 
                     //# 사이즈 재설정
-                    _contentRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _rtViewPort.rect.width);
+                    _contentRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _viewPortRectTransform.rect.width);
                     _contentRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, ScrollViewHeight);
 
                     //# 컨텐츠 최상단으로 이동
@@ -415,7 +430,7 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
 
                     //# 사이즈 재설정
                     _contentRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, ScrollViewWidth);
-                    _contentRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _rtViewPort.rect.height);
+                    _contentRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _viewPortRectTransform.rect.height);
 
                     //# 컨텐츠 최상단으로 이동
                     _contentRectTransform.anchoredPosition = Vector2.zero;
@@ -532,14 +547,14 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
         {
             case PoolingScrollViewDirection.Vertical:
                 {
-                    float scrollRectY = _rtViewPort.rect.size.y;
+                    float scrollRectY = _viewPortRectTransform.rect.size.y;
                     rect.Set(_contentRectTransform.anchoredPosition.x, -1 * (_contentRectTransform.anchoredPosition.y + scrollRectY), ContentWidth, scrollRectY + _itemSize.y);
                 }
                 break;
             case PoolingScrollViewDirection.Horizontal:
                 {
-                    float scrollRectX = _rtViewPort.rect.size.x;
-                    float scrollRectY = _rtViewPort.rect.size.y;
+                    float scrollRectX = _viewPortRectTransform.rect.size.x;
+                    float scrollRectY = _viewPortRectTransform.rect.size.y;
                     rect.Set(-1 * _contentRectTransform.anchoredPosition.x, -1 * (_contentRectTransform.anchoredPosition.y + scrollRectY), scrollRectX + _itemSize.x, ContentHeight);
                 }
                 break;

@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Resource
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c826f79c0daa00344b3364c31786500d
+    m_Address: Assets/AddressableResource/UICanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: daab91b697d92ae4a9f8503263425691, type: 2}
   m_SchemaSet:

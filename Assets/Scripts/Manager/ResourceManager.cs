@@ -7,12 +7,8 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 
-public class ResourceManager : MonoBehaviour
+public class ResourceManager : Singletone<ResourceManager>
 {
-    static ResourceManager _instance;
-
-    public static ResourceManager Instance => _instance ?? (_instance = new ResourceManager());
-
     const string LableName = "Resource";
 
     //# 에셋 이름, 에셋 경로

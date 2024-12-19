@@ -8,6 +8,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.IO;
+using UniRx;
+
 
 #if PLATFORM_ANDROID
 using UnityEngine.Android;
@@ -48,8 +50,6 @@ public class Lotto : MonoBehaviour
     const string Local_LottoDataFile = "lotto.json";
     const int Fail_Rank = 6;
 
-    [SerializeField] private Transform _uiParent;
-
     [Header("로딩")]
     [SerializeField] private GameObject _loadingPageObject;
     [SerializeField] private Image _loadingImage;
@@ -61,6 +61,7 @@ public class Lotto : MonoBehaviour
     [SerializeField] private Button _customImageButton;
     [SerializeField] private TMP_Text _saveLottoRoundText;
     [SerializeField] private Button _lottoInfoUpdateButton;
+    [SerializeField] private Button _viewWinningNumberButton;
 
     [Header("당첨 정보")]
     [SerializeField] private NumberInfo _lotto1Info;
@@ -77,33 +78,32 @@ public class Lotto : MonoBehaviour
     private async void Start()
     {
         await ResourceManager.Instance.Init();
+        await UIManager.Instance.Init();
 
         Loading(false);
 
         //# 버튼 바인딩
-        _rouletteButton.onClick.AddListener(() =>
+        _rouletteButton.OnClickAsObservable().Subscribe(_ =>
         {
             StartRoulette(_lotto1Info);
             StartRoulette(_lotto2Info);
             StartRoulette(_lotto3Info);
             StartRoulette(_lotto4Info);
             StartRoulette(_lotto5Info);
-
-            ResourceManager.Instance.LoadUI(CommonEnum.EUI.UILotto, (ui) =>
-            {
-                ui.transform.SetParent(_uiParent);
-                var rectTransform = ui.GetComponent<RectTransform>();
-                rectTransform.anchoredPosition3D = Vector3.zero;
-                rectTransform.localScale = Vector3.one;
-                UILotto uiLotto = ui.GetComponent<UILotto>();
-                if (uiLotto != null)
-                {
-                    uiLotto.Init(_lilottoResponse);
-                }
-            });
         });
-        _customImageButton.onClick.AddListener(PickImage);
-        _lottoInfoUpdateButton.onClick.AddListener(() => Loading(true));
+
+        _customImageButton.OnClickAsObservable().Subscribe(_ => PickImage());
+        _lottoInfoUpdateButton.OnClickAsObservable().Subscribe(_ => Loading(true));
+        _viewWinningNumberButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            if (_lilottoResponse.Count > 0)
+            {
+                UIManager.Instance.ShowUI(CommonEnum.EUI.UILotto, new UILottoArg
+                {
+                    liLottoResponse = _lilottoResponse,
+                });
+            }
+        });
 
         //# 룰렛 이미지 설정
         //# 사용자가 커스텀한 룰렛 이미지가 있으면 바로 설정
