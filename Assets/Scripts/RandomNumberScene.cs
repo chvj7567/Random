@@ -18,8 +18,7 @@ public class RandomNumberScene : MonoBehaviour
     {
         _menuButton.OnClickAsObservable().Subscribe(_ =>
         {
-            gameObject.SetActive(false);
-            _mainSceneManager.ShowMainScene();
+            Close();
         }).AddTo(this);
 
         _startNumberInput.onEndEdit.AddListener((str) =>
@@ -56,6 +55,12 @@ public class RandomNumberScene : MonoBehaviour
     public void SetManager(IMainSceneManager manager)
     {
         _mainSceneManager = manager;
+    }
+
+    public void Close()
+    {
+        gameObject.SetActive(false);
+        _mainSceneManager.ShowMainScene();
     }
 
     private (bool, int) CheckInteger(TMP_InputField input)

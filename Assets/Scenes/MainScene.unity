@@ -1995,11 +1995,11 @@ MonoBehaviour:
   - {fileID: 1491615790}
   - {fileID: 1574888588}
   _liMenu:
-  - menu: 0
-    button: {fileID: 78364446}
   - menu: 1
-    button: {fileID: 1711439845}
+    button: {fileID: 78364446}
   - menu: 2
+    button: {fileID: 1711439845}
+  - menu: 3
     button: {fileID: 867794377}
   _randomNumberScene: {fileID: 2033032163}
   _customRandomScene: {fileID: 2131901404}

@@ -13,6 +13,17 @@ public class UIManager : Singletone<UIManager>
     LinkedList<UIBase> _liCurrentUI = new LinkedList<UIBase>();
     Dictionary<CommonEnum.EUI, UIBase> _dicCashingUI = new Dictionary<CommonEnum.EUI, UIBase>();
 
+    public bool CheckUI => _liCurrentUI.Count > 0;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_liCurrentUI.Count > 0)
+                CloseUI(_liCurrentUI.Last.Value);
+        }
+    }
+
     public async Task<bool> Init()
     {
         if (_initialize)
@@ -81,6 +92,9 @@ public class UIManager : Singletone<UIManager>
     public void CloseUI(UIBase uiBase)
     {
         if (uiBase == null)
+            return;
+
+        if (_liCurrentUI.Count == 0)
             return;
 
         uiBase.Close();

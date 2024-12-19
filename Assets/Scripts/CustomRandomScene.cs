@@ -12,13 +12,18 @@ public class CustomRandomScene : MonoBehaviour
     {
         _menuButton.OnClickAsObservable().Subscribe(_ =>
         {
-            gameObject.SetActive(false);
-            _mainSceneManager.ShowMainScene();
+            Close();
         }).AddTo(this);
     }
 
     public void SetManager(IMainSceneManager manager)
     {
         _mainSceneManager = manager;
+    }
+
+    public void Close()
+    {
+        gameObject.SetActive(false);
+        _mainSceneManager.ShowMainScene();
     }
 }

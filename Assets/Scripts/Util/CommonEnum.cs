@@ -9,6 +9,7 @@ public class CommonEnum
 
     public enum EMenu
     {
+        None = 0,
         RandomNumber,
         Lotto,
         CustomRandom,

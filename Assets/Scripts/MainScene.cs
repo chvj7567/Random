@@ -25,6 +25,8 @@ public class MainScene : MonoBehaviour, IMainSceneManager
     [SerializeField] RandomNumberScene _randomNumberScene;
     [SerializeField] CustomRandomScene _customRandomScene;
 
+    CommonEnum.EMenu _curScene = CommonEnum.EMenu.None;
+
     private async void Start()
     {
         await ResourceManager.Instance.Init();
@@ -41,6 +43,7 @@ public class MainScene : MonoBehaviour, IMainSceneManager
                     {
                         menuInfo.button.OnClickAsObservable().Subscribe(_ =>
                         {
+                            _curScene = CommonEnum.EMenu.RandomNumber;
                             foreach (var obj in liMainSceneObj)
                             {
                                 obj.SetActive(false);
@@ -54,6 +57,7 @@ public class MainScene : MonoBehaviour, IMainSceneManager
                     {
                         menuInfo.button.OnClickAsObservable().Subscribe(_ =>
                         {
+                            _curScene = CommonEnum.EMenu.Lotto;
                             SceneManager.LoadScene(1);
                         }).AddTo(this);
                     }
@@ -62,6 +66,7 @@ public class MainScene : MonoBehaviour, IMainSceneManager
                     {
                         menuInfo.button.OnClickAsObservable().Subscribe(_ =>
                         {
+                            _curScene = CommonEnum.EMenu.CustomRandom;
                             foreach (var obj in liMainSceneObj)
                             {
                                 obj.SetActive(false);
