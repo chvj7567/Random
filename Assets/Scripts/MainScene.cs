@@ -9,6 +9,8 @@ using UnityEngine.UI;
 public interface IMainSceneManager
 {
     public void ShowMainScene();
+
+    public void HideMainScene();
 }
 
 public class MainScene : MonoBehaviour, IMainSceneManager
@@ -29,8 +31,14 @@ public class MainScene : MonoBehaviour, IMainSceneManager
 
     private async void Start()
     {
+        HideMainScene();
+        _randomNumberScene.gameObject.SetActive(false);
+        _customRandomScene.gameObject.SetActive(false);
+
         await ResourceManager.Instance.Init();
         await UIManager.Instance.Init();
+
+        ShowMainScene();
 
         _randomNumberScene.SetManager(this);
         _customRandomScene.SetManager(this);
@@ -44,10 +52,7 @@ public class MainScene : MonoBehaviour, IMainSceneManager
                         menuInfo.button.OnClickAsObservable().Subscribe(_ =>
                         {
                             _curScene = CommonEnum.EMenu.RandomNumber;
-                            foreach (var obj in liMainSceneObj)
-                            {
-                                obj.SetActive(false);
-                            }
+                            HideMainScene();
 
                             _randomNumberScene.gameObject.SetActive(true);
                         }).AddTo(this);
@@ -85,6 +90,14 @@ public class MainScene : MonoBehaviour, IMainSceneManager
         foreach (var obj in liMainSceneObj)
         {
             obj.SetActive(true);
+        }
+    }
+
+    public void HideMainScene()
+    {
+        foreach (var obj in liMainSceneObj)
+        {
+            obj.SetActive(false);
         }
     }
 }
