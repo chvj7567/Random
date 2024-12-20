@@ -12,6 +12,7 @@ public class CustomRandomScene : MonoBehaviour
     [SerializeField] private CustomScrollView scrollView;
     [SerializeField] private Button _plusButton;
     [SerializeField] private Button _minusButton;
+    [SerializeField] private ButtonEx _resultButton;
 
     private ReactiveCollection<string> _liCustomText = new ReactiveCollection<string>();
     private IMainSceneManager _mainSceneManager;
@@ -40,6 +41,18 @@ public class CustomRandomScene : MonoBehaviour
 
             _liCustomText.RemoveAt(_liCustomText.Count - 1);
         }).AddTo(this);
+
+        _resultButton.OnClick(() =>
+        {
+            if (_liCustomText.Count == 0)
+            {
+                _resultButton.SetText(string.Empty);
+            }
+            else
+            {
+                _resultButton.SetText(_liCustomText[Random.Range(0, _liCustomText.Count)]);
+            }
+        });
     }
 
     public void SetManager(IMainSceneManager manager)
