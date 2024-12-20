@@ -55,11 +55,6 @@ public class LottoScene : MonoBehaviour
     [Header("메뉴 버튼")]
     [SerializeField] private Button _menuButton;
 
-    [Header("로딩")]
-    [SerializeField] private GameObject _loadingPageObject;
-    [SerializeField] private Image _loadingImage;
-    [SerializeField] private TMP_Text _loadingText;
-
     [Header("로또 정보")]
     [SerializeField] private Image _rouletteImage;
     [SerializeField] private Button _rouletteButton;
@@ -75,8 +70,8 @@ public class LottoScene : MonoBehaviour
     [SerializeField] private NumberInfo _lotto4Info;
     [SerializeField] private NumberInfo _lotto5Info;
 
-    string _lottoURL = "www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=";
-    List<LottoResponse> _lilottoResponse = new List<LottoResponse>();
+    private string _lottoURL = "www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=";
+    private List<LottoResponse> _lilottoResponse = new List<LottoResponse>();
 
     public List<LottoResponse> LottoResponseList => _lilottoResponse;
 
@@ -120,18 +115,13 @@ public class LottoScene : MonoBehaviour
         }
     }
 
-    private async void Loading(bool update)
+    private void Loading(bool update)
     {
-        _loadingPageObject.SetActive(true);
-        var loadingTween = _loadingImage.rectTransform
-            .DORotate(new Vector3(0, 0, 360), .2f, RotateMode.FastBeyond360)
-            .SetEase(Ease.Linear)
-            .SetLoops(-1);
-
-        await GetLottoInfo(update);
-
-        loadingTween.Kill();
-        _loadingPageObject.SetActive(false);
+        UIManager.Instance.ShowUI(CommonEnum.EUI.UILoading, null, async (uiBase) =>
+        {
+            await GetLottoInfo(update);
+            UIManager.Instance.CloseUI(uiBase);
+        });
     }
 
     #region Gallery
@@ -186,7 +176,6 @@ public class LottoScene : MonoBehaviour
             {
                 Texture2D texture = DownloadHandlerTexture.GetContent(www);
                 Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-                _loadingImage.sprite = sprite;
                 _rouletteImage.sprite = sprite;
             }
         }
@@ -200,11 +189,21 @@ public class LottoScene : MonoBehaviour
 
         Debug.Log(localLottoPath);
 
-        if (update == false && File.Exists(localLottoPath))
+        if (update == false)
         {
-            LottoJson json = JsonUtility.FromJson<LottoJson>(File.ReadAllText(localLottoPath));
-            _lilottoResponse = json.liLottoInfo;
-            _saveLottoRoundText.text = $"최근 회차 : {_lilottoResponse.Count}회차";
+            if (File.Exists(localLottoPath))
+            {
+                LottoJson json = JsonUtility.FromJson<LottoJson>(File.ReadAllText(localLottoPath));
+                _lilottoResponse = json.liLottoInfo;
+                _saveLottoRoundText.text = $"최근 회차 : {_lilottoResponse.Count}회차";
+            }
+            else
+            {
+                var lottoText = Resources.Load<TextAsset>($"lotto");
+                LottoJson json = JsonUtility.FromJson<LottoJson>(lottoText.text);
+                _lilottoResponse = json.liLottoInfo;
+                _saveLottoRoundText.text = $"최근 회차 : {_lilottoResponse.Count}회차";
+            }
         }
         else
         {
@@ -255,7 +254,7 @@ public class LottoScene : MonoBehaviour
         liMyNumber.Add(numBounus);
 
         _rouletteImage.rectTransform
-            .DORotate(new Vector3(0, 0, 360), .2f, RotateMode.FastBeyond360)
+            .DORotate(new Vector3(0, 360, 0), .2f, RotateMode.FastBeyond360)
             .SetEase(Ease.Linear)
             .SetLoops(5)
             .OnComplete(() =>
@@ -301,7 +300,6 @@ public class LottoScene : MonoBehaviour
                     return false;
 
                 _lilottoResponse.Add(lottoResponse);
-                _loadingText.text = $"{round}회차 정보 저장...";
                 return true;
             }
         }

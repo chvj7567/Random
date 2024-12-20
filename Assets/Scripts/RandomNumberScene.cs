@@ -14,6 +14,11 @@ public class RandomNumberScene : MonoBehaviour
     private int _startNumber = 0;
     private int _endNumber = 0;
 
+    private void OnEnable()
+    {
+        _randomButton.SetText("Random");
+    }
+
     private void Start()
     {
         _menuButton.OnClickAsObservable().Subscribe(_ =>

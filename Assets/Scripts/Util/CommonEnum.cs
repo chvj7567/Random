@@ -5,6 +5,7 @@ public class CommonEnum
     public enum EUI
     {
         UILotto,
+        UILoading,
     }
 
     public enum EMenu

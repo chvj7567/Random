@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -51,7 +53,7 @@ public class UIManager : Singletone<UIManager>
         return await initComplete.Task;
     }
 
-    public void ShowUI(CommonEnum.EUI uiType, UIArg arg)
+    public void ShowUI(CommonEnum.EUI uiType, UIArg arg = null, Action<UIBase> callback = null)
     {
         //# 해당 UI가 한 번이라도 열린 적이 있다면 캐싱하고 있는 UI 재사용
         if (_dicCashingUI.TryGetValue(uiType, out var uiBase))
@@ -59,6 +61,8 @@ public class UIManager : Singletone<UIManager>
             uiBase.InitUI(arg);
             uiBase.gameObject.SetActive(true);
             _liCurrentUI.AddLast(uiBase);
+
+            callback?.Invoke(uiBase);
         }
         else
         {
@@ -85,6 +89,8 @@ public class UIManager : Singletone<UIManager>
                 uiBase.InitUI(arg);
                 _liCurrentUI.AddLast(uiBase);
                 _dicCashingUI.Add(uiType, uiBase);
+
+                callback?.Invoke(uiBase);
             });
         }
     }
@@ -100,5 +106,13 @@ public class UIManager : Singletone<UIManager>
         uiBase.Close();
         uiBase.gameObject.SetActive(false);
         _liCurrentUI.RemoveLast();
+    }
+
+    public void CloseRecentUI()
+    {
+        if (_liCurrentUI.Count == 0)
+            return;
+
+        CloseUI(_liCurrentUI.Last());
     }
 }

@@ -5,7 +5,7 @@ using System;
 
 public class UIArg { }
 
-public abstract class UIBase : MonoBehaviour
+public class UIBase : MonoBehaviour
 {
     [SerializeField] private Button _backgroundButton;
     [SerializeField] private Button _backButton;

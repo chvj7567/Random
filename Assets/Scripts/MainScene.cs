@@ -26,17 +26,25 @@ public class MainScene : MonoBehaviour, IMainSceneManager
     [SerializeField] List<Menu> _liMenu = new List<Menu>();
     [SerializeField] RandomNumberScene _randomNumberScene;
     [SerializeField] CustomRandomScene _customRandomScene;
-
+    [SerializeField] GameObject _loadingObject;
     CommonEnum.EMenu _curScene = CommonEnum.EMenu.None;
 
     private async void Start()
     {
+        _loadingObject.SetActive(true);
+
         HideMainScene();
         _randomNumberScene.gameObject.SetActive(false);
         _customRandomScene.gameObject.SetActive(false);
 
         await ResourceManager.Instance.Init();
         await UIManager.Instance.Init();
+
+        UIManager.Instance.ShowUI(CommonEnum.EUI.UILoading, null, async (uiBase) =>
+        {
+            
+            UIManager.Instance.CloseUI(uiBase);
+        });
 
         ShowMainScene();
 
@@ -83,6 +91,8 @@ public class MainScene : MonoBehaviour, IMainSceneManager
                     break;
             }
         }
+
+        _loadingObject.SetActive(false);
     }
 
     public void ShowMainScene()

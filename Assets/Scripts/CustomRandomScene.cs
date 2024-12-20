@@ -17,6 +17,11 @@ public class CustomRandomScene : MonoBehaviour
     private ReactiveCollection<string> _liCustomText = new ReactiveCollection<string>();
     private IMainSceneManager _mainSceneManager;
 
+    private void OnEnable()
+    {
+        _resultButton.SetText("Random");
+    }
+
     private void Start()
     {
         _menuButton.OnClickAsObservable().Subscribe(_ =>
