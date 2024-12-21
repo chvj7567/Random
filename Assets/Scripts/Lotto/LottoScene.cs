@@ -62,6 +62,7 @@ public class LottoScene : MonoBehaviour
     [SerializeField] private TMP_Text _saveLottoRoundText;
     [SerializeField] private Button _lottoInfoUpdateButton;
     [SerializeField] private Button _viewWinningNumberButton;
+    [SerializeField] private Button _screenShotButton;
 
     [Header("당첨 정보")]
     [SerializeField] private NumberInfo _lotto1Info;
@@ -105,6 +106,10 @@ public class LottoScene : MonoBehaviour
                 });
             }
         }).AddTo(this);
+        _screenShotButton.OnClickAsObservable().Subscribe(_ =>
+        {
+            CaptureScreenshot();
+        });
 
         //# 룰렛 이미지 설정
         //# 사용자가 커스텀한 룰렛 이미지가 있으면 바로 설정
@@ -179,6 +184,21 @@ public class LottoScene : MonoBehaviour
                 _rouletteImage.sprite = sprite;
             }
         }
+    }
+
+    private void CaptureScreenshot()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "Random_ScreenShot");
+        
+        if (Directory.Exists(path) == false)
+        {
+            Directory.CreateDirectory(path);
+        }
+
+        string fileName = $"{path}/screenshot_{System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.png";
+
+        ScreenCapture.CaptureScreenshot(fileName);
+        Debug.Log($"스크린샷이 저장되었습니다: {fileName}");
     }
     #endregion Gallery
 
