@@ -10,6 +10,8 @@ using UnityEngine.UI;
 using System.IO;
 using UniRx;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
+
 
 
 
@@ -73,7 +75,7 @@ public class LottoScene : MonoBehaviour
 
     private string _lottoURL = "www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=";
     private List<LottoResponse> _lilottoResponse = new List<LottoResponse>();
-
+    private string path = string.Empty;
     public List<LottoResponse> LottoResponseList => _lilottoResponse;
 
     private void Start()
@@ -108,7 +110,7 @@ public class LottoScene : MonoBehaviour
         }).AddTo(this);
         _screenShotButton.OnClickAsObservable().Subscribe(_ =>
         {
-            CaptureScreenshot();
+            StartCoroutine(CaptureScreenshot());
         });
 
         //# 룰렛 이미지 설정
@@ -186,19 +188,26 @@ public class LottoScene : MonoBehaviour
         }
     }
 
-    private void CaptureScreenshot()
+    private IEnumerator CaptureScreenshot()
     {
-        string path = Path.Combine(Application.persistentDataPath, "Random_ScreenShot");
-        
-        if (Directory.Exists(path) == false)
+        yield return new WaitForEndOfFrame();
+
+        string fileName = $"screenshot_{System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.png";
+
+        Texture2D screenshot = ScreenCapture.CaptureScreenshotAsTexture();
+
+        NativeGallery.SaveImageToGallery(screenshot, "Random_Screenshot", fileName, (success, path) =>
         {
-            Directory.CreateDirectory(path);
-        }
+            if (success)
+            {
+                UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
+                {
+                    alarmText = $"스크린 샷이 저장되었습니다."
+                });
+            }
+        });
 
-        string fileName = $"{path}/screenshot_{System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.png";
-
-        ScreenCapture.CaptureScreenshot(fileName);
-        Debug.Log($"스크린샷이 저장되었습니다: {fileName}");
+        Destroy(screenshot);
     }
     #endregion Gallery
 

@@ -6,6 +6,7 @@ public class CommonEnum
     {
         UILotto,
         UILoading,
+        UIAlarm,
     }
 
     public enum EMenu
