@@ -11,11 +11,11 @@ public class RandomNumberScene : MonoBehaviour
     [SerializeField] private ButtonEx _randomButton;
 
     private IMainSceneManager _mainSceneManager;
-    private int _startNumber = 0;
-    private int _endNumber = 0;
 
     private void OnEnable()
     {
+        _startNumberInput.text = string.Empty;
+        _endNumberInput.text = string.Empty;
         _randomButton.SetText("Random");
     }
 
@@ -26,33 +26,22 @@ public class RandomNumberScene : MonoBehaviour
             Close();
         }).AddTo(this);
 
-        _startNumberInput.onEndEdit.AddListener((str) =>
-        {
-            var result = CheckInteger(_startNumberInput);
-            if (result.Item1)
-            {
-                _startNumber = result.Item2;
-            }
-        });
-
-        _endNumberInput.onEndEdit.AddListener((str) =>
-        {
-            var result = CheckInteger(_endNumberInput);
-            if (result.Item1)
-            {
-                _endNumber = result.Item2;
-            }
-        });
-
         _randomButton.OnClick(() =>
         {
-            if (_startNumber > _endNumber)
+            var startNumber = CheckInteger(_startNumberInput);
+            var endNubmer = CheckInteger(_endNumberInput);
+
+            if (startNumber.Item1 == false || endNubmer.Item1 == false)
+            {
+                _randomButton.SetText("숫자 입력 확인");
+            }
+            else if (startNumber.Item2 > endNubmer.Item2)
             {
                 _randomButton.SetText("숫자 범위 확인");
             }
             else
             {
-                _randomButton.SetText($"{Random.Range(_startNumber, _endNumber + 1)}");
+                _randomButton.SetText($"{Random.Range(startNumber.Item2, endNubmer.Item2 + 1)}");
             }
         });
     }
