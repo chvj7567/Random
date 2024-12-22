@@ -16,4 +16,11 @@ public class CommonEnum
         Lotto,
         CustomRandom,
     }
+
+    public enum EAudio
+    {
+        None = 0,
+        BGM,
+        Click,
+    }
 }

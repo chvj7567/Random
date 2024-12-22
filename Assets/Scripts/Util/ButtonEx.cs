@@ -12,6 +12,18 @@ public class ButtonEx : MonoBehaviour
 
     bool _initialize = false;
 
+    public bool Interatable
+    {
+        get
+        {
+            return _button.interactable;
+        }
+        set
+        {
+            _button.interactable = value;
+        }
+    }
+
     private void Awake()
     {
         Init();
@@ -40,6 +52,7 @@ public class ButtonEx : MonoBehaviour
 
         _button.OnClickAsObservable().Subscribe(_ =>
         {
+            AudioManager.Instance.Play(CommonEnum.EAudio.Click);
             callback?.Invoke();
         }).AddTo(this);
     }

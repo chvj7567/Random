@@ -8,10 +8,10 @@ using System.Linq;
 public class CustomRandomScene : MonoBehaviour
 {
     [SerializeField] private TMP_InputField _customInput;
-    [SerializeField] private Button _menuButton;
+    [SerializeField] private ButtonEx _menuButton;
     [SerializeField] private CustomScrollView scrollView;
-    [SerializeField] private Button _plusButton;
-    [SerializeField] private Button _minusButton;
+    [SerializeField] private ButtonEx _plusButton;
+    [SerializeField] private ButtonEx _minusButton;
     [SerializeField] private ButtonEx _resultButton;
 
     private ReactiveCollection<string> _liCustomText = new ReactiveCollection<string>();
@@ -24,28 +24,28 @@ public class CustomRandomScene : MonoBehaviour
 
     private void Start()
     {
-        _menuButton.OnClickAsObservable().Subscribe(_ =>
+        _menuButton.OnClick(() =>
         {
             Close();
-        }).AddTo(this);
+        });
 
         _liCustomText.ObserveCountChanged().Subscribe(_ =>
         {
             scrollView.SetItemList(_liCustomText.ToList());
         }).AddTo(this);
 
-        _plusButton.OnClickAsObservable().Subscribe(_ =>
+        _plusButton.OnClick(() =>
         {
             _liCustomText.Add(_customInput.text);
-        }).AddTo(this);
+        });
 
-        _minusButton.OnClickAsObservable().Subscribe(_ =>
+        _minusButton.OnClick(() =>
         {
             if (_liCustomText.Count == 0)
                 return;
 
             _liCustomText.RemoveAt(_liCustomText.Count - 1);
-        }).AddTo(this);
+        });
 
         _resultButton.OnClick(() =>
         {

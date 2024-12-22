@@ -99,4 +99,15 @@ public class ResourceManager : Singletone<ResourceManager>
     {
         LoadGameObject(uiType.ToString(), callback);
     }
+
+    public void LoadAudio(CommonEnum.EAudio audioType, Action<AudioClip> callback = null)
+    {
+        LoadAsset<AudioClip>(audioType.ToString(), (audioClip) =>
+        {
+            if (audioClip == null)
+                return;
+
+            callback?.Invoke(audioClip);
+        });
+    }
 }

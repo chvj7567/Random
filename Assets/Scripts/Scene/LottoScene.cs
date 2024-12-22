@@ -55,16 +55,16 @@ public class LottoScene : MonoBehaviour
     const int Fail_Rank = 6;
 
     [Header("메뉴 버튼")]
-    [SerializeField] private Button _menuButton;
+    [SerializeField] private ButtonEx _menuButton;
 
     [Header("로또 정보")]
     [SerializeField] private Image _rouletteImage;
-    [SerializeField] private Button _rouletteButton;
-    [SerializeField] private Button _customImageButton;
+    [SerializeField] private ButtonEx _rouletteButton;
+    [SerializeField] private ButtonEx _customImageButton;
     [SerializeField] private TMP_Text _saveLottoRoundText;
-    [SerializeField] private Button _lottoInfoUpdateButton;
-    [SerializeField] private Button _viewWinningNumberButton;
-    [SerializeField] private Button _screenShotButton;
+    [SerializeField] private ButtonEx _lottoInfoUpdateButton;
+    [SerializeField] private ButtonEx _viewWinningNumberButton;
+    [SerializeField] private ButtonEx _screenShotButton;
 
     [Header("당첨 정보")]
     [SerializeField] private NumberInfo _lotto1Info;
@@ -82,23 +82,23 @@ public class LottoScene : MonoBehaviour
     {
         Loading(false);
 
-        _menuButton.OnClickAsObservable().Subscribe(_ =>
+        _menuButton.OnClick(() =>
         {
             SceneManager.LoadScene(0);
-        }).AddTo(this);
+        });
 
-        _rouletteButton.OnClickAsObservable().Subscribe(_ =>
+        _rouletteButton.OnClick(() =>
         {
             StartRoulette(_lotto1Info);
             StartRoulette(_lotto2Info);
             StartRoulette(_lotto3Info);
             StartRoulette(_lotto4Info);
             StartRoulette(_lotto5Info);
-        }).AddTo(this);
+        });
 
-        _customImageButton.OnClickAsObservable().Subscribe(_ => PickImage()).AddTo(this);
-        _lottoInfoUpdateButton.OnClickAsObservable().Subscribe(_ => Loading(true)).AddTo(this);
-        _viewWinningNumberButton.OnClickAsObservable().Subscribe(_ =>
+        _customImageButton.OnClick(() => PickImage());
+        _lottoInfoUpdateButton.OnClick(() => Loading(true));
+        _viewWinningNumberButton.OnClick(() =>
         {
             if (_lilottoResponse.Count > 0)
             {
@@ -107,8 +107,8 @@ public class LottoScene : MonoBehaviour
                     liLottoResponse = _lilottoResponse,
                 });
             }
-        }).AddTo(this);
-        _screenShotButton.OnClickAsObservable().Subscribe(_ =>
+        });
+        _screenShotButton.OnClick(() =>
         {
             StartCoroutine(CaptureScreenshot());
         });
@@ -255,7 +255,7 @@ public class LottoScene : MonoBehaviour
 
     private void StartRoulette(NumberInfo lottoInfo)
     {
-        _rouletteButton.interactable = false;
+        _rouletteButton.Interatable = false;
 
         List<int> liMyNumber = new List<int>(6);
 
@@ -288,7 +288,7 @@ public class LottoScene : MonoBehaviour
             .SetLoops(5)
             .OnComplete(() =>
             {
-                _rouletteButton.interactable = true;
+                _rouletteButton.Interatable = true;
 
                 for (int i = 0; i < liMyNumber.Count; i++)
                 {

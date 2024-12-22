@@ -19,7 +19,7 @@ public class MainScene : MonoBehaviour, IMainSceneManager
     class Menu
     {
         public CommonEnum.EMenu menu;
-        public Button button;
+        public ButtonEx buttonEx;
     }
 
     [SerializeField] List<GameObject> liMainSceneObj = new List<GameObject>();
@@ -39,45 +39,51 @@ public class MainScene : MonoBehaviour, IMainSceneManager
 
         await ResourceManager.Instance.Init();
         await UIManager.Instance.Init();
+        AudioManager.Instance.Init();
 
-        UIManager.Instance.ShowUI(CommonEnum.EUI.UILoading, null, async (uiBase) =>
+        UIManager.Instance.ShowUI(CommonEnum.EUI.UILoading, null, (uiBase) =>
         {
-            
             UIManager.Instance.CloseUI(uiBase);
         });
 
         ShowMainScene();
+        SetMenuButton();
 
         _randomNumberScene.SetManager(this);
         _customRandomScene.SetManager(this);
 
+        _loadingObject.SetActive(false);
+    }
+
+    private void SetMenuButton()
+    {
         foreach (var menuInfo in _liMenu)
         {
             switch (menuInfo.menu)
             {
                 case CommonEnum.EMenu.RandomNumber:
                     {
-                        menuInfo.button.OnClickAsObservable().Subscribe(_ =>
+                        menuInfo.buttonEx.OnClick(() =>
                         {
                             _curScene = CommonEnum.EMenu.RandomNumber;
                             HideMainScene();
 
                             _randomNumberScene.gameObject.SetActive(true);
-                        }).AddTo(this);
+                        });
                     }
                     break;
                 case CommonEnum.EMenu.Lotto:
                     {
-                        menuInfo.button.OnClickAsObservable().Subscribe(_ =>
+                        menuInfo.buttonEx.OnClick(() =>
                         {
                             _curScene = CommonEnum.EMenu.Lotto;
                             SceneManager.LoadScene(1);
-                        }).AddTo(this);
+                        });
                     }
                     break;
                 case CommonEnum.EMenu.CustomRandom:
                     {
-                        menuInfo.button.OnClickAsObservable().Subscribe(_ =>
+                        menuInfo.buttonEx.OnClick(() =>
                         {
                             _curScene = CommonEnum.EMenu.CustomRandom;
                             foreach (var obj in liMainSceneObj)
@@ -86,13 +92,11 @@ public class MainScene : MonoBehaviour, IMainSceneManager
                             }
 
                             _customRandomScene.gameObject.SetActive(true);
-                        }).AddTo(this);
+                        });
                     }
                     break;
             }
         }
-
-        _loadingObject.SetActive(false);
     }
 
     public void ShowMainScene()

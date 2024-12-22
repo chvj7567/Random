@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class RandomNumberScene : MonoBehaviour
 {
-    [SerializeField] private Button _menuButton;
+    [SerializeField] private ButtonEx _menuButton;
     [SerializeField] private TMP_InputField _startNumberInput;
     [SerializeField] private TMP_InputField _endNumberInput;
     [SerializeField] private ButtonEx _randomButton;
@@ -21,10 +21,10 @@ public class RandomNumberScene : MonoBehaviour
 
     private void Start()
     {
-        _menuButton.OnClickAsObservable().Subscribe(_ =>
+        _menuButton.OnClick(() =>
         {
             Close();
-        }).AddTo(this);
+        });
 
         _randomButton.OnClick(() =>
         {
