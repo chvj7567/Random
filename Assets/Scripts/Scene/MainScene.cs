@@ -1,3 +1,4 @@
+using GoogleMobileAds.Api;
 using System;
 using System.Collections.Generic;
 using UniRx;
@@ -40,6 +41,10 @@ public class MainScene : MonoBehaviour, IMainSceneManager
         await ResourceManager.Instance.Init();
         await UIManager.Instance.Init();
         AudioManager.Instance.Init();
+        AdmobManager.Instance.Init();
+
+        AdmobManager.Instance.ShowBanner(AdPosition.Top);
+        AdmobManager.Instance.ShowBanner(AdPosition.Bottom);
 
         UIManager.Instance.ShowUI(CommonEnum.EUI.UILoading, null, (uiBase) =>
         {

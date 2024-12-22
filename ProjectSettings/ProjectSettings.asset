@@ -258,11 +258,11 @@ PlayerSettings:
   templateDefaultScene: Assets/Scenes/SampleScene.unity
   useCustomMainManifest: 1
   useCustomLauncherManifest: 0
-  useCustomMainGradleTemplate: 0
+  useCustomMainGradleTemplate: 1
   useCustomLauncherGradleManifest: 0
   useCustomBaseGradleTemplate: 0
-  useCustomGradlePropertiesTemplate: 0
-  useCustomGradleSettingsTemplate: 0
+  useCustomGradlePropertiesTemplate: 1
+  useCustomGradleSettingsTemplate: 1
   useCustomProguardFile: 0
   AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 0
@@ -818,23 +818,24 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Android: DOTWEEN
-    EmbeddedLinux: DOTWEEN
+    Android: ENABLE_JSON_CATALOG;DOTWEEN
+    EmbeddedLinux: ENABLE_JSON_CATALOG;DOTWEEN
     GameCoreScarlett: DOTWEEN
     GameCoreXboxOne: DOTWEEN
-    LinuxHeadlessSimulation: DOTWEEN
-    Nintendo Switch: DOTWEEN
-    PS4: DOTWEEN
+    LinuxHeadlessSimulation: ENABLE_JSON_CATALOG;DOTWEEN
+    Nintendo Switch: ENABLE_JSON_CATALOG;DOTWEEN
+    PS4: ENABLE_JSON_CATALOG;DOTWEEN
     PS5: DOTWEEN
-    QNX: DOTWEEN
+    QNX: ENABLE_JSON_CATALOG;DOTWEEN
     ReservedCFE: DOTWEEN
-    Standalone: DOTWEEN
+    Server: ENABLE_JSON_CATALOG
+    Standalone: ENABLE_JSON_CATALOG;DOTWEEN
     VisionOS: DOTWEEN
-    WebGL: DOTWEEN
-    Windows Store Apps: DOTWEEN
-    XboxOne: DOTWEEN
-    iPhone: DOTWEEN
-    tvOS: DOTWEEN
+    WebGL: ENABLE_JSON_CATALOG;DOTWEEN
+    Windows Store Apps: ENABLE_JSON_CATALOG;DOTWEEN
+    XboxOne: ENABLE_JSON_CATALOG;DOTWEEN
+    iPhone: ENABLE_JSON_CATALOG;DOTWEEN
+    tvOS: ENABLE_JSON_CATALOG;DOTWEEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

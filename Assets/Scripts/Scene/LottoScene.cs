@@ -11,6 +11,8 @@ using System.IO;
 using UniRx;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
+using GoogleMobileAds.Api;
+
 
 
 
@@ -80,6 +82,9 @@ public class LottoScene : MonoBehaviour
 
     private void Start()
     {
+        AdmobManager.Instance.ShowBanner(AdPosition.Top);
+        AdmobManager.Instance.ShowBanner(AdPosition.Bottom);
+
         Loading(false);
 
         _menuButton.OnClick(() =>
