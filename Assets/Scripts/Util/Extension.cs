@@ -60,6 +60,6 @@ public static class Extension
     /// <param name="angle">회전할 각도</param>
     public static void RotateZRoation(this Transform transform, float angle)
     {
-        transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 }

@@ -1,10 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 public class UIRouletteArg : UIArg
 {
-    public float radius = 50f;
     public List<string> liText = new List<string>();
 }
 
@@ -12,9 +11,26 @@ public class UIRoulette : UIBase
 {
     UIRouletteArg _arg;
 
-    [SerializeField] RectTransform _rouletteObject;
-    [SerializeField] RectTransform _itemObject;
-    [SerializeField] RectTransform _lineObject;
+    [Serializable]
+    class RouletteResult
+    {
+        public string value;
+        public float minAngle;
+        public float maxAngle;
+    }
+
+    [SerializeField]
+    private RectTransform _arrowObject;
+    [SerializeField]
+    private RectTransform _rouletteObject;
+    [SerializeField]
+    private RouletteItem _itemObject;
+    [SerializeField]
+    private RectTransform _lineObject;
+    [SerializeField]
+    private float standard = 90f;
+
+    private List<RouletteResult> _rouletteResult = new List<RouletteResult>();
 
     public override void InitUI(UIArg arg)
     {
@@ -22,30 +38,75 @@ public class UIRoulette : UIBase
 
         _arg = arg as UIRouletteArg;
 
-        int itemCount = _arg.liText.Count;
-        if (itemCount == 0)
+        CreateRoulette(_arg.liText);
+        Spin();
+    }
+
+    void CreateRoulette(List<string> liText)
+    {
+        if (liText == null)
             return;
 
-        _itemObject.gameObject.SetActive(true);
-        _lineObject.gameObject.SetActive(true);
+        _itemObject.rectTransform.gameObject.SetActive(false);
+        _lineObject.gameObject.SetActive(false);
 
-        if (itemCount == 1)
+        float arrowDistance = Vector2.Distance(_rouletteObject.anchoredPosition, _arrowObject.anchoredPosition);
+        _arrowObject.RotateXYPosition(_rouletteObject, arrowDistance, standard);
+        _arrowObject.RotateZRoation(standard);
+
+        if (liText.Count == 0)
+            return;
+
+        if (liText.Count == 1)
         {
-            _lineObject.gameObject.SetActive(false);
-            _itemObject.anchoredPosition = _rouletteObject.anchoredPosition;
+            _itemObject.rectTransform.gameObject.SetActive(true);
+            _itemObject.rectTransform.anchoredPosition = _rouletteObject.anchoredPosition;
         }
         else
         {
-            float angle = 360f / itemCount;
-            foreach (var text in _arg.liText)
+            float distance = Vector2.Distance(_rouletteObject.anchoredPosition, _itemObject.rectTransform.anchoredPosition);
+            float angle = 360f / liText.Count;
+            float halfAngle = angle / 2f;
+            float itemAngle = halfAngle + standard;
+            float lineAngle = 0f + standard;
+            foreach (var text in liText)
             {
-                GameObject newItemObject = Instantiate(_itemObject.gameObject, _rouletteObject.transform);
-                newItemObject.transform.RotateXYPosition(_rouletteObject, _arg.radius, angle);
-                newItemObject.transform.RotateZRoation(angle);
+                GameObject newItemObject = Instantiate(_itemObject.rectTransform.gameObject, _rouletteObject.transform);
+                newItemObject.SetActive(true);
+                newItemObject.transform.RotateXYPosition(_rouletteObject, distance, itemAngle);
+                newItemObject.transform.RotateZRoation(itemAngle);
+                newItemObject.GetComponent<RouletteItem>().text.text = text;
 
-                GameObject newLineObject = Instantiate(_itemObject.gameObject, _rouletteObject.transform);
-                newLineObject.transform.RotateZRoation(angle - angle / 2f);
+                GameObject newLineObject = Instantiate(_lineObject.gameObject, _rouletteObject.transform);
+                newLineObject.SetActive(true);
+                newLineObject.transform.RotateZRoation(lineAngle);
+
+                _rouletteResult.Add(new RouletteResult
+                {
+                    value = text,
+                    minAngle = 360 - lineAngle - angle + standard,
+                    maxAngle = 360 - lineAngle + standard,
+                });
+
+                itemAngle += angle;
+                lineAngle += angle;
             }
         }
+    }
+
+    void Spin()
+    {
+        _rouletteObject.ZSpin((angle) =>
+        {
+            angle = angle % 360;
+            foreach (var result in _rouletteResult)
+            {
+                if (result.minAngle <= angle &&
+                    result.maxAngle > angle)
+                {
+                    Debug.Log(result.value);
+                }
+            }
+        });
     }
 }
