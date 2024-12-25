@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UIRouletteArg : UIArg
@@ -34,8 +35,24 @@ public class UIRoulette : UIBase
 
         _arg = arg as UIRouletteArg;
 
-        CreateRoulette(_arg.liText);
-        Spin();
+        if (_arg.liText.Count > 1000)
+        {
+            if (int.TryParse(_arg.liText.First(), out int startNumber) &&
+                int.TryParse(_arg.liText.Last(), out int endNumber))
+            {
+                UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
+                {
+                    alarmText = $"결과 : {UnityEngine.Random.Range(startNumber, endNumber)}"
+                });
+            }
+
+            Close();
+        }
+        else
+        {
+            CreateRoulette(_arg.liText);
+            Spin();
+        }
     }
 
     public override void Close(bool reuse = true)
@@ -113,7 +130,10 @@ public class UIRoulette : UIBase
                 if (result.minAngle <= angle &&
                     result.maxAngle > angle)
                 {
-                    Debug.Log(result.value);
+                    UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
+                    {
+                        alarmText = $"결과 : {result.value}"
+                    });
                 }
             }
         });
