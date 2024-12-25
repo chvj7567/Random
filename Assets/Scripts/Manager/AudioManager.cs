@@ -17,8 +17,15 @@ public class AudioManager : Singletone<AudioManager>
 
     public float Ratio { get; private set; } = 0.5f;
 
+    bool _initialize = false;
+
     public void Init()
     {
+        if (_initialize)
+            return;
+
+        _initialize = true;
+
         _liAudioSource.Add(new AudioSource());
 
         for (int i = 1; i < Enum.GetNames(typeof(CommonEnum.EAudio)).Length; i++)

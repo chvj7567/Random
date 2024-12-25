@@ -10,7 +10,7 @@ public class RandomNumberScene : MonoBehaviour
     [SerializeField] private TMP_InputField _endNumberInput;
     [SerializeField] private ButtonEx _randomButton;
 
-    private IMainSceneManager _mainSceneManager;
+    private IMainSceneManagement _mainSceneManagement;
 
     private void OnEnable()
     {
@@ -46,15 +46,15 @@ public class RandomNumberScene : MonoBehaviour
         });
     }
 
-    public void SetManager(IMainSceneManager manager)
+    public void SetManagement(IMainSceneManagement manager)
     {
-        _mainSceneManager = manager;
+        _mainSceneManagement = manager;
     }
 
     public void Close()
     {
         gameObject.SetActive(false);
-        _mainSceneManager.ShowMainScene();
+        _mainSceneManagement.ShowScene(CommonEnum.EMenu.Menu);
     }
 
     private (bool, int) CheckInteger(TMP_InputField input)

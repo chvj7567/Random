@@ -12,7 +12,7 @@ public class CommonEnum
 
     public enum EMenu
     {
-        None = 0,
+        Menu = 0,
         RandomNumber,
         Lotto,
         CustomRandom,

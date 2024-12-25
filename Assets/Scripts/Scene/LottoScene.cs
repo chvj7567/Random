@@ -10,12 +10,6 @@ using UnityEngine.UI;
 using System.IO;
 using UniRx;
 using UnityEngine.SceneManagement;
-using UnityEngine.Rendering;
-using GoogleMobileAds.Api;
-
-
-
-
 
 #if PLATFORM_ANDROID
 using UnityEngine.Android;
@@ -52,14 +46,12 @@ public class NumberInfo
 
 public class LottoScene : MonoBehaviour
 {
-    const string Image_Path = "Roulette";
-    const string Local_LottoDataFile = "lotto.json";
-    const int Fail_Rank = 6;
+    private const string Image_Path = "Roulette";
+    private const string Local_LottoDataFile = "lotto.json";
+    private const int Fail_Rank = 6;
 
-    [Header("메뉴 버튼")]
     [SerializeField] private ButtonEx _menuButton;
-
-    [Header("로또 정보")]
+    [SerializeField] private GameObject _loadingObject;
     [SerializeField] private Image _rouletteImage;
     [SerializeField] private ButtonEx _rouletteButton;
     [SerializeField] private ButtonEx _customImageButton;
@@ -67,8 +59,6 @@ public class LottoScene : MonoBehaviour
     [SerializeField] private ButtonEx _lottoInfoUpdateButton;
     [SerializeField] private ButtonEx _viewWinningNumberButton;
     [SerializeField] private ButtonEx _screenShotButton;
-
-    [Header("당첨 정보")]
     [SerializeField] private NumberInfo _lotto1Info;
     [SerializeField] private NumberInfo _lotto2Info;
     [SerializeField] private NumberInfo _lotto3Info;
@@ -78,15 +68,31 @@ public class LottoScene : MonoBehaviour
     private string _lottoURL = "www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=";
     private List<LottoResponse> _lilottoResponse = new List<LottoResponse>();
     private string path = string.Empty;
-    public List<LottoResponse> LottoResponseList => _lilottoResponse;
 
-    private void Start()
+    private async void Start()
     {
-        AdmobManager.Instance.ShowBanner(AdPosition.Top);
-        AdmobManager.Instance.ShowBanner(AdPosition.Bottom);
+        _loadingObject.SetActive(true);
 
-        Loading(false);
+        //# 매니저들 초기화
+        await GameManagement.InitManager();
 
+        //# 광고 On
+        GameManagement.ShowBanner();
+
+        //# 버튼 기능 세팅
+        SetButton();
+
+        //# 이미지 세팅
+        SetImage();
+
+        //# 실제 로또 번호 세팅
+        await GetLottoInfo(false);
+
+        _loadingObject.SetActive(false);
+    }
+
+    private void SetButton()
+    {
         _menuButton.OnClick(() =>
         {
             SceneManager.LoadScene(0);
@@ -101,8 +107,18 @@ public class LottoScene : MonoBehaviour
             StartRoulette(_lotto5Info);
         });
 
-        _customImageButton.OnClick(() => PickImage());
-        _lottoInfoUpdateButton.OnClick(() => Loading(true));
+        _customImageButton.OnClick(() =>
+        {
+            PickImage();
+        });
+
+        _lottoInfoUpdateButton.OnClick(async () =>
+        {
+            _loadingObject.SetActive(true);
+            await GetLottoInfo(true);
+            _loadingObject.SetActive(false);
+        });
+
         _viewWinningNumberButton.OnClick(() =>
         {
             if (_lilottoResponse.Count > 0)
@@ -113,27 +129,22 @@ public class LottoScene : MonoBehaviour
                 });
             }
         });
+
         _screenShotButton.OnClick(() =>
         {
             StartCoroutine(CaptureScreenshot());
         });
+    }
 
-        //# 룰렛 이미지 설정
-        //# 사용자가 커스텀한 룰렛 이미지가 있으면 바로 설정
+    private void SetImage()
+    {
+        //# 이미지 설정
+        //# 사용자가 커스텀한 이미지가 있으면 바로 설정
         var path = PlayerPrefs.GetString(Image_Path, string.Empty);
         if (path != string.Empty)
         {
             StartCoroutine(LoadImage(path));
         }
-    }
-
-    private void Loading(bool update)
-    {
-        UIManager.Instance.ShowUI(CommonEnum.EUI.UILoading, null, async (uiBase) =>
-        {
-            await GetLottoInfo(update);
-            UIManager.Instance.CloseUI(uiBase);
-        });
     }
 
     #region Gallery
@@ -144,8 +155,6 @@ public class LottoScene : MonoBehaviour
         {
             PermissionCallbacks callback = new PermissionCallbacks();
             callback.PermissionGranted += msg => {
-                Debug.Log($"{msg} 승인");
-
                 NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) => {
                     if (path != null)
                     {
@@ -171,6 +180,14 @@ public class LottoScene : MonoBehaviour
                 }
             }, "Select an image", "image/*");
         }
+#else
+        NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) => {
+            if (path != null)
+            {
+                PlayerPrefs.SetString(Image_Path, path);
+                StartCoroutine(LoadImage(path));
+            }
+        }, "Select an image", "image/*");
 #endif
     }
 
@@ -207,6 +224,7 @@ public class LottoScene : MonoBehaviour
             {
                 UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
                 {
+                    
                     alarmText = $"스크린 샷이 저장되었습니다."
                 });
             }
@@ -214,7 +232,7 @@ public class LottoScene : MonoBehaviour
 
         Destroy(screenshot);
     }
-    #endregion Gallery
+#endregion Gallery
 
     #region Lotto
     private async Task GetLottoInfo(bool update = false)
