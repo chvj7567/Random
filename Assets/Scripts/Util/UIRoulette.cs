@@ -32,14 +32,19 @@ public class UIRoulette : UIBase
 
     private List<RouletteResult> _rouletteResult = new List<RouletteResult>();
 
-    public override void InitUI(UIArg arg)
+    public override void InitUI(CommonEnum.EUI uiType, UIArg arg)
     {
-        base.InitUI(arg);
+        base.InitUI(uiType, arg);
 
         _arg = arg as UIRouletteArg;
 
         CreateRoulette(_arg.liText);
         Spin();
+    }
+
+    public override void Close(bool reuse = true)
+    {
+        base.Close(false);
     }
 
     void CreateRoulette(List<string> liText)

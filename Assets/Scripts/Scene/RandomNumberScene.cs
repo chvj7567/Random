@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -41,7 +43,19 @@ public class RandomNumberScene : MonoBehaviour
             }
             else
             {
-                _randomButton.SetText($"{Random.Range(startNumber.Item2, endNubmer.Item2 + 1)}");
+                //_randomButton.SetText($"{Random.Range(startNumber.Item2, endNubmer.Item2 + 1)}");
+
+                List<string> liText = new List<string>();
+
+                for (int i = startNumber.Item2; i <= endNubmer.Item2; i++)
+                {
+                    liText.Add($"{i}");
+                }
+
+                UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
+                {
+                    liText = liText
+                });
             }
         });
     }

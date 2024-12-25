@@ -18,9 +18,9 @@ public class UILotto : UIBase
     [SerializeField] private ButtonEx _bottomButton;
     [SerializeField] private LottoScrollView scrollView;
 
-    public override void InitUI(UIArg arg)
+    public override void InitUI(CommonEnum.EUI uiType, UIArg arg)
     {
-        base.InitUI(arg);
+        base.InitUI(uiType, arg);
 
         _arg = arg as UILottoArg;
 

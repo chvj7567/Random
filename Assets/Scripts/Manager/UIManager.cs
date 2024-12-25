@@ -58,7 +58,7 @@ public class UIManager : Singletone<UIManager>
         //# 해당 UI가 한 번이라도 열린 적이 있다면 캐싱하고 있는 UI 재사용
         if (_dicCashingUI.TryGetValue(uiType, out var uiBase))
         {
-            uiBase.InitUI(arg);
+            uiBase.InitUI(uiType, arg);
             uiBase.gameObject.SetActive(true);
             _liCurrentUI.AddLast(uiBase);
 
@@ -86,7 +86,7 @@ public class UIManager : Singletone<UIManager>
                 if (uiBase == null)
                     return;
 
-                uiBase.InitUI(arg);
+                uiBase.InitUI(uiType, arg);
                 _liCurrentUI.AddLast(uiBase);
                 _dicCashingUI.Add(uiType, uiBase);
 
@@ -103,8 +103,8 @@ public class UIManager : Singletone<UIManager>
         if (_liCurrentUI.Count == 0)
             return;
 
-        uiBase.Close();
         uiBase.gameObject.SetActive(false);
+        uiBase.Close();
         _liCurrentUI.RemoveLast();
     }
 
@@ -114,5 +114,14 @@ public class UIManager : Singletone<UIManager>
             return;
 
         CloseUI(_liCurrentUI.Last());
+    }
+
+    public void RemoveCashingUI(CommonEnum.EUI uiType)
+    {
+        if (_dicCashingUI.TryGetValue(uiType, out var uiBase))
+        {
+            _dicCashingUI.Remove(uiBase.UIType);
+            Destroy(uiBase.gameObject);
+        }
     }
 }

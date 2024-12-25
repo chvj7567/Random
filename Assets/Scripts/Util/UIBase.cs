@@ -7,13 +7,17 @@ public class UIArg { }
 
 public class UIBase : MonoBehaviour
 {
+    [SerializeField] public CommonEnum.EUI UIType;
+
     [SerializeField] private Button _backgroundButton;
     [SerializeField] private Button _backButton;
 
     protected CompositeDisposable closeDisposable = new CompositeDisposable();
 
-    public virtual void InitUI(UIArg arg)
+    public virtual void InitUI(CommonEnum.EUI uiType, UIArg arg)
     {
+        UIType = uiType;
+
         if (_backgroundButton)
         {
             _backgroundButton.OnClickAsObservable().Subscribe(_ =>
@@ -31,8 +35,13 @@ public class UIBase : MonoBehaviour
         }
     }
 
-    public virtual void Close()
+    public virtual void Close(bool reuse = true)
     {
         closeDisposable.Clear();
+
+        if (reuse == false)
+        {
+            UIManager.Instance.RemoveCashingUI(UIType);
+        }
     }
 }
