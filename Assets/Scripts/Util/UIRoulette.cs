@@ -19,16 +19,12 @@ public class UIRoulette : UIBase
         public float maxAngle;
     }
 
-    [SerializeField]
-    private RectTransform _arrowObject;
-    [SerializeField]
-    private RectTransform _rouletteObject;
-    [SerializeField]
-    private RouletteItem _itemObject;
-    [SerializeField]
-    private RectTransform _lineObject;
-    [SerializeField]
-    private float standard = 90f;
+    [SerializeField] private RectTransform _radius;
+    [SerializeField] private RectTransform _arrowObject;
+    [SerializeField] private RectTransform _rouletteObject;
+    [SerializeField] private RouletteItem _itemObject;
+    [SerializeField] private RectTransform _lineObject;
+    [SerializeField] private float standard = 90f;
 
     private List<RouletteResult> _rouletteResult = new List<RouletteResult>();
 
@@ -74,17 +70,25 @@ public class UIRoulette : UIBase
             float halfAngle = angle / 2f;
             float itemAngle = halfAngle + standard;
             float lineAngle = 0f + standard;
+            float radius = GetRadius();
+
+            //# 룰렛 사이즈 지정
+            _rouletteObject.sizeDelta = new Vector2(radius * 2, radius * 2);
+
             foreach (var text in liText)
             {
                 GameObject newItemObject = Instantiate(_itemObject.rectTransform.gameObject, _rouletteObject.transform);
                 newItemObject.SetActive(true);
                 newItemObject.transform.RotateXYPosition(_rouletteObject, distance, itemAngle);
                 newItemObject.transform.RotateZRoation(itemAngle);
-                newItemObject.GetComponent<RouletteItem>().text.text = text;
+
+                var item = newItemObject.GetComponent<RouletteItem>();
+                item.text.text = text;
 
                 GameObject newLineObject = Instantiate(_lineObject.gameObject, _rouletteObject.transform);
                 newLineObject.SetActive(true);
                 newLineObject.transform.RotateZRoation(lineAngle);
+                newLineObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, radius);
 
                 _rouletteResult.Add(new RouletteResult
                 {
@@ -99,7 +103,7 @@ public class UIRoulette : UIBase
         }
     }
 
-    void Spin()
+    private void Spin()
     {
         _rouletteObject.ZSpin((angle) =>
         {
@@ -113,5 +117,16 @@ public class UIRoulette : UIBase
                 }
             }
         });
+    }
+
+    /// <summary>
+    /// 해당 화면의 반지름값 가져오기
+    /// </summary>
+    private float GetRadius()
+    {
+        float radius = Vector2.Distance(_rouletteObject.anchoredPosition, _radius.anchoredPosition);
+        _radius.transform.RotateXYPosition(_rouletteObject, radius, 0);
+
+        return Vector2.Distance(_rouletteObject.anchoredPosition, _radius.anchoredPosition);
     }
 }
