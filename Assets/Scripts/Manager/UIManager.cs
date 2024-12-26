@@ -2,18 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIManager : Singletone<UIManager>
 {
-    const string MyCanvasName = "UICanvas";
-    bool _initialize = false;
-
-    Transform _rootTransform;
-
-    LinkedList<UIBase> _liCurrentUI = new LinkedList<UIBase>();
-    Dictionary<CommonEnum.EUI, UIBase> _dicCashingUI = new Dictionary<CommonEnum.EUI, UIBase>();
+    private const string MyCanvasName = "UICanvas";
+    private bool _initialize = false;
+    private Transform _rootTransform;
+    private ReactiveCollection<UIBase> _liCurrentUI = new ReactiveCollection<UIBase>();
+    private ReactiveCollection<UIBase> _liWaitCloseUI = new ReactiveCollection<UIBase>();
+    private Dictionary<CommonEnum.EUI, UIBase> _dicCashingUI = new Dictionary<CommonEnum.EUI, UIBase>();
 
     public bool CheckUI => _liCurrentUI.Count > 0;
 
@@ -22,7 +22,7 @@ public class UIManager : Singletone<UIManager>
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (_liCurrentUI.Count > 0)
-                CloseUI(_liCurrentUI.Last.Value);
+                CloseUI(_liCurrentUI.Last());
         }
     }
 
@@ -50,6 +50,42 @@ public class UIManager : Singletone<UIManager>
             initComplete.SetResult(true);
         }
 
+        _liCurrentUI.ObserveAdd().Subscribe(addUI =>
+        {
+            //# 현재 UI 대기열이 추가되었을때 닫기 UI 목록에 있으면 닫기
+            foreach (var waitUI in _liWaitCloseUI)
+            {
+                UIBase uiBase = addUI.Value;
+                if (waitUI.UIType == addUI.Value.UIType)
+                {
+                    uiBase.gameObject.SetActive(false);
+
+                    //# 닫았으니 제거
+                    _liCurrentUI.Remove(uiBase);
+                    _liWaitCloseUI.Remove(uiBase);
+                    break;
+                }
+            }
+        }).AddTo(this);
+
+        _liWaitCloseUI.ObserveAdd().Subscribe(addUI =>
+        {
+            //# 닫기 UI 대기열이 추가되었을때 현재 UI 목록에 있으면 닫기
+            foreach (var curUI in _liCurrentUI)
+            {
+                UIBase uiBase = addUI.Value;
+                if (curUI.UIType == uiBase.UIType)
+                {
+                    uiBase.gameObject.SetActive(false);
+
+                    //# 닫았으니 제거
+                    _liWaitCloseUI.Remove(uiBase);
+                    _liCurrentUI.Remove(uiBase);
+                    break;
+                }
+            }
+        }).AddTo(this);
+
         return await initComplete.Task;
     }
 
@@ -60,7 +96,7 @@ public class UIManager : Singletone<UIManager>
         {
             uiBase.InitUI(uiType, arg);
             uiBase.gameObject.SetActive(true);
-            _liCurrentUI.AddLast(uiBase);
+            _liCurrentUI.Add(uiBase);
 
             callback?.Invoke(uiBase);
         }
@@ -87,7 +123,7 @@ public class UIManager : Singletone<UIManager>
                     return;
 
                 uiBase.InitUI(uiType, arg);
-                _liCurrentUI.AddLast(uiBase);
+                _liCurrentUI.Add(uiBase);
                 _dicCashingUI.Add(uiType, uiBase);
 
                 callback?.Invoke(uiBase);
@@ -95,25 +131,12 @@ public class UIManager : Singletone<UIManager>
         }
     }
 
-    public void CloseUI(UIBase uiBase)
+    public void CloseUI(UIBase uiBase, bool reuse = false)
     {
         if (uiBase == null)
             return;
 
-        if (_liCurrentUI.Count == 0)
-            return;
-
-        uiBase.gameObject.SetActive(false);
-        uiBase.Close();
-        _liCurrentUI.RemoveLast();
-    }
-
-    public void CloseRecentUI()
-    {
-        if (_liCurrentUI.Count == 0)
-            return;
-
-        CloseUI(_liCurrentUI.Last());
+        _liWaitCloseUI.Add(uiBase);
     }
 
     public void RemoveCashingUI(CommonEnum.EUI uiType)

@@ -22,7 +22,7 @@ public class UIBase : MonoBehaviour
         {
             _backgroundButton.OnClickAsObservable().Subscribe(_ =>
             {
-                UIManager.Instance.CloseUI(this);
+                Close();
             }).AddTo(closeDisposable);
         }
 
@@ -30,7 +30,7 @@ public class UIBase : MonoBehaviour
         {
             _backButton.OnClickAsObservable().Subscribe(_ =>
             {
-                UIManager.Instance.CloseUI(this);
+                Close();
             }).AddTo(closeDisposable);
         }
     }
@@ -43,5 +43,7 @@ public class UIBase : MonoBehaviour
         {
             UIManager.Instance.RemoveCashingUI(UIType);
         }
+
+        UIManager.Instance.CloseUI(this, reuse);
     }
 }
