@@ -15,7 +15,7 @@ public class CustomRandomScene : MonoBehaviour
     [SerializeField] private ButtonEx _resultButton;
 
     private ReactiveCollection<string> _liCustomText = new ReactiveCollection<string>();
-    private IMainSceneManagement _mainSceneManagement;
+    private IRouletteSceneAccess _rouletteSceneAccess;
 
     private void OnEnable()
     {
@@ -63,14 +63,14 @@ public class CustomRandomScene : MonoBehaviour
         });
     }
 
-    public void SetManagement(IMainSceneManagement manager)
+    public void SetRouletteSceneAccess(IRouletteSceneAccess rouletteSceneAccess)
     {
-        _mainSceneManagement = manager;
+        _rouletteSceneAccess = rouletteSceneAccess;
     }
 
     public void Close()
     {
         gameObject.SetActive(false);
-        _mainSceneManagement.ShowScene(CommonEnum.EMenu.Menu);
+        _rouletteSceneAccess.ShowScene(CommonEnum.EMenu.Menu);
     }
 }

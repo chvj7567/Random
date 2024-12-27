@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IMainSceneManagement
+public interface IRouletteSceneAccess
 {
     public void ShowScene(CommonEnum.EMenu sceneType);
 }
 
-public class RouletteScene : MonoBehaviour, IMainSceneManagement
+public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
 {
     [Serializable]
     private class Menu
@@ -60,8 +60,8 @@ public class RouletteScene : MonoBehaviour, IMainSceneManagement
 
     private void SetManagement()
     {
-        _randomNumberScene.SetManagement(this);
-        _customRandomScene.SetManagement(this);
+        _randomNumberScene.SetRouletteSceneAccess(this);
+        _customRandomScene.SetRouletteSceneAccess(this);
     }
 
     public void ShowScene(CommonEnum.EMenu sceneType)

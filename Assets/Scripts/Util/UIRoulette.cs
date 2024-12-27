@@ -40,9 +40,11 @@ public class UIRoulette : UIBase
             if (int.TryParse(_arg.liText.First(), out int startNumber) &&
                 int.TryParse(_arg.liText.Last(), out int endNumber))
             {
+                int result = UnityEngine.Random.Range(startNumber, endNumber);
+
                 UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
                 {
-                    alarmText = $"결과 : {UnityEngine.Random.Range(startNumber, endNumber)}"
+                    alarmText = $"결과 : {result}"
                 });
             }
 
