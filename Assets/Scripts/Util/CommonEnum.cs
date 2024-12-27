@@ -24,4 +24,10 @@ public class CommonEnum
         BGM,
         Click,
     }
+
+    public enum ERoulette
+    {
+        Circle,
+        Scroll,
+    }
 }

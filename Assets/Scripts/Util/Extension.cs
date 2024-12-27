@@ -1,11 +1,12 @@
 using DG.Tweening;
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public static class Extension
 {
     /// <summary>
-    /// z축 기준 룰렛 회전
+    /// z축 회전
     /// </summary>
     /// <param name="rectTransform"></param>
     /// <param name="zValueCallback"></param>
@@ -14,15 +15,13 @@ public static class Extension
     /// <param name="maxRotationCount"></param>
     /// <param name="finalRotationMin"></param>
     /// <param name="finalRotationMax"></param>
-    public static void ZSpin(this RectTransform rectTransform,
+    public static void Spin(this RectTransform rectTransform,
         Action<float> zValueCallback = null,
-        float rotationDuration = 3f,
-        int minRotationCount = 3,
-        int maxRotationCount = 6,
+        int rotationCount = 1,
+        float rotationDuration = 1f,
         float finalRotationMin = 0f,
         float finalRotationMax = 360f)
     {
-        int rotationCount = UnityEngine.Random.Range(minRotationCount, maxRotationCount + 1);
         float finalRotation = UnityEngine.Random.Range(finalRotationMin, finalRotationMax);
         float totalRotation = rotationCount * 360f + finalRotation;
 

@@ -26,12 +26,12 @@ public class UILotto : UIBase
 
         _topButton.OnClick(() =>
         {
-            scrollView.SetScrollPosition(1);
+            scrollView.SetScrollPosition(0);
         });
 
         _bottomButton.OnClick(() =>
         {
-            scrollView.SetScrollPosition(_arg.liLottoResponse.Count);
+            scrollView.SetScrollPosition(_arg.liLottoResponse.Count - 1);
         });
 
         scrollView.SetItemList(_arg.liLottoResponse);

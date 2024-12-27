@@ -34,7 +34,7 @@ public class PoolingScrollViewItem<TItem>
 }
 
 [RequireComponent(typeof(ScrollRect))]
-public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TItem : MonoBehaviour
+public abstract class CHScrollView<TItem, TData> : MonoBehaviour where TItem : MonoBehaviour
 {
     protected LinkedList<PoolingScrollViewItem<TItem>> _liPoolItem = new LinkedList<PoolingScrollViewItem<TItem>>();
 
@@ -225,16 +225,16 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
     /// <summary>
     /// 아이템 초기화 스크롤하여 인덱스가 바뀔때마다 호출
     /// </summary>
-    /// <param name="obj"></param>
-    /// <param name="info"></param>
+    /// <param name="item"></param>
+    /// <param name="data"></param>
     /// <param name="index"></param>
-    public abstract void InitItem(TItem obj, TData info, int index);
+    public abstract void InitItem(TItem item, TData data, int index);
 
     /// <summary>
     /// 풀링 오브젝트 생성 시 호출(최초 1회)
     /// </summary>
-    /// <param name="obj"></param>
-    public abstract void InitPoolingObject(TItem obj);
+    /// <param name="item"></param>
+    public abstract void InitPoolingObject(TItem item);
 
     /// <summary>
     /// 스크롤 될 데이터 세팅
@@ -283,9 +283,15 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
         InitItem();
     }
 
-    public void SetScrollPosition(int index, float duration = 1f)
+    /// <summary>
+    /// 풀링 미 사용 시에만 duration = 0 가능
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="duration"></param>
+    /// <param name="completeCallback"></param>
+    public void SetScrollPosition(int index, float duration = 1f, Action completeCallback = null)
     {
-        var pos = GetItemPosition(index - 1);
+        var pos = GetItemPosition(index);
 
         float x = _contentRectTransform.anchoredPosition.x;
         float y = _contentRectTransform.anchoredPosition.y;
@@ -313,7 +319,7 @@ public abstract class PoolingScrollView<TItem, TData> : MonoBehaviour where TIte
 
         //# 즉시 이동 시 풀링이 제대로 되지 않음
         //_contentRectTransform.anchoredPosition = new Vector2(x, y);
-        _contentRectTransform.DOAnchorPos(new Vector2(x, y), duration);
+        _contentRectTransform.DOAnchorPos(new Vector2(x, y), duration).OnComplete(() => completeCallback?.Invoke()).SetEase(Ease.Linear);
     }
 
     public void Refresh()

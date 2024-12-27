@@ -13,13 +13,15 @@ public class UIRoulette : UIBase
     UIRouletteArg _arg;
 
     [Serializable]
-    class RouletteResult
+    class CircleRouletteResult
     {
         public string value;
         public float minAngle;
         public float maxAngle;
     }
 
+    [Header("¿øÇü ·ê·¿")]
+    [SerializeField] private GameObject _circleRoulette;
     [SerializeField] private RectTransform _radius;
     [SerializeField] private RectTransform _arrowObject;
     [SerializeField] private RectTransform _rouletteObject;
@@ -27,7 +29,11 @@ public class UIRoulette : UIBase
     [SerializeField] private RectTransform _lineObject;
     [SerializeField] private float standard = 90f;
 
-    private List<RouletteResult> _rouletteResult = new List<RouletteResult>();
+    [Header("½ºÅ©·Ñ ·ê·¿")]
+    [SerializeField] private GameObject _scrollRoulette;
+    [SerializeField] private RouletteScrollView _scrollView;
+
+    private List<CircleRouletteResult> _rouletteResult = new List<CircleRouletteResult>();
 
     public override void InitUI(CommonEnum.EUI uiType, UIArg arg)
     {
@@ -35,25 +41,22 @@ public class UIRoulette : UIBase
 
         _arg = arg as UIRouletteArg;
 
-        if (_arg.liText.Count > 1000)
+        _circleRoulette.SetActive(false);
+        _scrollRoulette.SetActive(false);
+
+        //# ¸ñ·Ï ¼ö°¡ 10°³ ÃÊ°ú¸é ½ºÅ©·Ñ ·ê·¿
+        //# ¸ñ·Ï ¼ö°¡ 10°³ ÀÌÇÏ¸é ¿øÇü ·ê·¿
+        if (_arg.liText.Count > 10)
         {
-            if (int.TryParse(_arg.liText.First(), out int startNumber) &&
-                int.TryParse(_arg.liText.Last(), out int endNumber))
-            {
-                int result = UnityEngine.Random.Range(startNumber, endNumber);
-
-                UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
-                {
-                    alarmText = $"°á°ú : {result}"
-                });
-            }
-
-            Close();
+            _scrollRoulette.SetActive(true);
+            CreateScrollRoulette(_arg.liText);
+            SpinScrollRoulette(_arg.liText.Count - 1, 2);
         }
         else
         {
-            CreateRoulette(_arg.liText);
-            Spin();
+            _circleRoulette.SetActive(true);
+            CreateCircleRoulette(_arg.liText);
+            SpinCircleRoulette();
         }
     }
 
@@ -62,7 +65,7 @@ public class UIRoulette : UIBase
         base.Close(false);
     }
 
-    void CreateRoulette(List<string> liText)
+    private void CreateCircleRoulette(List<string> liText)
     {
         if (liText == null)
             return;
@@ -109,7 +112,7 @@ public class UIRoulette : UIBase
                 newLineObject.transform.RotateZRoation(lineAngle);
                 newLineObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, radius);
 
-                _rouletteResult.Add(new RouletteResult
+                _rouletteResult.Add(new CircleRouletteResult
                 {
                     value = text,
                     minAngle = 360 - lineAngle - angle + standard,
@@ -122,9 +125,9 @@ public class UIRoulette : UIBase
         }
     }
 
-    private void Spin()
+    private void SpinCircleRoulette()
     {
-        _rouletteObject.ZSpin((angle) =>
+        _rouletteObject.Spin((angle) =>
         {
             angle = angle % 360;
             foreach (var result in _rouletteResult)
@@ -138,7 +141,7 @@ public class UIRoulette : UIBase
                     });
                 }
             }
-        });
+        }, 3);
     }
 
     /// <summary>
@@ -150,5 +153,41 @@ public class UIRoulette : UIBase
         _radius.transform.RotateXYPosition(_rouletteObject, radius, 0);
 
         return Vector2.Distance(_rouletteObject.anchoredPosition, _radius.anchoredPosition);
+    }
+
+    private void CreateScrollRoulette(List<string> liText)
+    {
+        liText.Add(liText.First());
+
+        _scrollView.SetItemList(liText);
+    }
+
+    private void SpinScrollRoulette(int lastIndex,int repeatCount)
+    {
+        if (repeatCount == 0)
+        {
+            RandomScroll();
+            return;
+        }
+
+        _scrollView.SetScrollPosition(lastIndex, 1f, () =>
+        {
+            _scrollView.SetScrollPosition(0, 0, () =>
+            {
+                SpinScrollRoulette(lastIndex, repeatCount - 1);
+            });
+        });
+    }
+
+    private void RandomScroll()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, _arg.liText.Count - 2);
+        _scrollView.SetScrollPosition(randomIndex, 1f, () =>
+        {
+            UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
+            {
+                alarmText = $"°á°ú : {_arg.liText[randomIndex]}"
+            });
+        });
     }
 }

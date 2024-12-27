@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class CustomScrollView : PoolingScrollView<CustomScrollViewItem, string>
+public class CustomScrollView : CHScrollView<CustomScrollViewItem, string>
 {
     public override void InitItem(CustomScrollViewItem obj, string info, int index)
     {
