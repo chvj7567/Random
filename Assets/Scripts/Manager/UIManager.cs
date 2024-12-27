@@ -96,6 +96,9 @@ public class UIManager : Singletone<UIManager>
         {
             uiBase.InitUI(uiType, arg);
             uiBase.gameObject.SetActive(true);
+
+            uiBase.transform.SetAsLastSibling();
+
             _liCurrentUI.Add(uiBase);
 
             callback?.Invoke(uiBase);
