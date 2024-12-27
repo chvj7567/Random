@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIRouletteArg : UIArg
 {
@@ -44,19 +45,19 @@ public class UIRoulette : UIBase
         _circleRoulette.SetActive(false);
         _scrollRoulette.SetActive(false);
 
-        //# ∏Ò∑œ ºˆ∞° 10∞≥ √ ∞˙∏È Ω∫≈©∑— ∑Í∑ø
         //# ∏Ò∑œ ºˆ∞° 10∞≥ ¿Ã«œ∏È ø¯«¸ ∑Í∑ø
-        if (_arg.liText.Count > 10)
-        {
-            _scrollRoulette.SetActive(true);
-            CreateScrollRoulette(_arg.liText);
-            SpinScrollRoulette(_arg.liText.Count - 1, 2);
-        }
-        else
+        //# ∏Ò∑œ ºˆ∞° 10∞≥ √ ∞˙∏È Ω∫≈©∑— ∑Í∑ø
+        if (_arg.liText.Count <= 10)
         {
             _circleRoulette.SetActive(true);
             CreateCircleRoulette(_arg.liText);
             SpinCircleRoulette();
+        }
+        else
+        {
+            _scrollRoulette.SetActive(true);
+            CreateScrollRoulette(_arg.liText);
+            SpinScrollRoulette(_arg.liText.Count - 1, 2);
         }
     }
 
@@ -67,23 +68,37 @@ public class UIRoulette : UIBase
 
     private void CreateCircleRoulette(List<string> liText)
     {
-        if (liText == null)
+        if (liText == null || liText.Count == 0)
             return;
 
         _itemObject.rectTransform.gameObject.SetActive(false);
         _lineObject.gameObject.SetActive(false);
 
+        //# ∑Í∑ø »≠ªÏ«• «•Ω√
         float arrowDistance = Vector2.Distance(_rouletteObject.anchoredPosition, _arrowObject.anchoredPosition);
         _arrowObject.RotateXYPosition(_rouletteObject, arrowDistance, standard);
         _arrowObject.RotateZRoation(standard);
 
-        if (liText.Count == 0)
-            return;
+        //# ∑Í∑ø ªÁ¿Ã¡Ó ¡ˆ¡§
+        float radius = GetRadius();
+        _rouletteObject.sizeDelta = new Vector2(radius * 2, radius * 2);
 
         if (liText.Count == 1)
         {
-            _itemObject.rectTransform.gameObject.SetActive(true);
-            _itemObject.rectTransform.anchoredPosition = _rouletteObject.anchoredPosition;
+            GameObject newItemObject = Instantiate(_itemObject.rectTransform.gameObject, _rouletteObject.transform);
+            newItemObject.SetActive(true);
+            newItemObject.transform.RotateZRoation(90);
+            newItemObject.transform.position = _rouletteObject.transform.position;
+
+            var item = newItemObject.GetComponent<RouletteItem>();
+            item.text.text = liText[0];
+
+            _rouletteResult.Add(new CircleRouletteResult
+            {
+                value = liText[0],
+                minAngle = 0f,
+                maxAngle = 360f,
+            });
         }
         else
         {
@@ -92,10 +107,6 @@ public class UIRoulette : UIBase
             float halfAngle = angle / 2f;
             float itemAngle = halfAngle + standard;
             float lineAngle = 0f + standard;
-            float radius = GetRadius();
-
-            //# ∑Í∑ø ªÁ¿Ã¡Ó ¡ˆ¡§
-            _rouletteObject.sizeDelta = new Vector2(radius * 2, radius * 2);
 
             foreach (var text in liText)
             {

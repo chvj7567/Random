@@ -49,11 +49,7 @@ public class CustomRandomScene : MonoBehaviour
 
         _resultButton.OnClick(() =>
         {
-            if (_liCustomText.Count == 0)
-            {
-                _resultButton.SetText(string.Empty);
-            }
-            else
+            if (_liCustomText.Count > 0)
             {
                 UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
                 {
