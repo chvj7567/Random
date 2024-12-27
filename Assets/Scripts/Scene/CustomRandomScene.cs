@@ -55,7 +55,10 @@ public class CustomRandomScene : MonoBehaviour
             }
             else
             {
-                _resultButton.SetText(_liCustomText[Random.Range(0, _liCustomText.Count)]);
+                UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
+                {
+                    liText = _liCustomText.ToList(),
+                });
             }
         });
     }
