@@ -27,6 +27,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Resource
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 208750bf29d3dfb49ac16375a9b7df19
+    m_Address: Assets/AddressableResource/Json/Food.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 211dd2afd4a0d264ea403cf4ecd647f3
     m_Address: Assets/AddressableResource/UIAlarm.prefab
     m_ReadOnly: 0

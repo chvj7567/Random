@@ -110,4 +110,15 @@ public class ResourceManager : Singletone<ResourceManager>
             callback?.Invoke(audioClip);
         });
     }
+
+    public void LoadJson(CommonEnum.EJson jsonType, Action<TextAsset> callback = null)
+    {
+        LoadAsset<TextAsset>(jsonType.ToString(), (jsonData) =>
+        {
+            if (jsonData == null)
+                return;
+
+            callback?.Invoke(jsonData);
+        });
+    }
 }

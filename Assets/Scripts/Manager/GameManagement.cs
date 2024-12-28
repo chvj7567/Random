@@ -13,6 +13,7 @@ public static class GameManagement
         Initialize = true;
 
         await ResourceManager.Instance.Init();
+        await JsonManager.Instance.Init();
         await UIManager.Instance.Init();
         AudioManager.Instance.Init();
         AdmobManager.Instance.Init();

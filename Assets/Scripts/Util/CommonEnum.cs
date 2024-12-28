@@ -14,7 +14,7 @@ public class CommonEnum
     {
         Menu = 0,
         RandomNumber,
-        Lotto,
+        RandomFood,
         CustomRandom,
     }
 
@@ -29,5 +29,11 @@ public class CommonEnum
     {
         Circle,
         Scroll,
+    }
+
+    public enum EJson
+    {
+        Lotto,
+        Food,
     }
 }
