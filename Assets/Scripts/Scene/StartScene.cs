@@ -3,12 +3,19 @@ using UnityEngine.SceneManagement;
 
 public class StartScene : MonoBehaviour
 {
+    [SerializeField] private SystemLanguage _language;
     [SerializeField] private CommonEnum.EScene _nextSceneType;
 
     private async void Start()
     {
         //# 매니저들 초기화
         await GameManagement.InitManager();
+
+#if UNITY_EDITOR
+        GameManagement.Language = _language;
+#else
+        GameManagement.Language = Application.systemLanguage;
+#endif
 
         switch (_nextSceneType)
         {

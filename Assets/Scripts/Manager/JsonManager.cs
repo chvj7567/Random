@@ -126,7 +126,7 @@ public partial class JsonManager
         if (findData == null)
             return string.Empty;
 
-        if (Application.systemLanguage == SystemLanguage.Korean)
+        if (GameManagement.Language == SystemLanguage.Korean)
         {
             return findData.korean;
         }

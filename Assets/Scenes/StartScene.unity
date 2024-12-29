@@ -659,6 +659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953379da016ef56478e75e6446470556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _language: 23
   _nextSceneType: 0
 --- !u!224 &1765237989 stripped
 RectTransform:
