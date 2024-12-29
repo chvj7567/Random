@@ -21,17 +21,11 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
     [SerializeField] private RandomNumberScene _randomNumberScene;
     [SerializeField] private RandomFoodScene _randomFoodScene;
     [SerializeField] private CustomRandomScene _customRandomScene;
-    [SerializeField] private GameObject _loadingObject;
 
     private CommonEnum.EMenu _curScene = CommonEnum.EMenu.Menu;
 
     private async void Start()
     {
-        _loadingObject.SetActive(true);
-
-        //# ∏≈¥œ¿˙µÈ √ ±‚»≠
-        await GameManagement.InitManager();
-
         //# ±§∞Ì On
         GameManagement.ShowBanner();
 
@@ -43,8 +37,6 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
 
         //# ∏ﬁ¥∫ æ¿ ∫∏ø©¡‹
         ShowScene(CommonEnum.EMenu.Menu);
-
-        _loadingObject.SetActive(false);
     }
 
     private void SetMenuButton()

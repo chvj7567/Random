@@ -71,11 +71,6 @@ public class LottoScene : MonoBehaviour
 
     private async void Start()
     {
-        _loadingObject.SetActive(true);
-
-        //# 매니저들 초기화
-        await GameManagement.InitManager();
-
         //# 광고 On
         GameManagement.ShowBanner();
 
@@ -87,8 +82,6 @@ public class LottoScene : MonoBehaviour
 
         //# 실제 로또 번호 세팅
         await GetLottoInfo(false);
-
-        _loadingObject.SetActive(false);
     }
 
     private void SetButton()

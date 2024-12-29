@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class CommonEnum
 {
+    public enum EScene
+    {
+        Roulette,
+        Lotto
+    }
+
     public enum EUI
     {
         UILotto,
