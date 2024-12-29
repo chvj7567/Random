@@ -7,7 +7,7 @@ public class UIArg { }
 
 public class UIBase : MonoBehaviour
 {
-    [SerializeField] public CommonEnum.EUI UIType;
+    [HideInInspector] public CommonEnum.EUI UIType;
 
     [SerializeField] private Button _backgroundButton;
     [SerializeField] private Button _backButton;

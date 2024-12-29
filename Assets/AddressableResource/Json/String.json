@@ -1,0 +1,17 @@
+[
+	{
+		"stringID": 1,
+		"korean": "{0}",
+		"english": "{0}"
+	},
+	{
+		"stringID": 2,
+		"korean": "결과 : {0}",
+		"english": "Result : {0}"
+	},
+	{
+		"stringID": 3,
+		"korean": "랜덤\n룰렛",
+		"english": "Random\nRoulette"
+	}
+]

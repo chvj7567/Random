@@ -39,6 +39,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Resource
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6405ba6d0c534644abe1c73cd77b8dd0
+    m_Address: Assets/AddressableResource/Json/String.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 67c5173aee689b342a48aa567edbe5df
     m_Address: Assets/AddressableResource/Click.mp3
     m_ReadOnly: 0

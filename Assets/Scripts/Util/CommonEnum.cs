@@ -33,7 +33,7 @@ public class CommonEnum
 
     public enum EJson
     {
-        Lotto,
         Food,
+        String
     }
 }

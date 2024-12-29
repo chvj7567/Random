@@ -10,12 +10,22 @@ public class FoodData
     public string food;
 }
 
-public class JsonManager : Singletone<JsonManager>
+[Serializable]
+public class StringData
+{
+    public int stringID;
+    public string korean;
+    public string english;
+}
+
+
+public partial class JsonManager : Singletone<JsonManager>
 {
     [Serializable]
     private class JsonData
     {
         public FoodData[] arrFoodData;
+        public StringData[] arrStringData;
     }
 
     private int _loadCompleteFileCount = 0;
@@ -24,6 +34,9 @@ public class JsonManager : Singletone<JsonManager>
 
     private List<FoodData> _liFoodData = new List<FoodData>();
     public List<FoodData> GetFoodDataList() => _liFoodData;
+
+    private List<StringData> _liStringData = new List<StringData>();
+    public List<StringData> GetStringDataList() => _liStringData;
 
     public async Task Init()
     {
@@ -34,6 +47,7 @@ public class JsonManager : Singletone<JsonManager>
     {
         _liJsonData.Clear();
         _liFoodData.Clear();
+        _liStringData.Clear();
     }
 
     async Task LoadJsonData()
@@ -43,6 +57,7 @@ public class JsonManager : Singletone<JsonManager>
         _liJsonData.Clear();
 
         await LoadFoodData();
+        await LoadStringData();
 
         _loadingFileCount = _loadCompleteFileCount;
     }
@@ -77,5 +92,47 @@ public class JsonManager : Singletone<JsonManager>
         });
 
         return await taskCompletionSource.Task;
+    }
+
+    async Task<TextAsset> LoadStringData()
+    {
+        TaskCompletionSource<TextAsset> taskCompletionSource = new TaskCompletionSource<TextAsset>();
+
+        Action<TextAsset> callback;
+        _liStringData.Clear();
+
+        ResourceManager.Instance.LoadJson(CommonEnum.EJson.String, callback = (TextAsset textAsset) =>
+        {
+            var jsonData = JsonUtility.FromJson<JsonData>("{\"arrStringData\":" + textAsset.text + "}");
+            foreach (var data in jsonData.arrStringData)
+            {
+                _liStringData.Add(data);
+            }
+
+            taskCompletionSource.SetResult(textAsset);
+            ++_loadCompleteFileCount;
+        });
+
+        return await taskCompletionSource.Task;
+    }
+}
+
+public partial class JsonManager
+{
+    public string GetStringData(int stringID)
+    {
+        var liString = GetStringDataList();
+        var findData = liString.Find(_ => _.stringID == stringID);
+        if (findData == null)
+            return string.Empty;
+
+        if (Application.systemLanguage == SystemLanguage.Korean)
+        {
+            return findData.korean;
+        }
+        else
+        {
+            return findData.english;
+        }
     }
 }
