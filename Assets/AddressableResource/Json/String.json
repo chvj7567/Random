@@ -12,6 +12,21 @@
 	{
 		"stringID": 3,
 		"korean": "랜덤 룰렛",
-		"english": "Random Roulette"
+		"english": "Random\nRoulette"
+	},
+	{
+		"stringID": 4,
+		"korean": "랜덤 숫자",
+		"english": "Random\nNumber"
+	},
+	{
+		"stringID": 5,
+		"korean": "랜덤 음식",
+		"english": "Random\nFood"
+	},
+	{
+		"stringID": 6,
+		"korean": "나만의 랜덤",
+		"english": "Custom\nRandom"
 	}
 ]
