@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Singletone<T> : MonoBehaviour where T : MonoBehaviour
+public class MonoBehaviourSingletone<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance;
     private static object _lock = new object();

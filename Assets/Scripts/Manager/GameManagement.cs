@@ -2,12 +2,12 @@ using GoogleMobileAds.Api;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public static class GameManagement
+public class GameManagement : StaticSingletone<GameManagement>
 {
-    public static SystemLanguage Language { get; set; }
-    public static bool Initialize { get; private set; } = false;
+    public SystemLanguage Language { get; set; }
+    public bool Initialize { get; private set; } = false;
 
-    public static async Task InitManager()
+    public async Task InitManager()
     {
         if (Initialize)
             return;
@@ -21,7 +21,7 @@ public static class GameManagement
         AdmobManager.Instance.Init();
     }
 
-    public static void ShowBanner()
+    public void ShowBanner()
     {
         if (Initialize == false)
             return;

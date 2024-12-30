@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System;
 using UnityEngine;
 
-public class AudioManager : Singletone<AudioManager>
+public class AudioManager : MonoBehaviourSingletone<AudioManager>
 {
     private const string localBGMVolume = "BGM_Volume";
     private const string localEffectVolume = "Effect_Volume";

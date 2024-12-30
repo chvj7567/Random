@@ -7,7 +7,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 
-public class ResourceManager : Singletone<ResourceManager>
+public class ResourceManager : StaticSingletone<ResourceManager>
 {
     const string LableName = "Resource";
     bool _initialize = false;
@@ -91,7 +91,7 @@ public class ResourceManager : Singletone<ResourceManager>
             if (obj == null)
                 return;
 
-            callback?.Invoke(Instantiate(obj));
+            callback?.Invoke(GameObject.Instantiate(obj));
         });
     }
 

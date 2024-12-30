@@ -72,7 +72,7 @@ public class LottoScene : MonoBehaviour
     private async void Start()
     {
         //# 광고 On
-        GameManagement.ShowBanner();
+        GameManagement.Instance.ShowBanner();
 
         //# 버튼 기능 세팅
         SetButton();

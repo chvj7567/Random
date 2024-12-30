@@ -2,7 +2,7 @@ using UnityEngine;
 using GoogleMobileAds.Api;
 using System;
 
-public class AdmobManager : Singletone<AdmobManager>
+public class AdmobManager : StaticSingletone<AdmobManager>
 {
     //string bannerAdUnitId = "";
     //string interstitialAdUnitId = "";

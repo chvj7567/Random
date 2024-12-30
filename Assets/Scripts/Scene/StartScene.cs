@@ -9,10 +9,10 @@ public class StartScene : MonoBehaviour
     private async void Start()
     {
         //# 매니저들 초기화
-        await GameManagement.InitManager();
+        await GameManagement.Instance.InitManager();
 
 #if UNITY_EDITOR
-        GameManagement.Language = _language;
+        GameManagement.Instance.Language = _language;
 #else
         GameManagement.Language = Application.systemLanguage;
 #endif

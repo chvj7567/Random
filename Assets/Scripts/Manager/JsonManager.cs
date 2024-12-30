@@ -19,7 +19,7 @@ public class StringData
 }
 
 
-public partial class JsonManager : Singletone<JsonManager>
+public partial class JsonManager : StaticSingletone<JsonManager>
 {
     [Serializable]
     private class JsonData
@@ -126,7 +126,7 @@ public partial class JsonManager
         if (findData == null)
             return string.Empty;
 
-        if (GameManagement.Language == SystemLanguage.Korean)
+        if (GameManagement.Instance.Language == SystemLanguage.Korean)
         {
             return findData.korean;
         }

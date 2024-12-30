@@ -27,7 +27,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
     private async void Start()
     {
         //# 광고 On
-        GameManagement.ShowBanner();
+        GameManagement.Instance.ShowBanner();
 
         //# 메뉴 관리 기능 넘겨줌
         SetManagement();
