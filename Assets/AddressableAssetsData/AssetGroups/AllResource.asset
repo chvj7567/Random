@@ -57,6 +57,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Resource
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9efc365f1adb26469d9a404634afdce
+    m_Address: Assets/AddressableResource/Json/Country.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c826f79c0daa00344b3364c31786500d
     m_Address: Assets/AddressableResource/UICanvas.prefab
     m_ReadOnly: 0

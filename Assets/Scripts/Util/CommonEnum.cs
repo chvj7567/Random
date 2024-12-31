@@ -4,6 +4,7 @@ public class CommonEnum
 {
     public enum EScene
     {
+        Start,
         Roulette,
         Lotto
     }
@@ -40,6 +41,7 @@ public class CommonEnum
     public enum EJson
     {
         Food,
-        String
+        String,
+        Country,
     }
 }

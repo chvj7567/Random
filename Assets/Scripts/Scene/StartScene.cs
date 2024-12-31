@@ -16,19 +16,6 @@ public class StartScene : MonoBehaviour
 #else
         GameManagement.Language = Application.systemLanguage;
 #endif
-
-        switch (_nextSceneType)
-        {
-            case CommonEnum.EScene.Roulette:
-                {
-                    SceneManager.LoadScene(1);
-                }
-                break;
-            case CommonEnum.EScene.Lotto:
-                {
-                    SceneManager.LoadScene(2);
-                }
-                break;
-        }
+        SceneManager.LoadScene((int)_nextSceneType);
     }
 }

@@ -18,6 +18,12 @@ public class StringData
     public string english;
 }
 
+[Serializable]
+public class CountryData
+{
+    public string name;
+    public string code;
+}
 
 public partial class JsonManager : StaticSingletone<JsonManager>
 {
@@ -26,6 +32,7 @@ public partial class JsonManager : StaticSingletone<JsonManager>
     {
         public FoodData[] arrFoodData;
         public StringData[] arrStringData;
+        public CountryData[] arrCountryData;
     }
 
     private int _loadCompleteFileCount = 0;
@@ -38,6 +45,9 @@ public partial class JsonManager : StaticSingletone<JsonManager>
     private List<StringData> _liStringData = new List<StringData>();
     public List<StringData> GetStringDataList() => _liStringData;
 
+    private List<CountryData> _liCountryData = new List<CountryData>();
+    public List<CountryData> GetCountryDataList() => _liCountryData;
+
     public async Task Init()
     {
         await LoadJsonData();
@@ -48,9 +58,10 @@ public partial class JsonManager : StaticSingletone<JsonManager>
         _liJsonData.Clear();
         _liFoodData.Clear();
         _liStringData.Clear();
+        _liCountryData.Clear();
     }
 
-    async Task LoadJsonData()
+    private async Task LoadJsonData()
     {
         Debug.Log("LoadJsonData");
         _loadCompleteFileCount = 0;
@@ -58,6 +69,7 @@ public partial class JsonManager : StaticSingletone<JsonManager>
 
         await LoadFoodData();
         await LoadStringData();
+        await LoadCountryData();
 
         _loadingFileCount = _loadCompleteFileCount;
     }
@@ -72,7 +84,7 @@ public partial class JsonManager : StaticSingletone<JsonManager>
         return ((float)_loadCompleteFileCount) / _loadingFileCount * 100f;
     }
 
-    async Task<TextAsset> LoadFoodData()
+    private async Task<TextAsset> LoadFoodData()
     {
         TaskCompletionSource<TextAsset> taskCompletionSource = new TaskCompletionSource<TextAsset>();
 
@@ -94,7 +106,7 @@ public partial class JsonManager : StaticSingletone<JsonManager>
         return await taskCompletionSource.Task;
     }
 
-    async Task<TextAsset> LoadStringData()
+    private async Task<TextAsset> LoadStringData()
     {
         TaskCompletionSource<TextAsset> taskCompletionSource = new TaskCompletionSource<TextAsset>();
 
@@ -107,6 +119,28 @@ public partial class JsonManager : StaticSingletone<JsonManager>
             foreach (var data in jsonData.arrStringData)
             {
                 _liStringData.Add(data);
+            }
+
+            taskCompletionSource.SetResult(textAsset);
+            ++_loadCompleteFileCount;
+        });
+
+        return await taskCompletionSource.Task;
+    }
+
+    private async Task<TextAsset> LoadCountryData()
+    {
+        TaskCompletionSource<TextAsset> taskCompletionSource = new TaskCompletionSource<TextAsset>();
+
+        Action<TextAsset> callback;
+        _liCountryData.Clear();
+
+        ResourceManager.Instance.LoadJson(CommonEnum.EJson.Country, callback = (TextAsset textAsset) =>
+        {
+            var jsonData = JsonUtility.FromJson<JsonData>("{\"arrCountryData\":" + textAsset.text + "}");
+            foreach (var data in jsonData.arrCountryData)
+            {
+                _liCountryData.Add(data);
             }
 
             taskCompletionSource.SetResult(textAsset);

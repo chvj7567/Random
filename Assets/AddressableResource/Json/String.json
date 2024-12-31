@@ -28,5 +28,50 @@
 		"stringID": 6,
 		"korean": "나만의 랜덤",
 		"english": "Custom\nRandom"
+	},
+	{
+		"stringID": 7,
+		"korean": "시작 숫자",
+		"english": "Start Number"
+	},
+	{
+		"stringID": 8,
+		"korean": "마지막 숫자",
+		"english": "End Number"
+	},
+	{
+		"stringID": 9,
+		"korean": "룰렛",
+		"english": "Roulette"
+	},
+	{
+		"stringID": 10,
+		"korean": "랜덤 선택",
+		"english": "Random Choice"
+	},
+	{
+		"stringID": 11,
+		"korean": "랜덤 음식",
+		"english": "Random Food"
+	},
+	{
+		"stringID": 12,
+		"korean": "랜덤 월",
+		"english": "Random Month"
+	},
+	{
+		"stringID": 13,
+		"korean": "랜덤 일",
+		"english": "Random Day"
+	},
+	{
+		"stringID": 14,
+		"korean": "랜덤 국가",
+		"english": "Random Country"
+	},
+	{
+		"stringID": 15,
+		"korean": "추가/삭제",
+		"english": "Add/Remove"
 	}
 ]

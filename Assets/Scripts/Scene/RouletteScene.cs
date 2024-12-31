@@ -19,7 +19,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
     [SerializeField] private List<GameObject> liMainSceneObj = new List<GameObject>();
     [SerializeField] private List<Menu> _liMenu = new List<Menu>();
     [SerializeField] private RandomNumberScene _randomNumberScene;
-    [SerializeField] private RandomFoodScene _randomFoodScene;
+    [SerializeField] private RandomExampleScene _randomFoodScene;
     [SerializeField] private CustomRandomScene _customRandomScene;
 
     private CommonEnum.EMenu _curScene = CommonEnum.EMenu.Menu;
