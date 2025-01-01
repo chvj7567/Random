@@ -166,16 +166,21 @@ public class UIRoulette : UIBase
     }
 
     /// <summary>
-    /// 화살표, 아이템 위치 세팅
+    /// 위치 및 크기 세팅
     /// </summary>
     private void SetPosition()
     {
-        //# 룰렛 화살표 표시
+        //# 룰렛 화살표 위치
         _arrowObject.RotateXYPosition(_rouletteObject, 500f, standard);
         _arrowObject.RotateZRoation(standard);
 
+        //# 룰렛 사이즈 설정
         _rouletteRadius = Vector2.Distance(_rouletteObject.anchoredPosition, _arrowObject.anchoredPosition);
         _rouletteObject.sizeDelta = new Vector2(_rouletteRadius * 2, _rouletteRadius * 2);
+
+        //# 화살표 사이즈 설정
+        float arrowSize = _rouletteRadius / 6f;
+        _arrowObject.sizeDelta = new Vector2(arrowSize, arrowSize);
     }
 
     /// <summary>
