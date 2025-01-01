@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-public class GameManagement : StaticSingletone<GameManagement>
+public class GameManagement : SingletoneStatic<GameManagement>
 {
     public SystemLanguage Language { get; set; }
     public bool Initialize { get; private set; } = false;

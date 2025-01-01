@@ -25,7 +25,7 @@ public class CountryData
     public string code;
 }
 
-public partial class JsonManager : StaticSingletone<JsonManager>
+public partial class JsonManager : SingletoneStatic<JsonManager>
 {
     [Serializable]
     private class JsonData

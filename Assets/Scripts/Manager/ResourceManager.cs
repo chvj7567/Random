@@ -8,7 +8,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 
-public class ResourceManager : StaticSingletone<ResourceManager>
+public class ResourceManager : SingletoneStatic<ResourceManager>
 {
     const string LableName = "Resource";
     bool _initialize = false;

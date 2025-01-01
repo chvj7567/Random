@@ -6,7 +6,7 @@ using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class UIManager : MonoBehaviourSingletone<UIManager>
+public class UIManager : SingletoneMonoBehaviour<UIManager>
 {
     private const string MyCanvasName = "UICanvas";
     private bool _initialize = false;

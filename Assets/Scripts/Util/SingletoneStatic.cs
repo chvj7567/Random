@@ -1,6 +1,6 @@
 
 
-public class StaticSingletone<T> where T : new()
+public class SingletoneStatic<T> where T : new()
 {
     private static T _instance;
 
