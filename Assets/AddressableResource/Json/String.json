@@ -32,12 +32,12 @@
 	{
 		"stringID": 7,
 		"korean": "시작 숫자",
-		"english": "Start Number"
+		"english": "Start\nNumber"
 	},
 	{
 		"stringID": 8,
 		"korean": "마지막 숫자",
-		"english": "End Number"
+		"english": "End\nNumber"
 	},
 	{
 		"stringID": 9,
@@ -47,31 +47,36 @@
 	{
 		"stringID": 10,
 		"korean": "랜덤 선택",
-		"english": "Random Choice"
+		"english": "Random\nChoice"
 	},
 	{
 		"stringID": 11,
 		"korean": "랜덤 음식",
-		"english": "Random Food"
+		"english": "Random\nFood"
 	},
 	{
 		"stringID": 12,
 		"korean": "랜덤 월",
-		"english": "Random Month"
+		"english": "Random\nMonth"
 	},
 	{
 		"stringID": 13,
 		"korean": "랜덤 일",
-		"english": "Random Day"
+		"english": "Random\nDay"
 	},
 	{
 		"stringID": 14,
 		"korean": "랜덤 국가",
-		"english": "Random Country"
+		"english": "Random\nCountry"
 	},
 	{
 		"stringID": 15,
-		"korean": "추가/삭제",
+		"korean": "추가/제거",
 		"english": "Add/Remove"
+	},
+	{
+		"stringID": 16,
+		"korean": "랜덤 예제",
+		"english": "Random\nExample"
 	}
 ]

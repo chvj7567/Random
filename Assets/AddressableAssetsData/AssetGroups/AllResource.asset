@@ -33,6 +33,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Resource
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 210005fb241dc734bb3a5fef7177c59b
+    m_Address: Assets/AddressableResource/Font/Jua.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 211dd2afd4a0d264ea403cf4ecd647f3
     m_Address: Assets/AddressableResource/UIAlarm.prefab
     m_ReadOnly: 0

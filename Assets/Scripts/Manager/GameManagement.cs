@@ -1,11 +1,14 @@
 using GoogleMobileAds.Api;
+using JetBrains.Annotations;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 public class GameManagement : StaticSingletone<GameManagement>
 {
     public SystemLanguage Language { get; set; }
     public bool Initialize { get; private set; } = false;
+    public TMP_FontAsset FontAsset { get; private set; }
 
     public async Task InitManager()
     {
@@ -19,6 +22,16 @@ public class GameManagement : StaticSingletone<GameManagement>
         await UIManager.Instance.Init();
         AudioManager.Instance.Init();
         AdmobManager.Instance.Init();
+
+        TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
+
+        ResourceManager.Instance.LoadFont(CommonEnum.EFont.Jua, (font) =>
+        {
+            FontAsset = font;
+            taskCompletionSource.SetResult(true);
+        });
+
+        await taskCompletionSource.Task;
     }
 
     public void ShowBanner()

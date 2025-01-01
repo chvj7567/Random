@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Loading...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d3c661bb1b0644a4ca84054d370f83de, type: 2}
-  m_sharedMaterial: {fileID: -1590562221988183217, guid: d3c661bb1b0644a4ca84054d370f83de, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 210005fb241dc734bb3a5fef7177c59b, type: 2}
+  m_sharedMaterial: {fileID: 1054146971164732455, guid: 210005fb241dc734bb3a5fef7177c59b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -262,9 +262,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68187a0788addd409a3d96974113dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIType: 0
   _backgroundButton: {fileID: 0}
   _backButton: {fileID: 0}
   _loadingImage: {fileID: 457109404557174599}
+  _loadingText: {fileID: 0}
 --- !u!1 &6684297391516159257
 GameObject:
   m_ObjectHideFlags: 0

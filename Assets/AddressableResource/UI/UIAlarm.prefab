@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c2db53f80d7764eb8e68dc3e5a379b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIType: 0
   _backgroundButton: {fileID: 8418605412671326667}
   _backButton: {fileID: 0}
   _alarmText: {fileID: 5285364404010555285}
@@ -240,8 +241,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Alarm
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d3c661bb1b0644a4ca84054d370f83de, type: 2}
-  m_sharedMaterial: {fileID: -1590562221988183217, guid: d3c661bb1b0644a4ca84054d370f83de, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 210005fb241dc734bb3a5fef7177c59b, type: 2}
+  m_sharedMaterial: {fileID: 1054146971164732455, guid: 210005fb241dc734bb3a5fef7177c59b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

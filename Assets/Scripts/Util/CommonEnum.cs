@@ -44,4 +44,9 @@ public class CommonEnum
         String,
         Country,
     }
+
+    public enum EFont
+    {
+        Jua
+    }
 }

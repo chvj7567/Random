@@ -18,6 +18,7 @@ public class TextEx : MonoBehaviour
         if (_stringID != -1)
         {
             _text.text = JsonManager.Instance.GetStringData(_stringID);
+            _text.font = GameManagement.Instance.FontAsset;
         }
     }
 

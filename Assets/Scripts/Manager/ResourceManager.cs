@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -58,7 +59,11 @@ public class ResourceManager : StaticSingletone<ResourceManager>
                 foreach (var pathInfo in handle.Result)
                 {
                     Debug.Log(pathInfo);
-                    _dicAssetInfo.Add(pathInfo.ToString().Split('/').Last().Split('.').First(), pathInfo);
+                    string key = pathInfo.ToString().Split('/').Last().Split('.').First();
+                    if (_dicAssetInfo.ContainsKey(key) == false)
+                    {
+                        _dicAssetInfo.Add(key, pathInfo);
+                    }
                 }
 
                 saveComplete.TrySetResult(true);
@@ -114,6 +119,17 @@ public class ResourceManager : StaticSingletone<ResourceManager>
     public void LoadJson(CommonEnum.EJson jsonType, Action<TextAsset> callback = null)
     {
         LoadAsset<TextAsset>(jsonType.ToString(), (jsonData) =>
+        {
+            if (jsonData == null)
+                return;
+
+            callback?.Invoke(jsonData);
+        });
+    }
+
+    public void LoadFont(CommonEnum.EFont fontType, Action<TMP_FontAsset> callback = null)
+    {
+        LoadAsset<TMP_FontAsset>(fontType.ToString(), (jsonData) =>
         {
             if (jsonData == null)
                 return;

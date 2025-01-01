@@ -65,7 +65,7 @@ public class RandomExampleScene : MonoBehaviour
             List<string> liMonth = new List<string>();
             for (int i = 1; i <= 12; i++)
             {
-                liMonth.Add($"{i}к≈");
+                liMonth.Add($"{i}");
             }
 
             UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
@@ -79,7 +79,7 @@ public class RandomExampleScene : MonoBehaviour
             List<string> liDay = new List<string>();
             for (int i = 1; i <= 31; i++)
             {
-                liDay.Add($"{i}мн");
+                liDay.Add($"{i}");
             }
 
             UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
