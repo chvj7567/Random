@@ -14,7 +14,7 @@ public class StartScene : MonoBehaviour
 #if UNITY_EDITOR
         GameManagement.Instance.Language = _language;
 #else
-        GameManagement.Language = Application.systemLanguage;
+        GameManagement.Instance.Language = Application.systemLanguage;
 #endif
         SceneManager.LoadScene((int)_nextSceneType);
     }
