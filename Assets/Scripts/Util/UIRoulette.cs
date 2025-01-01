@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class UIRouletteArg : UIArg
 {
@@ -28,13 +27,16 @@ public class UIRoulette : UIBase
     [SerializeField] private RectTransform _rouletteObject;
     [SerializeField] private RouletteItem _itemObject;
     [SerializeField] private RectTransform _lineObject;
-    [SerializeField] private float standard = 90f;
+    [SerializeField, Header("x축 0도 기준")] private float standard = 90f;
+    [SerializeField, Header("화살표 위치 Offset (반지름 기준)")] private float _arrowOffset = 0f;
+    [SerializeField, Header("아이템 위치 Offset (반지름 기준)")] private float _itemOffset = -85f;
 
     [Header("스크롤 룰렛")]
     [SerializeField] private GameObject _scrollRoulette;
     [SerializeField] private RouletteScrollView _scrollView;
 
     private List<CircleRouletteResult> _rouletteResult = new List<CircleRouletteResult>();
+    private float _rouletteRadius;
 
     public override void InitUI(CommonEnum.EUI uiType, UIArg arg)
     {
@@ -74,14 +76,7 @@ public class UIRoulette : UIBase
         _itemObject.rectTransform.gameObject.SetActive(false);
         _lineObject.gameObject.SetActive(false);
 
-        //# 룰렛 화살표 표시
-        float arrowDistance = Vector2.Distance(_rouletteObject.anchoredPosition, _arrowObject.anchoredPosition);
-        _arrowObject.RotateXYPosition(_rouletteObject, arrowDistance, standard);
-        _arrowObject.RotateZRoation(standard);
-
-        //# 룰렛 사이즈 지정
-        float radius = GetRadius();
-        _rouletteObject.sizeDelta = new Vector2(radius * 2, radius * 2);
+        SetPosition();
 
         if (liText.Count == 1)
         {
@@ -121,7 +116,7 @@ public class UIRoulette : UIBase
                 GameObject newLineObject = Instantiate(_lineObject.gameObject, _rouletteObject.transform);
                 newLineObject.SetActive(true);
                 newLineObject.transform.RotateZRoation(lineAngle);
-                newLineObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, radius);
+                newLineObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _rouletteRadius);
 
                 _rouletteResult.Add(new CircleRouletteResult
                 {
@@ -156,14 +151,40 @@ public class UIRoulette : UIBase
     }
 
     /// <summary>
+    /// 화살표, 아이템 위치 세팅
+    /// </summary>
+    private void SetPosition()
+    {
+        Vector3 anchorPositionA = _radius.TransformPoint(_radius.anchorMin);
+        Vector3 anchorPositionB = _rouletteObject.TransformPoint(_rouletteObject.anchorMin);
+
+        Vector3 arrowOffset = anchorPositionA - anchorPositionB;
+        arrowOffset.x = arrowOffset.x + _arrowOffset;
+        _arrowObject.position += arrowOffset;
+
+        Vector3 itemOffset = anchorPositionA - anchorPositionB;
+        itemOffset.x = itemOffset.x + _itemOffset;
+        _itemObject.transform.position += itemOffset;
+
+        //# 룰렛 화살표 표시
+        float arrowDistance = Vector2.Distance(_rouletteObject.anchoredPosition, _arrowObject.anchoredPosition);
+        _arrowObject.RotateXYPosition(_rouletteObject, arrowDistance, standard);
+        _arrowObject.RotateZRoation(standard);
+
+        //# 룰렛 사이즈 지정
+        SetRadius();
+        _rouletteObject.sizeDelta = new Vector2(_rouletteRadius * 2, _rouletteRadius * 2);
+    }
+
+    /// <summary>
     /// 해당 화면의 반지름값 가져오기
     /// </summary>
-    private float GetRadius()
+    private void SetRadius()
     {
         float radius = Vector2.Distance(_rouletteObject.anchoredPosition, _radius.anchoredPosition);
         _radius.transform.RotateXYPosition(_rouletteObject, radius, 0);
 
-        return Vector2.Distance(_rouletteObject.anchoredPosition, _radius.anchoredPosition);
+        _rouletteRadius = Vector2.Distance(_rouletteObject.anchoredPosition, _radius.anchoredPosition);
     }
 
     private void CreateScrollRoulette(List<string> liText)

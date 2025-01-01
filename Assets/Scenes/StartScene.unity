@@ -660,7 +660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _language: 23
-  _nextSceneType: 0
+  _nextSceneType: 1
 --- !u!224 &1765237989 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6065800678793668674, guid: 18ad8d2ae6474ce4ea7ecb826ad08b7f, type: 3}
