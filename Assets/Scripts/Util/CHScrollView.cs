@@ -408,7 +408,7 @@ public abstract class CHScrollView<TItem, TData> : MonoBehaviour where TItem : M
         }
     }
 
-    public virtual void SetContentTransform()
+    private void SetContentTransform()
     {
         switch (_scrollDirection)
         {
@@ -581,7 +581,7 @@ public abstract class CHScrollView<TItem, TData> : MonoBehaviour where TItem : M
         {
             case PoolingScrollViewDirection.Vertical:
                 {
-                    // 이전 위치와 달라졌다면
+                    //# 이전 위치와 달라졌다면
                     if (delta.y != 0)
                     {
                         UpdateContent(delta.y > 0 ? PoolingScrollViewScrollingDirection.UpOrLeft : PoolingScrollViewScrollingDirection.DownOrRight);
@@ -590,7 +590,7 @@ public abstract class CHScrollView<TItem, TData> : MonoBehaviour where TItem : M
                 break;
             case PoolingScrollViewDirection.Horizontal:
                 {
-                    // 이전 위치와 달라졌다면
+                    //# 이전 위치와 달라졌다면
                     if (delta.x != 0)
                     {
                         UpdateContent(delta.x < 0 ? PoolingScrollViewScrollingDirection.UpOrLeft : PoolingScrollViewScrollingDirection.DownOrRight);
