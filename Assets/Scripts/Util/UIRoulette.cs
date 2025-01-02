@@ -149,20 +149,7 @@ public class UIRoulette : UIBase
                 if (result.minAngle <= angle &&
                     result.maxAngle > angle)
                 {
-                    string alarmText = string.Empty;
-                    if (GameManagement.Instance.Language == SystemLanguage.Korean)
-                    {
-                        alarmText = $"결과 : {result.value}";
-                    }
-                    else
-                    {
-                        alarmText = $"Result : {result.value}";
-                    }
-
-                    UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
-                    {
-                        alarmText = alarmText
-                    });
+                    ShowResult(result.value);
                 }
             }
         }, 3);
@@ -215,20 +202,18 @@ public class UIRoulette : UIBase
         int randomIndex = UnityEngine.Random.Range(0, _arg.liText.Count - 2);
         _scrollView.SetScrollPosition(randomIndex, 1f, () =>
         {
-            string alarmText = string.Empty;
-            if (GameManagement.Instance.Language == SystemLanguage.Korean)
-            {
-                alarmText = $"결과 : {_arg.liText[randomIndex]}";
-            }
-            else
-            {
-                alarmText = $"Result : {_arg.liText[randomIndex]}";
-            }
+            ShowResult(_arg.liText[randomIndex]);
+        });
+    }
 
-            UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
-            {
-                alarmText = alarmText,
-            });
+    private void ShowResult(string result)
+    {
+        string alarmText = JsonManager.Instance.GetStringData(2);
+        alarmText = string.Format(alarmText, result);
+
+        UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
+        {
+            alarmText = alarmText,
         });
     }
 }
