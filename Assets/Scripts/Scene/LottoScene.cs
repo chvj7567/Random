@@ -58,7 +58,6 @@ public class LottoScene : MonoBehaviour
     [SerializeField] private TMP_Text _saveLottoRoundText;
     [SerializeField] private ButtonEx _lottoInfoUpdateButton;
     [SerializeField] private ButtonEx _viewWinningNumberButton;
-    [SerializeField] private ButtonEx _screenShotButton;
     [SerializeField] private NumberInfo _lotto1Info;
     [SerializeField] private NumberInfo _lotto2Info;
     [SerializeField] private NumberInfo _lotto3Info;
@@ -121,11 +120,6 @@ public class LottoScene : MonoBehaviour
                     liLottoResponse = _lilottoResponse,
                 });
             }
-        });
-
-        _screenShotButton.OnClick(() =>
-        {
-            StartCoroutine(CaptureScreenshot());
         });
     }
 
@@ -201,29 +195,6 @@ public class LottoScene : MonoBehaviour
                 _rouletteImage.sprite = sprite;
             }
         }
-    }
-
-    private IEnumerator CaptureScreenshot()
-    {
-        yield return new WaitForEndOfFrame();
-
-        string fileName = $"screenshot_{System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.png";
-
-        Texture2D screenshot = ScreenCapture.CaptureScreenshotAsTexture();
-
-        NativeGallery.SaveImageToGallery(screenshot, "Random_Screenshot", fileName, (success, path) =>
-        {
-            if (success)
-            {
-                UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
-                {
-                    
-                    alarmText = $"스크린 샷이 저장되었습니다."
-                });
-            }
-        });
-
-        Destroy(screenshot);
     }
 #endregion Gallery
 

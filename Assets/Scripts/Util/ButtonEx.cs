@@ -43,6 +43,9 @@ public class ButtonEx : MonoBehaviour
     {
         Init();
 
+        if (_text == null)
+            return;
+
         _text.text = text;
     }
 
