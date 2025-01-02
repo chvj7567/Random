@@ -84,7 +84,10 @@ public class UIRoulette : UIBase
         {
             GameObject newItemObject = Instantiate(_itemObject.rectTransform.gameObject, _rouletteObject.transform);
             newItemObject.SetActive(true);
-            newItemObject.transform.RotateZRoation(90);
+
+            RectTransform itemRectTransform = newItemObject.GetComponent<RectTransform>();
+            itemRectTransform.RotateZRoation(90);
+
             newItemObject.transform.position = _rouletteObject.transform.position;
 
             var item = newItemObject.GetComponent<RouletteItem>();
@@ -181,17 +184,6 @@ public class UIRoulette : UIBase
         //# 화살표 사이즈 설정
         float arrowSize = _rouletteRadius / 6f;
         _arrowObject.sizeDelta = new Vector2(arrowSize, arrowSize);
-    }
-
-    /// <summary>
-    /// 해당 화면의 반지름값 가져오기
-    /// </summary>
-    private void SetRadius()
-    {
-        float radius = Vector2.Distance(_rouletteObject.anchoredPosition, _radius.anchoredPosition);
-        _radius.transform.RotateXYPosition(_rouletteObject, radius, 0);
-
-        _rouletteRadius = Vector2.Distance(_rouletteObject.anchoredPosition, _radius.anchoredPosition);
     }
 
     private void CreateScrollRoulette(List<string> liText)

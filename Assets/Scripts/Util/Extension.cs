@@ -34,25 +34,6 @@ public static class Extension
     }
 
     /// <summary>
-    /// 중심 위치에서 특정 각도만큼 회전한 위치로 이동
-    /// </summary>
-    /// <param name="transform">이동할 Transform</param>
-    /// <param name="baseTransform">중심 위치</param>
-    /// <param name="distance">중심 위치에서 떨어진 거리</param>
-    /// <param name="angle">이동할 각도</param>
-    public static void RotateXYPosition(this Transform transform, Transform baseTransform, float distance, float angle)
-    {
-        float radian = angle * Mathf.Deg2Rad;
-
-        Vector3 basePos = baseTransform.position;
-
-        float x = basePos.x + distance * Mathf.Cos(radian);
-        float y = basePos.y + distance * Mathf.Sin(radian);
-
-        transform.position = new Vector3(x, y, basePos.z);
-    }
-
-    /// <summary>
     /// 중심 위치에서 특정 각도만큼 회전
     /// </summary>
     /// <param name="transform">중심 위치</param>
@@ -79,15 +60,5 @@ public static class Extension
         float y = basePos.y + distance * Mathf.Sin(radian);
 
         rectTransform.anchoredPosition = new Vector2(x, y);
-    }
-
-    /// <summary>
-    /// 중심 위치에서 특정 각도만큼 회전
-    /// </summary>
-    /// <param name="rectTransform">회전할 RectTransform</param>
-    /// <param name="angle">회전할 각도</param>
-    public static void RotateZRotation(this RectTransform rectTransform, float angle)
-    {
-        rectTransform.rotation = Quaternion.Euler(0, 0, angle);
     }
 }
