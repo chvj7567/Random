@@ -46,7 +46,7 @@ public class NumberInfo
 
 public class LottoScene : MonoBehaviour
 {
-    private const string Image_Path = "Roulette";
+    private const string Image_Path = "Lotto";
     private const string Local_LottoDataFile = "lotto.json";
     private const int Fail_Rank = 6;
 
