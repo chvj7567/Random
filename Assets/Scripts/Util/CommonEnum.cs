@@ -17,12 +17,19 @@ public class CommonEnum
         UIRoulette,
     }
 
-    public enum EMenu
+    public enum ERouletteMenu
     {
         Menu = 0,
         RandomNumber,
         RandomFood,
         CustomRandom,
+    }
+
+    public enum ELottoMenu
+    {
+        Menu = 0,
+        Lotto,
+        Lotto2,
     }
 
     public enum EAudio
@@ -40,9 +47,9 @@ public class CommonEnum
 
     public enum EJson
     {
-        Food,
         String,
         Country,
+        Animal,
     }
 
     public enum EFont

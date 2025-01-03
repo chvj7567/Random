@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IRouletteSceneAccess
 {
-    public void ShowScene(CommonEnum.EMenu sceneType);
+    public void ShowScene(CommonEnum.ERouletteMenu sceneType);
 }
 
 public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
@@ -12,7 +12,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
     [Serializable]
     private class Menu
     {
-        public CommonEnum.EMenu menu;
+        public CommonEnum.ERouletteMenu menu;
         public ButtonEx buttonEx;
     }
 
@@ -22,7 +22,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
     [SerializeField] private RandomExampleScene _randomFoodScene;
     [SerializeField] private CustomRandomScene _customRandomScene;
 
-    private CommonEnum.EMenu _curScene = CommonEnum.EMenu.Menu;
+    private CommonEnum.ERouletteMenu _curScene = CommonEnum.ERouletteMenu.Menu;
 
     private async void Start()
     {
@@ -36,7 +36,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
         SetMenuButton();
 
         //# ∏ﬁ¥∫ æ¿ ∫∏ø©¡‹
-        ShowScene(CommonEnum.EMenu.Menu);
+        ShowScene(CommonEnum.ERouletteMenu.Menu);
     }
 
     private void SetMenuButton()
@@ -58,7 +58,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
         _customRandomScene.SetRouletteSceneAccess(this);
     }
 
-    public void ShowScene(CommonEnum.EMenu sceneType)
+    public void ShowScene(CommonEnum.ERouletteMenu sceneType)
     {
         _randomNumberScene.gameObject.SetActive(false);
         _randomFoodScene.gameObject.SetActive(false);
@@ -66,7 +66,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
 
         switch (sceneType)
         {
-            case CommonEnum.EMenu.Menu:
+            case CommonEnum.ERouletteMenu.Menu:
                 {
                     foreach (var obj in liMainSceneObj)
                     {
@@ -74,7 +74,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
                     }
                 }
                 break;
-            case CommonEnum.EMenu.RandomNumber:
+            case CommonEnum.ERouletteMenu.RandomNumber:
                 {
                     foreach (var obj in liMainSceneObj)
                     {
@@ -84,7 +84,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
                     _randomNumberScene.gameObject.SetActive(true);
                 }
                 break;
-            case CommonEnum.EMenu.RandomFood:
+            case CommonEnum.ERouletteMenu.RandomFood:
                 {
                     foreach (var obj in liMainSceneObj)
                     {
@@ -94,7 +94,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
                     _randomFoodScene.gameObject.SetActive(true);
                 }
                 break;
-            case CommonEnum.EMenu.CustomRandom:
+            case CommonEnum.ERouletteMenu.CustomRandom:
                 {
                     foreach (var obj in liMainSceneObj)
                     {

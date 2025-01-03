@@ -5,12 +5,6 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class FoodData
-{
-    public string food;
-}
-
-[Serializable]
 public class StringData
 {
     public int stringID;
@@ -21,8 +15,15 @@ public class StringData
 [Serializable]
 public class CountryData
 {
-    public string name;
-    public string code;
+    public string korName;
+    public string engName;
+}
+
+[Serializable]
+public class AnimalData
+{
+    public string korName;
+    public string engName;
 }
 
 public partial class JsonManager : SingletoneStatic<JsonManager>
@@ -30,23 +31,23 @@ public partial class JsonManager : SingletoneStatic<JsonManager>
     [Serializable]
     private class JsonData
     {
-        public FoodData[] arrFoodData;
         public StringData[] arrStringData;
         public CountryData[] arrCountryData;
+        public AnimalData[] arrAnimalData;
     }
 
     private int _loadCompleteFileCount = 0;
     private int _loadingFileCount = 0;
     private List<Action<TextAsset>> _liJsonData = new List<Action<TextAsset>>();
 
-    private List<FoodData> _liFoodData = new List<FoodData>();
-    public List<FoodData> GetFoodDataList() => _liFoodData;
-
     private List<StringData> _liStringData = new List<StringData>();
     public List<StringData> GetStringDataList() => _liStringData;
 
     private List<CountryData> _liCountryData = new List<CountryData>();
     public List<CountryData> GetCountryDataList() => _liCountryData;
+
+    private List<AnimalData> _liAnimalData = new List<AnimalData>();
+    public List<AnimalData> GetAnimalDataList() => _liAnimalData;
 
     public async Task Init()
     {
@@ -56,9 +57,9 @@ public partial class JsonManager : SingletoneStatic<JsonManager>
     public void Clear()
     {
         _liJsonData.Clear();
-        _liFoodData.Clear();
         _liStringData.Clear();
         _liCountryData.Clear();
+        _liAnimalData.Clear();
     }
 
     private async Task LoadJsonData()
@@ -67,9 +68,9 @@ public partial class JsonManager : SingletoneStatic<JsonManager>
         _loadCompleteFileCount = 0;
         _liJsonData.Clear();
 
-        await LoadFoodData();
         await LoadStringData();
         await LoadCountryData();
+        await LoadAnimalData();
 
         _loadingFileCount = _loadCompleteFileCount;
     }
@@ -82,28 +83,6 @@ public partial class JsonManager : SingletoneStatic<JsonManager>
         }
 
         return ((float)_loadCompleteFileCount) / _loadingFileCount * 100f;
-    }
-
-    private async Task<TextAsset> LoadFoodData()
-    {
-        TaskCompletionSource<TextAsset> taskCompletionSource = new TaskCompletionSource<TextAsset>();
-
-        Action<TextAsset> callback;
-        _liFoodData.Clear();
-
-        ResourceManager.Instance.LoadJson(CommonEnum.EJson.Food, callback = (TextAsset textAsset) =>
-        {
-            var jsonData = JsonUtility.FromJson<JsonData>("{\"arrFoodData\":" + textAsset.text + "}");
-            foreach (var data in jsonData.arrFoodData)
-            {
-                _liFoodData.Add(data);
-            }
-
-            taskCompletionSource.SetResult(textAsset);
-            ++_loadCompleteFileCount;
-        });
-
-        return await taskCompletionSource.Task;
     }
 
     private async Task<TextAsset> LoadStringData()
@@ -141,6 +120,28 @@ public partial class JsonManager : SingletoneStatic<JsonManager>
             foreach (var data in jsonData.arrCountryData)
             {
                 _liCountryData.Add(data);
+            }
+
+            taskCompletionSource.SetResult(textAsset);
+            ++_loadCompleteFileCount;
+        });
+
+        return await taskCompletionSource.Task;
+    }
+
+    private async Task<TextAsset> LoadAnimalData()
+    {
+        TaskCompletionSource<TextAsset> taskCompletionSource = new TaskCompletionSource<TextAsset>();
+
+        Action<TextAsset> callback;
+        _liAnimalData.Clear();
+
+        ResourceManager.Instance.LoadJson(CommonEnum.EJson.Animal, callback = (TextAsset textAsset) =>
+        {
+            var jsonData = JsonUtility.FromJson<JsonData>("{\"arrAnimalData\":" + textAsset.text + "}");
+            foreach (var data in jsonData.arrAnimalData)
+            {
+                _liAnimalData.Add(data);
             }
 
             taskCompletionSource.SetResult(textAsset);

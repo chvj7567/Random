@@ -64,6 +64,7 @@ public class LottoScene : MonoBehaviour
     [SerializeField] private NumberInfo _lotto4Info;
     [SerializeField] private NumberInfo _lotto5Info;
 
+    private ILottoMenuSceneAccess _lottoMenuSceneAccess;
     private string _lottoURL = "www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=";
     private List<LottoResponse> _lilottoResponse = new List<LottoResponse>();
     private string path = string.Empty;
@@ -81,6 +82,11 @@ public class LottoScene : MonoBehaviour
 
         //# 실제 로또 번호 세팅
         await GetLottoInfo(false);
+    }
+
+    public void SetLottoMenuSceneAccess(ILottoMenuSceneAccess lottoMenuSceneAccess)
+    {
+        _lottoMenuSceneAccess = lottoMenuSceneAccess;
     }
 
     private void SetButton()

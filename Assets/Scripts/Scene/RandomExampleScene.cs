@@ -9,7 +9,7 @@ public class RandomExampleScene : MonoBehaviour
     [SerializeField] private ButtonEx _randomYesNoButton;
     [SerializeField] private ButtonEx _randomMonthButton;
     [SerializeField] private ButtonEx _randomDayButton;
-    [SerializeField] private ButtonEx _randomFoodButton;
+    [SerializeField] private ButtonEx _randomAnimalButton;
     [SerializeField] private ButtonEx _randomCountryButton;
 
     private IRouletteSceneAccess _rouletteSceneAccess;
@@ -88,19 +88,29 @@ public class RandomExampleScene : MonoBehaviour
             });
         });
 
-        _randomFoodButton.OnClick(() =>
+        _randomAnimalButton.OnClick(() =>
         {
-            var liJsonData = JsonManager.Instance.GetFoodDataList();
+            var liJsonData = JsonManager.Instance.GetAnimalDataList();
 
-            List<string> liFood = new List<string>();
-            foreach (var data in liJsonData)
+            List<string> liAnimal = new List<string>();
+            if (GameManagement.Instance.Language == SystemLanguage.Korean)
             {
-                liFood.Add(data.food);
+                foreach (var data in liJsonData)
+                {
+                    liAnimal.Add(data.korName);
+                }
+            }
+            else
+            {
+                foreach (var data in liJsonData)
+                {
+                    liAnimal.Add(data.engName);
+                }
             }
 
             UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
             {
-                liText = liFood
+                liText = liAnimal
             });
         });
 
@@ -109,9 +119,19 @@ public class RandomExampleScene : MonoBehaviour
             var liJsonData = JsonManager.Instance.GetCountryDataList();
 
             List<string> liCountry = new List<string>();
-            foreach (var data in liJsonData)
+            if (GameManagement.Instance.Language == SystemLanguage.Korean)
             {
-                liCountry.Add(data.name);
+                foreach (var data in liJsonData)
+                {
+                    liCountry.Add(data.korName);
+                }
+            }
+            else
+            {
+                foreach (var data in liJsonData)
+                {
+                    liCountry.Add(data.engName);
+                }
             }
 
             UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
@@ -129,6 +149,6 @@ public class RandomExampleScene : MonoBehaviour
     public void Close()
     {
         gameObject.SetActive(false);
-        _rouletteSceneAccess.ShowScene(CommonEnum.EMenu.Menu);
+        _rouletteSceneAccess.ShowScene(CommonEnum.ERouletteMenu.Menu);
     }
 }

@@ -2635,7 +2635,7 @@ MonoBehaviour:
   _randomYesNoButton: {fileID: 2113424007}
   _randomMonthButton: {fileID: 1025719791}
   _randomDayButton: {fileID: 1512710573}
-  _randomFoodButton: {fileID: 998791923}
+  _randomAnimalButton: {fileID: 998791923}
   _randomCountryButton: {fileID: 901436855}
 --- !u!1 &548737249
 GameObject:

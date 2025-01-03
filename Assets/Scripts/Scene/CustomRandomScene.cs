@@ -62,6 +62,6 @@ public class CustomRandomScene : MonoBehaviour
     public void Close()
     {
         gameObject.SetActive(false);
-        _rouletteSceneAccess.ShowScene(CommonEnum.EMenu.Menu);
+        _rouletteSceneAccess.ShowScene(CommonEnum.ERouletteMenu.Menu);
     }
 }

@@ -15,8 +15,9 @@ public class Lotto2Scene : MonoBehaviour
     [SerializeField] private NumberInfo _lotto3Info;
     [SerializeField] private NumberInfo _lotto4Info;
     [SerializeField] private NumberInfo _lotto5Info;
-
     [SerializeField] private ButtonEx _rouletteButton;
+
+    private ILottoMenuSceneAccess _lottoMenuSceneAccess;
 
     private void Start()
     {
@@ -28,6 +29,11 @@ public class Lotto2Scene : MonoBehaviour
             StartRoulette(_jo4Text, _lotto4Info);
             StartRoulette(_jo5Text, _lotto5Info);
         });
+    }
+
+    public void SetLottoMenuSceneAccess(ILottoMenuSceneAccess lottoMenuSceneAccess)
+    {
+        _lottoMenuSceneAccess = lottoMenuSceneAccess;
     }
 
     private void StartRoulette(TMP_Text joText, NumberInfo lottoInfo)
