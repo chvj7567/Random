@@ -30,8 +30,6 @@ public class UIRoulette : UIBase
     [SerializeField] private RouletteItem _itemObject;
     [SerializeField] private RectTransform _lineObject;
     [SerializeField, Header("x축 0도 기준")] private float standard = 90f;
-    [SerializeField, Header("화살표 위치 Offset (반지름 기준)")] private float _arrowOffset = 0f;
-    [SerializeField, Header("아이템 위치 Offset (반지름 기준)")] private float _itemOffset = -85f;
 
     [Header("스크롤 룰렛")]
     [SerializeField] private GameObject _scrollRoulette;
@@ -39,6 +37,7 @@ public class UIRoulette : UIBase
 
     private List<CircleRouletteResult> _rouletteResult = new List<CircleRouletteResult>();
     private float _rouletteRadius;
+    private bool _rouletteComplete = false;
 
     public override void InitUI(CommonEnum.EUI uiType, UIArg arg)
     {
@@ -67,6 +66,9 @@ public class UIRoulette : UIBase
 
     public override void Close(bool reuse = true)
     {
+        if (_rouletteComplete == false)
+            return;
+
         base.Close(false);
     }
 
@@ -214,6 +216,9 @@ public class UIRoulette : UIBase
         UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
         {
             alarmText = alarmText,
+        }, _ =>
+        {
+            _rouletteComplete = true;
         });
     }
 }
