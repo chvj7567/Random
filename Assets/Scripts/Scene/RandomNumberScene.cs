@@ -35,11 +35,25 @@ public class RandomNumberScene : MonoBehaviour
 
             if (startNumber.Item1 == false || endNubmer.Item1 == false)
             {
-                _randomButton.SetText("숫자 입력 확인");
+                if (GameManagement.Instance.Language == SystemLanguage.Korean)
+                {
+                    _randomButton.SetText("숫자 입력 확인");
+                }
+                else
+                {
+                    _randomButton.SetText("Failed");
+                }
             }
             else if (startNumber.Item2 > endNubmer.Item2)
             {
-                _randomButton.SetText("숫자 범위 확인");
+                if (GameManagement.Instance.Language == SystemLanguage.Korean)
+                {
+                    _randomButton.SetText("숫자 범위 확인");
+                }
+                else
+                {
+                    _randomButton.SetText("Failed");
+                }
             }
             else
             {
@@ -78,11 +92,6 @@ public class RandomNumberScene : MonoBehaviour
 
         if (int.TryParse(input.text, out int result) == false)
         {
-            if (input.placeholder is TextMeshProUGUI placeholder)
-            {
-                placeholder.text = "정수 입력...";
-            }
-
             return (false, 0);
         }
 
