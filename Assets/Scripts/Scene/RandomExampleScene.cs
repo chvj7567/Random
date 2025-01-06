@@ -40,17 +40,37 @@ public class RandomExampleScene : MonoBehaviour
             List<string> liYesNo = new List<string>();
 
             bool yes = true;
-            for (int i = 0; i < 8; i++)
+
+            if (GameManagement.Instance.Language == SystemLanguage.Korean)
             {
-                if (yes)
+                for (int i = 0; i < 8; i++)
                 {
-                    yes = false;
-                    liYesNo.Add("Yes");
+                    if (yes)
+                    {
+                        yes = false;
+                        liYesNo.Add("예");
+                    }
+                    else
+                    {
+                        yes = true;
+                        liYesNo.Add("아니오");
+                    }
                 }
-                else
+            }
+            else
+            {
+                for (int i = 0; i < 8; i++)
                 {
-                    yes = true;
-                    liYesNo.Add("NO");
+                    if (yes)
+                    {
+                        yes = false;
+                        liYesNo.Add("Yes");
+                    }
+                    else
+                    {
+                        yes = true;
+                        liYesNo.Add("NO");
+                    }
                 }
             }
 
@@ -63,9 +83,28 @@ public class RandomExampleScene : MonoBehaviour
         _randomMonthButton.OnClick(() =>
         {
             List<string> liMonth = new List<string>();
-            for (int i = 1; i <= 12; i++)
+
+            if (GameManagement.Instance.Language == SystemLanguage.Korean)
             {
-                liMonth.Add($"{i}");
+                for (int i = 1; i <= 12; i++)
+                {
+                    liMonth.Add($"{i}월");
+                }
+            }
+            else
+            {
+                liMonth.Add("January");
+                liMonth.Add("February");
+                liMonth.Add("March");
+                liMonth.Add("April");
+                liMonth.Add("May");
+                liMonth.Add("June");
+                liMonth.Add("July");
+                liMonth.Add("August");
+                liMonth.Add("September");
+                liMonth.Add("October");
+                liMonth.Add("November");
+                liMonth.Add("December");
             }
 
             UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
@@ -77,10 +116,22 @@ public class RandomExampleScene : MonoBehaviour
         _randomDayButton.OnClick(() =>
         {
             List<string> liDay = new List<string>();
-            for (int i = 1; i <= 31; i++)
+
+            if (GameManagement.Instance.Language == SystemLanguage.Korean)
             {
-                liDay.Add($"{i}");
+                for (int i = 1; i <= 31; i++)
+                {
+                    liDay.Add($"{i}일");
+                }
             }
+            else
+            {
+                for (int i = 1; i <= 31; i++)
+                {
+                    liDay.Add($"{i}th");
+                }
+            }
+            
 
             UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
             {
