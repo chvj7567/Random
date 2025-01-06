@@ -37,7 +37,7 @@ public class AdmobManager : SingletoneStatic<AdmobManager>
 
     public void ShowBanner(AdPosition _position)
     {
-        bannerView = new BannerView(bannerAdUnitId, AdSize.SmartBanner, _position);
+        bannerView = new BannerView(bannerAdUnitId, AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth), _position);
         bannerView.LoadAd(adRequest);
     }
 
