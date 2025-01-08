@@ -173,6 +173,10 @@ public class UIRoulette : UIBase
         //# 화살표 사이즈 설정
         float arrowSize = _rouletteRadius / 6f;
         _arrowObject.sizeDelta = new Vector2(arrowSize, arrowSize);
+
+        //# 아이템 사이즈 설정
+        float itemSize = _rouletteRadius / 4f;
+        _itemObject.rectTransform.sizeDelta = new Vector2(itemSize, itemSize);
     }
 
     private void CreateScrollRoulette(List<string> liText)
