@@ -4,14 +4,13 @@ using System;
 
 public class AdmobManager : SingletoneStatic<AdmobManager>
 {
-    string bannerAdUnitId = "ca-app-pub-7085378387310828~5438733391";
-    //string interstitialAdUnitId = "";
-    //string rewardedAdUnitId = "";
+    string _bannerAdUnitId = "ca-app-pub-7085378387310828~5438733391";
+    string _interstitialAdUnitId = "";
+    string _rewardedAdUnitId = "";
 
-    //# Test
-    //string bannerAdUnitId = "ca-app-pub-3940256099942544/9214589741";
-    string interstitialAdUnitId = "ca-app-pub-3940256099942544/1033173712";
-    string rewardedAdUnitId = "ca-app-pub-3940256099942544/5224354917";
+    string _testBannerAdUnitId = "ca-app-pub-3940256099942544/9214589741";
+    string _testInterstitialAdUnitId = "ca-app-pub-3940256099942544/1033173712";
+    string _testTewardedAdUnitId = "ca-app-pub-3940256099942544/5224354917";
 
     BannerView bannerView;
     InterstitialAd interstitialAd;
@@ -31,6 +30,12 @@ public class AdmobManager : SingletoneStatic<AdmobManager>
 
         _initialize = true;
 
+#if UNITY_EDITOR
+        _bannerAdUnitId = _testBannerAdUnitId;
+        _interstitialAdUnitId= _testInterstitialAdUnitId;
+        _rewardedAdUnitId = _testTewardedAdUnitId;
+#endif
+
         adRequest = new AdRequest(adRequest);
 
         MobileAds.Initialize(initStatus => { });
@@ -38,7 +43,7 @@ public class AdmobManager : SingletoneStatic<AdmobManager>
 
     public void ShowBanner(AdPosition _position)
     {
-        bannerView = new BannerView(bannerAdUnitId, AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth), _position);
+        bannerView = new BannerView(_bannerAdUnitId, AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth), _position);
         bannerView.LoadAd(adRequest);
     }
 
@@ -50,7 +55,7 @@ public class AdmobManager : SingletoneStatic<AdmobManager>
             interstitialAd = null;
         }
 
-        InterstitialAd.Load(interstitialAdUnitId, adRequest,
+        InterstitialAd.Load(_interstitialAdUnitId, adRequest,
                 (InterstitialAd ad, LoadAdError error) =>
                 {
                     // if error is not null, the load request failed.
@@ -94,7 +99,7 @@ public class AdmobManager : SingletoneStatic<AdmobManager>
             rewardedAd = null;
         }
 
-        RewardedAd.Load(rewardedAdUnitId, adRequest,
+        RewardedAd.Load(_rewardedAdUnitId, adRequest,
                 (RewardedAd ad, LoadAdError error) =>
                 {
                     // if error is not null, the load request failed.
