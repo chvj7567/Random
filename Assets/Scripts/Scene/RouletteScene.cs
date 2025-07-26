@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface IRouletteBackButton
+{
+    public void Close();
+}
 public interface IRouletteSceneAccess
 {
     public void ShowScene(CommonEnum.ERouletteMenu sceneType);
@@ -68,6 +72,8 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
         {
             case CommonEnum.ERouletteMenu.Menu:
                 {
+                    UIManager.Instance.ResetMainUI();
+
                     foreach (var obj in liMainSceneObj)
                     {
                         obj.SetActive(true);
@@ -76,6 +82,8 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
                 break;
             case CommonEnum.ERouletteMenu.RandomNumber:
                 {
+                    UIManager.Instance.SetMainUI(_randomNumberScene);
+
                     foreach (var obj in liMainSceneObj)
                     {
                         obj.SetActive(false);
@@ -86,6 +94,8 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
                 break;
             case CommonEnum.ERouletteMenu.RandomFood:
                 {
+                    UIManager.Instance.SetMainUI(_randomFoodScene);
+
                     foreach (var obj in liMainSceneObj)
                     {
                         obj.SetActive(false);
@@ -96,6 +106,8 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
                 break;
             case CommonEnum.ERouletteMenu.CustomRandom:
                 {
+                    UIManager.Instance.SetMainUI(_customRandomScene);
+
                     foreach (var obj in liMainSceneObj)
                     {
                         obj.SetActive(false);

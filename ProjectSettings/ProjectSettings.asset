@@ -268,7 +268,7 @@ PlayerSettings:
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: '{inproject}: user.keystore'
-  AndroidKeyaliasName: random
+  AndroidKeyaliasName: rr
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidEnableArm64MTE: 0
   AndroidBuildApkPerCpuArchitecture: 0
@@ -825,7 +825,7 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Android: ENABLE_JSON_CATALOG;DOTWEEN
+    Android: ENABLE_JSON_CATALOG;DOTWEEN;TEST
     EmbeddedLinux: ENABLE_JSON_CATALOG;DOTWEEN
     GameCoreScarlett: DOTWEEN
     GameCoreXboxOne: DOTWEEN

@@ -5,7 +5,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RandomNumberScene : MonoBehaviour
+public class RandomNumberScene : MonoBehaviour, IRouletteBackButton
 {
     [SerializeField] private ButtonEx _menuButton;
     [SerializeField] private TMP_InputField _startNumberInput;

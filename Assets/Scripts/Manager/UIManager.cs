@@ -14,6 +14,7 @@ public class UIManager : SingletoneMonoBehaviour<UIManager>
     private ReactiveCollection<UIBase> _liCurrentUI = new ReactiveCollection<UIBase>();
     private ReactiveCollection<UIBase> _liWaitCloseUI = new ReactiveCollection<UIBase>();
     private Dictionary<CommonEnum.EUI, UIBase> _dicCashingUI = new Dictionary<CommonEnum.EUI, UIBase>();
+    private IRouletteBackButton _mainRouletteUI;
 
     public bool CheckUI => _liCurrentUI.Count > 0;
 
@@ -22,8 +23,20 @@ public class UIManager : SingletoneMonoBehaviour<UIManager>
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (_liCurrentUI.Count > 0)
-                CloseUI(_liCurrentUI.Last());
+                _liCurrentUI.Last().Close();
+            else
+                _mainRouletteUI?.Close();
         }
+    }
+
+    public void SetMainUI(IRouletteBackButton mainUI)
+    {
+        _mainRouletteUI = mainUI;
+    }
+
+    public void ResetMainUI()
+    {
+        _mainRouletteUI = null;
     }
 
     public async Task<bool> Init()

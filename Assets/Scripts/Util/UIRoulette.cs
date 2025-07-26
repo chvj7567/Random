@@ -35,7 +35,8 @@ public class UIRoulette : UIBase
     [SerializeField] private GameObject _scrollRoulette;
     [SerializeField] private RouletteScrollView _scrollView;
 
-    private List<CircleRouletteResult> _rouletteResult = new List<CircleRouletteResult>();
+    private List<GameObject> _copyObjects = new List<GameObject>();
+    private List<CircleRouletteResult> _rouletteResults = new List<CircleRouletteResult>();
     private float _rouletteRadius;
     private bool _rouletteComplete = false;
 
@@ -45,6 +46,7 @@ public class UIRoulette : UIBase
 
         _arg = arg as UIRouletteArg;
 
+        _copyObjects.Clear();
         _circleRoulette.SetActive(false);
         _scrollRoulette.SetActive(false);
 
@@ -70,6 +72,11 @@ public class UIRoulette : UIBase
             return;
 
         base.Close(false);
+
+        foreach (GameObject obj in _copyObjects)
+        {
+            Destroy(obj);
+        }
     }
 
     private void CreateCircleRoulette(List<string> liText)
@@ -95,12 +102,14 @@ public class UIRoulette : UIBase
             var item = newItemObject.GetComponent<RouletteItem>();
             item.text.text = liText[0];
 
-            _rouletteResult.Add(new CircleRouletteResult
+            _rouletteResults.Add(new CircleRouletteResult
             {
                 value = liText[0],
                 minAngle = 0f,
                 maxAngle = 360f,
             });
+
+            _copyObjects.Add(newItemObject);
         }
         else
         {
@@ -128,7 +137,7 @@ public class UIRoulette : UIBase
                 lineRectTransform.RotateZRoation(lineAngle);
                 newLineObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, _rouletteRadius);
 
-                _rouletteResult.Add(new CircleRouletteResult
+                _rouletteResults.Add(new CircleRouletteResult
                 {
                     value = text,
                     minAngle = 360 - lineAngle - angle + standard,
@@ -137,6 +146,9 @@ public class UIRoulette : UIBase
 
                 itemAngle += angle;
                 lineAngle += angle;
+
+                _copyObjects.Add(newItemObject);
+                _copyObjects.Add(newLineObject);
             }
         }
     }
@@ -146,7 +158,7 @@ public class UIRoulette : UIBase
         _rouletteObject.Spin((angle) =>
         {
             angle = angle % 360;
-            foreach (var result in _rouletteResult)
+            foreach (var result in _rouletteResults)
             {
                 if (result.minAngle <= angle &&
                     result.maxAngle > angle)

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomExampleScene : MonoBehaviour
+public class RandomExampleScene : MonoBehaviour, IRouletteBackButton
 {
     [SerializeField] private ButtonEx _menuButton;
 

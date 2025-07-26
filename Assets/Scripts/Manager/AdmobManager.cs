@@ -30,7 +30,7 @@ public class AdmobManager : SingletoneStatic<AdmobManager>
 
         _initialize = true;
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || TEST
         _bannerAdUnitId = _testBannerAdUnitId;
         _interstitialAdUnitId= _testInterstitialAdUnitId;
         _rewardedAdUnitId = _testTewardedAdUnitId;

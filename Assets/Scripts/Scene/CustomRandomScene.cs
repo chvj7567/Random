@@ -5,7 +5,7 @@ using TMPro;
 using System.Collections.Generic;
 using System.Linq;
 
-public class CustomRandomScene : MonoBehaviour
+public class CustomRandomScene : MonoBehaviour, IRouletteBackButton
 {
     [SerializeField] private TMP_InputField _customInput;
     [SerializeField] private ButtonEx _menuButton;
