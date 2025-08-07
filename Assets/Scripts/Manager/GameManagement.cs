@@ -9,6 +9,7 @@ public class GameManagement : SingletoneStatic<GameManagement>
     public SystemLanguage Language { get; set; }
     public bool Initialize { get; private set; } = false;
     public TMP_FontAsset FontAsset { get; private set; }
+    public int RouletteCount { get; set; }
 
     public async Task InitManager()
     {
@@ -39,7 +40,6 @@ public class GameManagement : SingletoneStatic<GameManagement>
         if (Initialize == false)
             return;
 
-        AdmobManager.Instance.ShowBanner(AdPosition.Top);
         AdmobManager.Instance.ShowBanner(AdPosition.Bottom);
     }
 }

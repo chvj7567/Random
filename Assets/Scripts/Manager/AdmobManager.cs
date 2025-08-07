@@ -4,8 +4,8 @@ using System;
 
 public class AdmobManager : SingletoneStatic<AdmobManager>
 {
-    string _bannerAdUnitId = "ca-app-pub-7085378387310828~5438733391";
-    string _interstitialAdUnitId = "";
+    string _bannerAdUnitId = "ca-app-pub-7085378387310828/7475395879";
+    string _interstitialAdUnitId = "ca-app-pub-7085378387310828/3699678689";
     string _rewardedAdUnitId = "";
 
     string _testBannerAdUnitId = "ca-app-pub-3940256099942544/9214589741";
