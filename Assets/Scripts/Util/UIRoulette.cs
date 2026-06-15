@@ -1,3 +1,4 @@
+using ChvjUnityInfra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,16 +23,16 @@ public class UIRoulette : UIBase
         public float maxAngle;
     }
 
-    [Header("¿øÇü ·ê·¿")]
+    [Header("ì›í˜• ë£°ë ›")]
     [SerializeField] private GameObject _circleRoulette;
     [SerializeField] private RectTransform _radius;
     [SerializeField] private RectTransform _arrowObject;
     [SerializeField] private RectTransform _rouletteObject;
     [SerializeField] private RouletteItem _itemObject;
     [SerializeField] private RectTransform _lineObject;
-    [SerializeField, Header("xÃà 0µµ ±âÁØ")] private float standard = 90f;
+    [SerializeField, Header("xì¶• 0ë„ ê¸°ì¤€")] private float standard = 90f;
 
-    [Header("½ºÅ©·Ñ ·ê·¿")]
+    [Header("ìŠ¤í¬ë¡¤ ë£°ë ›")]
     [SerializeField] private GameObject _scrollRoulette;
     [SerializeField] private RouletteScrollView _scrollView;
 
@@ -40,10 +41,8 @@ public class UIRoulette : UIBase
     private float _rouletteRadius;
     private bool _rouletteComplete = false;
 
-    public override void InitUI(CommonEnum.EUI uiType, UIArg arg)
+    public override void InitUI(UIArg arg)
     {
-        base.InitUI(uiType, arg);
-
         _arg = arg as UIRouletteArg;
 
         _copyObjects.Clear();
@@ -52,8 +51,8 @@ public class UIRoulette : UIBase
 
         ++GameManagement.Instance.RouletteCount;
 
-        //# ¸ñ·Ï ¼ö°¡ 10°³ ÀÌÇÏ¸é ¿øÇü ·ê·¿
-        //# ¸ñ·Ï ¼ö°¡ 10°³ ÃÊ°ú¸é ½ºÅ©·Ñ ·ê·¿
+        //# í•­ëª© ìˆ˜ 10ê°œ ì´í•˜ë©´ ì›í˜• ë£°ë ›
+        //# í•­ëª© ìˆ˜ 10ê°œ ì´ˆê³¼ë©´ ìŠ¤í¬ë¡¤ ë£°ë ›
         if (_arg.liText.Count <= 10)
         {
             _circleRoulette.SetActive(true);
@@ -107,8 +106,8 @@ public class UIRoulette : UIBase
 
             newItemObject.transform.position = _rouletteObject.transform.position;
 
-            var item = newItemObject.GetComponent<RouletteItem>();
-            item.text.text = liText[0];
+            RouletteItem item = newItemObject.GetComponent<RouletteItem>();
+            item.text.SetText(liText[0]);
 
             _rouletteResults.Add(new CircleRouletteResult
             {
@@ -126,7 +125,7 @@ public class UIRoulette : UIBase
             float itemAngle = halfAngle + standard;
             float lineAngle = 0f + standard;
 
-            foreach (var text in liText)
+            foreach (string text in liText)
             {
                 GameObject newItemObject = Instantiate(_itemObject.rectTransform.gameObject, _rouletteObject);
                 newItemObject.SetActive(true);
@@ -135,8 +134,8 @@ public class UIRoulette : UIBase
                 itemRectTransform.RotateXYPosition(_rouletteObject, _rouletteRadius * .7f, itemAngle);
                 itemRectTransform.RotateZRoation(itemAngle);
 
-                var item = newItemObject.GetComponent<RouletteItem>();
-                item.text.text = text;
+                RouletteItem item = newItemObject.GetComponent<RouletteItem>();
+                item.text.SetText(text);
 
                 GameObject newLineObject = Instantiate(_lineObject.gameObject, _rouletteObject.transform);
                 newLineObject.SetActive(true);
@@ -166,7 +165,7 @@ public class UIRoulette : UIBase
         _rouletteObject.Spin((angle) =>
         {
             angle = angle % 360;
-            foreach (var result in _rouletteResults)
+            foreach (CircleRouletteResult result in _rouletteResults)
             {
                 if (result.minAngle <= angle &&
                     result.maxAngle > angle)
@@ -178,23 +177,23 @@ public class UIRoulette : UIBase
     }
 
     /// <summary>
-    /// À§Ä¡ ¹× Å©±â ¼¼ÆÃ
+    /// ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
     /// </summary>
     private void SetPosition()
     {
-        //# ·ê·¿ È­»ìÇ¥ À§Ä¡
+        //# ë£°ë › í™”ì‚´í‘œ ìœ„ì¹˜
         _arrowObject.RotateXYPosition(_rouletteObject, 500f, standard);
         _arrowObject.RotateZRoation(standard);
 
-        //# ·ê·¿ »çÀÌÁî ¼³Á¤
+        //# ë£°ë › ë°˜ì§€ë¦„ ì„¤ì •
         _rouletteRadius = Vector2.Distance(_rouletteObject.anchoredPosition, _arrowObject.anchoredPosition);
         _rouletteObject.sizeDelta = new Vector2(_rouletteRadius * 2, _rouletteRadius * 2);
 
-        //# È­»ìÇ¥ »çÀÌÁî ¼³Á¤
+        //# í™”ì‚´í‘œ ì‚¬ì´ì¦ˆ ì„¤ì •
         float arrowSize = _rouletteRadius / 6f;
         _arrowObject.sizeDelta = new Vector2(arrowSize, arrowSize);
 
-        //# ¾ÆÀÌÅÛ »çÀÌÁî ¼³Á¤
+        //# ì•„ì´í…œ ì‚¬ì´ì¦ˆ ì„¤ì •
         float itemSize = _rouletteRadius / 4f;
         _itemObject.rectTransform.sizeDelta = new Vector2(itemSize, itemSize);
     }
@@ -214,22 +213,22 @@ public class UIRoulette : UIBase
             return;
         }
 
-        _scrollView.SetScrollPosition(lastIndex, 1f, () =>
+        _scrollView.SetScrollPosition(lastIndex, () =>
         {
-            _scrollView.SetScrollPosition(0, 0, () =>
+            _scrollView.SetScrollPosition(0, () =>
             {
                 SpinScrollRoulette(lastIndex, repeatCount - 1);
-            });
-        });
+            }, 0f);
+        }, 1f);
     }
 
     private void RandomScroll()
     {
         int randomIndex = UnityEngine.Random.Range(0, _arg.liText.Count - 2);
-        _scrollView.SetScrollPosition(randomIndex, 1f, () =>
+        _scrollView.SetScrollPosition(randomIndex, () =>
         {
             ShowResult(_arg.liText[randomIndex]);
-        });
+        }, 1f);
     }
 
     private void ShowResult(string result)
@@ -237,7 +236,7 @@ public class UIRoulette : UIBase
         string alarmText = JsonManager.Instance.GetStringData(2);
         alarmText = string.Format(alarmText, result);
 
-        UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
+        CHMUI.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
         {
             alarmText = alarmText,
         }, _ =>

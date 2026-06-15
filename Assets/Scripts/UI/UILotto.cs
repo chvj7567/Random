@@ -1,7 +1,7 @@
+using ChvjUnityInfra;
 using System;
 using System.Collections.Generic;
 using TMPro;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,14 +14,12 @@ public class UILotto : UIBase
 {
     UILottoArg _arg;
 
-    [SerializeField] private ButtonEx _topButton;
-    [SerializeField] private ButtonEx _bottomButton;
+    [SerializeField] private CHButton _topButton;
+    [SerializeField] private CHButton _bottomButton;
     [SerializeField] private LottoScrollView scrollView;
 
-    public override void InitUI(CommonEnum.EUI uiType, UIArg arg)
+    public override void InitUI(UIArg arg)
     {
-        base.InitUI(uiType, arg);
-
         _arg = arg as UILottoArg;
 
         _topButton.OnClick(() =>

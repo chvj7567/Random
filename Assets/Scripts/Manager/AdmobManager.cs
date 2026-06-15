@@ -1,8 +1,9 @@
+using ChvjUnityInfra;
 using UnityEngine;
 using GoogleMobileAds.Api;
 using System;
 
-public class AdmobManager : SingletoneStatic<AdmobManager>
+public class AdmobManager : CHSingletonStatic<AdmobManager>
 {
     string _bannerAdUnitId = "ca-app-pub-7085378387310828/7475395879";
     string _interstitialAdUnitId = "ca-app-pub-7085378387310828/3699678689";
@@ -20,8 +21,8 @@ public class AdmobManager : SingletoneStatic<AdmobManager>
 
     bool _initialize = false;
 
-    public Action AcquireReward;
-    public Action CloseAD;
+    public event Action AcquireReward;
+    public event Action CloseAD;
 
     public void Init()
     {

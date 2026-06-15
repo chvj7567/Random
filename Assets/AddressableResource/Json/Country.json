@@ -1,122 +1,362 @@
 [
-	{"korName": "가나", "engName": "Ghana"},
-	{"korName": "가이아나", "engName": "Guyana"},
-	{"korName": "가봉", "engName": "Gabon"},
-	{"korName": "과테말라", "engName": "Guatemala"},
-	{"korName": "그리스", "engName": "Greece"},
-	{"korName": "그레나다", "engName": "Grenada"},
-	{"korName": "기니", "engName": "Guinea"},
-	{"korName": "기니비사우", "engName": "Guinea-Bissau"},
-	{"korName": "나미비아", "engName": "Namibia"},
-	{"korName": "나우루", "engName": "Nauru"},
-	{"korName": "나이지리아", "engName": "Nigeria"},
-	{"korName": "남아프리카 공화국", "engName": "South Africa"},
-	{"korName": "남수단", "engName": "South Sudan"},
-	{"korName": "네덜란드", "engName": "Netherlands"},
-	{"korName": "네팔", "engName": "Nepal"},
-	{"korName": "노르웨이", "engName": "Norway"},
-	{"korName": "뉴질랜드", "engName": "New Zealand"},
-	{"korName": "니제르", "engName": "Niger"},
-	{"korName": "니카라과", "engName": "Nicaragua"},
-	{"korName": "대만", "engName": "Taiwan"},
-	{"korName": "덴마크", "engName": "Denmark"},
-	{"korName": "도미니카", "engName": "Dominica"},
-	{"korName": "도미니카 공화국", "engName": "Dominican Republic"},
-	{"korName": "라오스", "engName": "Laos"},
-	{"korName": "레바논", "engName": "Lebanon"},
-	{"korName": "레소토", "engName": "Lesotho"},
-	{"korName": "루마니아", "engName": "Romania"},
-	{"korName": "룩셈부르크", "engName": "Luxembourg"},
-	{"korName": "리비아", "engName": "Libya"},
-	{"korName": "리투아니아", "engName": "Lithuania"},
-	{"korName": "마다가스카르", "engName": "Madagascar"},
-	{"korName": "말라위", "engName": "Malawi"},
-	{"korName": "말레이시아", "engName": "Malaysia"},
-	{"korName": "멕시코", "engName": "Mexico"},
-	{"korName": "모로코", "engName": "Morocco"},
-	{"korName": "모리셔스", "engName": "Mauritius"},
-	{"korName": "모리타니", "engName": "Mauritania"},
-	{"korName": "미국", "engName": "United States"},
-	{"korName": "미얀마", "engName": "Myanmar"},
-	{"korName": "바누아투", "engName": "Vanuatu"},
-	{"korName": "바르바도스", "engName": "Barbados"},
-	{"korName": "바레인", "engName": "Bahrain"},
-	{"korName": "방글라데시", "engName": "Bangladesh"},
-	{"korName": "베네수엘라", "engName": "Venezuela"},
-	{"korName": "베트남", "engName": "Vietnam"},
-	{"korName": "벨기에", "engName": "Belgium"},
-	{"korName": "벨라루스", "engName": "Belarus"},
-	{"korName": "보스니아 헤르체고비나", "engName": "Bosnia and Herzegovina"},
-	{"korName": "부르키나파소", "engName": "Burkina Faso"},
-	{"korName": "부룬디", "engName": "Burundi"},
-	{"korName": "불가리아", "engName": "Bulgaria"},
-	{"korName": "사우디아라비아", "engName": "Saudi Arabia"},
-	{"korName": "사모아", "engName": "Samoa"},
-	{"korName": "산마리노", "engName": "San Marino"},
-	{"korName": "상투메 프린시페", "engName": "Sao Tome and Principe"},
-	{"korName": "세네갈", "engName": "Senegal"},
-	{"korName": "세르비아", "engName": "Serbia"},
-	{"korName": "세이셸", "engName": "Seychelles"},
-	{"korName": "소말리아", "engName": "Somalia"},
-	{"korName": "솔로몬 제도", "engName": "Solomon Islands"},
-	{"korName": "수단", "engName": "Sudan"},
-	{"korName": "스리랑카", "engName": "Sri Lanka"},
-	{"korName": "스웨덴", "engName": "Sweden"},
-	{"korName": "스위스", "engName": "Switzerland"},
-	{"korName": "스페인", "engName": "Spain"},
-	{"korName": "슬로바키아", "engName": "Slovakia"},
-	{"korName": "슬로베니아", "engName": "Slovenia"},
-	{"korName": "시리아", "engName": "Syria"},
-	{"korName": "싱가포르", "engName": "Singapore"},
-	{"korName": "아이슬란드", "engName": "Iceland"},
-	{"korName": "아이티", "engName": "Haiti"},
-	{"korName": "알바니아", "engName": "Albania"},
-	{"korName": "알제리", "engName": "Algeria"},
-	{"korName": "앙골라", "engName": "Angola"},
-	{"korName": "아르메니아", "engName": "Armenia"},
-	{"korName": "아르헨티나", "engName": "Argentina"},
-	{"korName": "에스토니아", "engName": "Estonia"},
-	{"korName": "에콰도르", "engName": "Ecuador"},
-	{"korName": "엘살바도르", "engName": "El Salvador"},
-	{"korName": "영국", "engName": "United Kingdom"},
-	{"korName": "예멘", "engName": "Yemen"},
-	{"korName": "오만", "engName": "Oman"},
-	{"korName": "우간다", "engName": "Uganda"},
-	{"korName": "우루과이", "engName": "Uruguay"},
-	{"korName": "우즈베키스탄", "engName": "Uzbekistan"},
-	{"korName": "이란", "engName": "Iran"},
-	{"korName": "이탈리아", "engName": "Italy"},
-	{"korName": "인도", "engName": "India"},
-	{"korName": "인도네시아", "engName": "Indonesia"},
-	{"korName": "일본", "engName": "Japan"},
-	{"korName": "자메이카", "engName": "Jamaica"},
-	{"korName": "적도 기니", "engName": "Equatorial Guinea"},
-	{"korName": "조지아", "engName": "Georgia"},
-	{"korName": "중국", "engName": "China"},
-	{"korName": "체코", "engName": "Czech Republic"},
-	{"korName": "칠레", "engName": "Chile"},
-	{"korName": "카메룬", "engName": "Cameroon"},
-	{"korName": "카자흐스탄", "engName": "Kazakhstan"},
-	{"korName": "카타르", "engName": "Qatar"},
-	{"korName": "캐나다", "engName": "Canada"},
-	{"korName": "케냐", "engName": "Kenya"},
-	{"korName": "코스타리카", "engName": "Costa Rica"},
-	{"korName": "코모로", "engName": "Comoros"},
-	{"korName": "콜롬비아", "engName": "Colombia"},
-	{"korName": "크로아티아", "engName": "Croatia"},
-	{"korName": "키르기스스탄", "engName": "Kyrgyzstan"},
-	{"korName": "키프로스", "engName": "Cyprus"},
-	{"korName": "타지키스탄", "engName": "Tajikistan"},
-	{"korName": "탄자니아", "engName": "Tanzania"},
-	{"korName": "태국", "engName": "Thailand"},
-	{"korName": "터키", "engName": "Turkey"},
-	{"korName": "투르크메니스탄", "engName": "Turkmenistan"},
-	{"korName": "파나마", "engName": "Panama"},
-	{"korName": "파키스탄", "engName": "Pakistan"},
-	{"korName": "팔레스타인", "engName": "Palestine"},
-	{"korName": "폴란드", "engName": "Poland"},
-	{"korName": "프랑스", "engName": "France"},
-	{"korName": "피지", "engName": "Fiji"},
-	{"korName": "필리핀", "engName": "Philippines"},
-	{"korName": "헝가리", "engName": "Hungary"}
+	{
+		"stringID": 1000
+	},
+	{
+		"stringID": 1001
+	},
+	{
+		"stringID": 1002
+	},
+	{
+		"stringID": 1003
+	},
+	{
+		"stringID": 1004
+	},
+	{
+		"stringID": 1005
+	},
+	{
+		"stringID": 1006
+	},
+	{
+		"stringID": 1007
+	},
+	{
+		"stringID": 1008
+	},
+	{
+		"stringID": 1009
+	},
+	{
+		"stringID": 1010
+	},
+	{
+		"stringID": 1011
+	},
+	{
+		"stringID": 1012
+	},
+	{
+		"stringID": 1013
+	},
+	{
+		"stringID": 1014
+	},
+	{
+		"stringID": 1015
+	},
+	{
+		"stringID": 1016
+	},
+	{
+		"stringID": 1017
+	},
+	{
+		"stringID": 1018
+	},
+	{
+		"stringID": 1019
+	},
+	{
+		"stringID": 1020
+	},
+	{
+		"stringID": 1021
+	},
+	{
+		"stringID": 1022
+	},
+	{
+		"stringID": 1023
+	},
+	{
+		"stringID": 1024
+	},
+	{
+		"stringID": 1025
+	},
+	{
+		"stringID": 1026
+	},
+	{
+		"stringID": 1027
+	},
+	{
+		"stringID": 1028
+	},
+	{
+		"stringID": 1029
+	},
+	{
+		"stringID": 1030
+	},
+	{
+		"stringID": 1031
+	},
+	{
+		"stringID": 1032
+	},
+	{
+		"stringID": 1033
+	},
+	{
+		"stringID": 1034
+	},
+	{
+		"stringID": 1035
+	},
+	{
+		"stringID": 1036
+	},
+	{
+		"stringID": 1037
+	},
+	{
+		"stringID": 1038
+	},
+	{
+		"stringID": 1039
+	},
+	{
+		"stringID": 1040
+	},
+	{
+		"stringID": 1041
+	},
+	{
+		"stringID": 1042
+	},
+	{
+		"stringID": 1043
+	},
+	{
+		"stringID": 1044
+	},
+	{
+		"stringID": 1045
+	},
+	{
+		"stringID": 1046
+	},
+	{
+		"stringID": 1047
+	},
+	{
+		"stringID": 1048
+	},
+	{
+		"stringID": 1049
+	},
+	{
+		"stringID": 1050
+	},
+	{
+		"stringID": 1051
+	},
+	{
+		"stringID": 1052
+	},
+	{
+		"stringID": 1053
+	},
+	{
+		"stringID": 1054
+	},
+	{
+		"stringID": 1055
+	},
+	{
+		"stringID": 1056
+	},
+	{
+		"stringID": 1057
+	},
+	{
+		"stringID": 1058
+	},
+	{
+		"stringID": 1059
+	},
+	{
+		"stringID": 1060
+	},
+	{
+		"stringID": 1061
+	},
+	{
+		"stringID": 1062
+	},
+	{
+		"stringID": 1063
+	},
+	{
+		"stringID": 1064
+	},
+	{
+		"stringID": 1065
+	},
+	{
+		"stringID": 1066
+	},
+	{
+		"stringID": 1067
+	},
+	{
+		"stringID": 1068
+	},
+	{
+		"stringID": 1069
+	},
+	{
+		"stringID": 1070
+	},
+	{
+		"stringID": 1071
+	},
+	{
+		"stringID": 1072
+	},
+	{
+		"stringID": 1073
+	},
+	{
+		"stringID": 1074
+	},
+	{
+		"stringID": 1075
+	},
+	{
+		"stringID": 1076
+	},
+	{
+		"stringID": 1077
+	},
+	{
+		"stringID": 1078
+	},
+	{
+		"stringID": 1079
+	},
+	{
+		"stringID": 1080
+	},
+	{
+		"stringID": 1081
+	},
+	{
+		"stringID": 1082
+	},
+	{
+		"stringID": 1083
+	},
+	{
+		"stringID": 1084
+	},
+	{
+		"stringID": 1085
+	},
+	{
+		"stringID": 1086
+	},
+	{
+		"stringID": 1087
+	},
+	{
+		"stringID": 1088
+	},
+	{
+		"stringID": 1089
+	},
+	{
+		"stringID": 1090
+	},
+	{
+		"stringID": 1091
+	},
+	{
+		"stringID": 1092
+	},
+	{
+		"stringID": 1093
+	},
+	{
+		"stringID": 1094
+	},
+	{
+		"stringID": 1095
+	},
+	{
+		"stringID": 1096
+	},
+	{
+		"stringID": 1097
+	},
+	{
+		"stringID": 1098
+	},
+	{
+		"stringID": 1099
+	},
+	{
+		"stringID": 1100
+	},
+	{
+		"stringID": 1101
+	},
+	{
+		"stringID": 1102
+	},
+	{
+		"stringID": 1103
+	},
+	{
+		"stringID": 1104
+	},
+	{
+		"stringID": 1105
+	},
+	{
+		"stringID": 1106
+	},
+	{
+		"stringID": 1107
+	},
+	{
+		"stringID": 1108
+	},
+	{
+		"stringID": 1109
+	},
+	{
+		"stringID": 1110
+	},
+	{
+		"stringID": 1111
+	},
+	{
+		"stringID": 1112
+	},
+	{
+		"stringID": 1113
+	},
+	{
+		"stringID": 1114
+	},
+	{
+		"stringID": 1115
+	},
+	{
+		"stringID": 1116
+	},
+	{
+		"stringID": 1117
+	},
+	{
+		"stringID": 1118
+	},
+	{
+		"stringID": 1119
+	}
 ]

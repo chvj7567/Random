@@ -1,6 +1,6 @@
+using ChvjUnityInfra;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class UIAlarmArg : UIArg
 {
@@ -13,10 +13,8 @@ public class UIAlarm : UIBase
 
     [SerializeField] TMP_Text _alarmText;
 
-    public override void InitUI(CommonEnum.EUI uiType, UIArg arg)
+    public override void InitUI(UIArg arg)
     {
-        base.InitUI(uiType, arg);
-
         _arg = arg as UIAlarmArg;
 
         _alarmText.text = _arg.alarmText;

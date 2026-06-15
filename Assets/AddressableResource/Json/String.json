@@ -78,5 +78,960 @@
 		"stringID": 16,
 		"korean": "랜덤 예제",
 		"english": "Random\nExample"
+	},
+	{
+		"stringID": 100,
+		"korean": "예",
+		"english": "Yes"
+	},
+	{
+		"stringID": 101,
+		"korean": "아니오",
+		"english": "No"
+	},
+	{
+		"stringID": 110,
+		"korean": "1월",
+		"english": "January"
+	},
+	{
+		"stringID": 111,
+		"korean": "2월",
+		"english": "February"
+	},
+	{
+		"stringID": 112,
+		"korean": "3월",
+		"english": "March"
+	},
+	{
+		"stringID": 113,
+		"korean": "4월",
+		"english": "April"
+	},
+	{
+		"stringID": 114,
+		"korean": "5월",
+		"english": "May"
+	},
+	{
+		"stringID": 115,
+		"korean": "6월",
+		"english": "June"
+	},
+	{
+		"stringID": 116,
+		"korean": "7월",
+		"english": "July"
+	},
+	{
+		"stringID": 117,
+		"korean": "8월",
+		"english": "August"
+	},
+	{
+		"stringID": 118,
+		"korean": "9월",
+		"english": "September"
+	},
+	{
+		"stringID": 119,
+		"korean": "10월",
+		"english": "October"
+	},
+	{
+		"stringID": 120,
+		"korean": "11월",
+		"english": "November"
+	},
+	{
+		"stringID": 121,
+		"korean": "12월",
+		"english": "December"
+	},
+	{
+		"stringID": 130,
+		"korean": "{0}일",
+		"english": "{0}th"
+	},
+	{
+		"stringID": 140,
+		"korean": "숫자 입력 확인",
+		"english": "Failed"
+	},
+	{
+		"stringID": 141,
+		"korean": "숫자 범위 확인",
+		"english": "Failed"
+	},
+	{
+		"stringID": 1000,
+		"korean": "가나",
+		"english": "Ghana"
+	},
+	{
+		"stringID": 1001,
+		"korean": "가이아나",
+		"english": "Guyana"
+	},
+	{
+		"stringID": 1002,
+		"korean": "가봉",
+		"english": "Gabon"
+	},
+	{
+		"stringID": 1003,
+		"korean": "과테말라",
+		"english": "Guatemala"
+	},
+	{
+		"stringID": 1004,
+		"korean": "그리스",
+		"english": "Greece"
+	},
+	{
+		"stringID": 1005,
+		"korean": "그레나다",
+		"english": "Grenada"
+	},
+	{
+		"stringID": 1006,
+		"korean": "기니",
+		"english": "Guinea"
+	},
+	{
+		"stringID": 1007,
+		"korean": "기니비사우",
+		"english": "Guinea-Bissau"
+	},
+	{
+		"stringID": 1008,
+		"korean": "나미비아",
+		"english": "Namibia"
+	},
+	{
+		"stringID": 1009,
+		"korean": "나우루",
+		"english": "Nauru"
+	},
+	{
+		"stringID": 1010,
+		"korean": "나이지리아",
+		"english": "Nigeria"
+	},
+	{
+		"stringID": 1011,
+		"korean": "남아프리카 공화국",
+		"english": "South Africa"
+	},
+	{
+		"stringID": 1012,
+		"korean": "남수단",
+		"english": "South Sudan"
+	},
+	{
+		"stringID": 1013,
+		"korean": "네덜란드",
+		"english": "Netherlands"
+	},
+	{
+		"stringID": 1014,
+		"korean": "네팔",
+		"english": "Nepal"
+	},
+	{
+		"stringID": 1015,
+		"korean": "노르웨이",
+		"english": "Norway"
+	},
+	{
+		"stringID": 1016,
+		"korean": "뉴질랜드",
+		"english": "New Zealand"
+	},
+	{
+		"stringID": 1017,
+		"korean": "니제르",
+		"english": "Niger"
+	},
+	{
+		"stringID": 1018,
+		"korean": "니카라과",
+		"english": "Nicaragua"
+	},
+	{
+		"stringID": 1019,
+		"korean": "대만",
+		"english": "Taiwan"
+	},
+	{
+		"stringID": 1020,
+		"korean": "덴마크",
+		"english": "Denmark"
+	},
+	{
+		"stringID": 1021,
+		"korean": "도미니카",
+		"english": "Dominica"
+	},
+	{
+		"stringID": 1022,
+		"korean": "도미니카 공화국",
+		"english": "Dominican Republic"
+	},
+	{
+		"stringID": 1023,
+		"korean": "라오스",
+		"english": "Laos"
+	},
+	{
+		"stringID": 1024,
+		"korean": "레바논",
+		"english": "Lebanon"
+	},
+	{
+		"stringID": 1025,
+		"korean": "레소토",
+		"english": "Lesotho"
+	},
+	{
+		"stringID": 1026,
+		"korean": "루마니아",
+		"english": "Romania"
+	},
+	{
+		"stringID": 1027,
+		"korean": "룩셈부르크",
+		"english": "Luxembourg"
+	},
+	{
+		"stringID": 1028,
+		"korean": "리비아",
+		"english": "Libya"
+	},
+	{
+		"stringID": 1029,
+		"korean": "리투아니아",
+		"english": "Lithuania"
+	},
+	{
+		"stringID": 1030,
+		"korean": "마다가스카르",
+		"english": "Madagascar"
+	},
+	{
+		"stringID": 1031,
+		"korean": "말라위",
+		"english": "Malawi"
+	},
+	{
+		"stringID": 1032,
+		"korean": "말레이시아",
+		"english": "Malaysia"
+	},
+	{
+		"stringID": 1033,
+		"korean": "멕시코",
+		"english": "Mexico"
+	},
+	{
+		"stringID": 1034,
+		"korean": "모로코",
+		"english": "Morocco"
+	},
+	{
+		"stringID": 1035,
+		"korean": "모리셔스",
+		"english": "Mauritius"
+	},
+	{
+		"stringID": 1036,
+		"korean": "모리타니",
+		"english": "Mauritania"
+	},
+	{
+		"stringID": 1037,
+		"korean": "미국",
+		"english": "United States"
+	},
+	{
+		"stringID": 1038,
+		"korean": "미얀마",
+		"english": "Myanmar"
+	},
+	{
+		"stringID": 1039,
+		"korean": "바누아투",
+		"english": "Vanuatu"
+	},
+	{
+		"stringID": 1040,
+		"korean": "바르바도스",
+		"english": "Barbados"
+	},
+	{
+		"stringID": 1041,
+		"korean": "바레인",
+		"english": "Bahrain"
+	},
+	{
+		"stringID": 1042,
+		"korean": "방글라데시",
+		"english": "Bangladesh"
+	},
+	{
+		"stringID": 1043,
+		"korean": "베네수엘라",
+		"english": "Venezuela"
+	},
+	{
+		"stringID": 1044,
+		"korean": "베트남",
+		"english": "Vietnam"
+	},
+	{
+		"stringID": 1045,
+		"korean": "벨기에",
+		"english": "Belgium"
+	},
+	{
+		"stringID": 1046,
+		"korean": "벨라루스",
+		"english": "Belarus"
+	},
+	{
+		"stringID": 1047,
+		"korean": "보스니아 헤르체고비나",
+		"english": "Bosnia and Herzegovina"
+	},
+	{
+		"stringID": 1048,
+		"korean": "부르키나파소",
+		"english": "Burkina Faso"
+	},
+	{
+		"stringID": 1049,
+		"korean": "부룬디",
+		"english": "Burundi"
+	},
+	{
+		"stringID": 1050,
+		"korean": "불가리아",
+		"english": "Bulgaria"
+	},
+	{
+		"stringID": 1051,
+		"korean": "사우디아라비아",
+		"english": "Saudi Arabia"
+	},
+	{
+		"stringID": 1052,
+		"korean": "사모아",
+		"english": "Samoa"
+	},
+	{
+		"stringID": 1053,
+		"korean": "산마리노",
+		"english": "San Marino"
+	},
+	{
+		"stringID": 1054,
+		"korean": "상투메 프린시페",
+		"english": "Sao Tome and Principe"
+	},
+	{
+		"stringID": 1055,
+		"korean": "세네갈",
+		"english": "Senegal"
+	},
+	{
+		"stringID": 1056,
+		"korean": "세르비아",
+		"english": "Serbia"
+	},
+	{
+		"stringID": 1057,
+		"korean": "세이셸",
+		"english": "Seychelles"
+	},
+	{
+		"stringID": 1058,
+		"korean": "소말리아",
+		"english": "Somalia"
+	},
+	{
+		"stringID": 1059,
+		"korean": "솔로몬 제도",
+		"english": "Solomon Islands"
+	},
+	{
+		"stringID": 1060,
+		"korean": "수단",
+		"english": "Sudan"
+	},
+	{
+		"stringID": 1061,
+		"korean": "스리랑카",
+		"english": "Sri Lanka"
+	},
+	{
+		"stringID": 1062,
+		"korean": "스웨덴",
+		"english": "Sweden"
+	},
+	{
+		"stringID": 1063,
+		"korean": "스위스",
+		"english": "Switzerland"
+	},
+	{
+		"stringID": 1064,
+		"korean": "스페인",
+		"english": "Spain"
+	},
+	{
+		"stringID": 1065,
+		"korean": "슬로바키아",
+		"english": "Slovakia"
+	},
+	{
+		"stringID": 1066,
+		"korean": "슬로베니아",
+		"english": "Slovenia"
+	},
+	{
+		"stringID": 1067,
+		"korean": "시리아",
+		"english": "Syria"
+	},
+	{
+		"stringID": 1068,
+		"korean": "싱가포르",
+		"english": "Singapore"
+	},
+	{
+		"stringID": 1069,
+		"korean": "아이슬란드",
+		"english": "Iceland"
+	},
+	{
+		"stringID": 1070,
+		"korean": "아이티",
+		"english": "Haiti"
+	},
+	{
+		"stringID": 1071,
+		"korean": "알바니아",
+		"english": "Albania"
+	},
+	{
+		"stringID": 1072,
+		"korean": "알제리",
+		"english": "Algeria"
+	},
+	{
+		"stringID": 1073,
+		"korean": "앙골라",
+		"english": "Angola"
+	},
+	{
+		"stringID": 1074,
+		"korean": "아르메니아",
+		"english": "Armenia"
+	},
+	{
+		"stringID": 1075,
+		"korean": "아르헨티나",
+		"english": "Argentina"
+	},
+	{
+		"stringID": 1076,
+		"korean": "에스토니아",
+		"english": "Estonia"
+	},
+	{
+		"stringID": 1077,
+		"korean": "에콰도르",
+		"english": "Ecuador"
+	},
+	{
+		"stringID": 1078,
+		"korean": "엘살바도르",
+		"english": "El Salvador"
+	},
+	{
+		"stringID": 1079,
+		"korean": "영국",
+		"english": "United Kingdom"
+	},
+	{
+		"stringID": 1080,
+		"korean": "예멘",
+		"english": "Yemen"
+	},
+	{
+		"stringID": 1081,
+		"korean": "오만",
+		"english": "Oman"
+	},
+	{
+		"stringID": 1082,
+		"korean": "우간다",
+		"english": "Uganda"
+	},
+	{
+		"stringID": 1083,
+		"korean": "우루과이",
+		"english": "Uruguay"
+	},
+	{
+		"stringID": 1084,
+		"korean": "우즈베키스탄",
+		"english": "Uzbekistan"
+	},
+	{
+		"stringID": 1085,
+		"korean": "이란",
+		"english": "Iran"
+	},
+	{
+		"stringID": 1086,
+		"korean": "이탈리아",
+		"english": "Italy"
+	},
+	{
+		"stringID": 1087,
+		"korean": "인도",
+		"english": "India"
+	},
+	{
+		"stringID": 1088,
+		"korean": "인도네시아",
+		"english": "Indonesia"
+	},
+	{
+		"stringID": 1089,
+		"korean": "일본",
+		"english": "Japan"
+	},
+	{
+		"stringID": 1090,
+		"korean": "자메이카",
+		"english": "Jamaica"
+	},
+	{
+		"stringID": 1091,
+		"korean": "적도 기니",
+		"english": "Equatorial Guinea"
+	},
+	{
+		"stringID": 1092,
+		"korean": "조지아",
+		"english": "Georgia"
+	},
+	{
+		"stringID": 1093,
+		"korean": "중국",
+		"english": "China"
+	},
+	{
+		"stringID": 1094,
+		"korean": "체코",
+		"english": "Czech Republic"
+	},
+	{
+		"stringID": 1095,
+		"korean": "칠레",
+		"english": "Chile"
+	},
+	{
+		"stringID": 1096,
+		"korean": "카메룬",
+		"english": "Cameroon"
+	},
+	{
+		"stringID": 1097,
+		"korean": "카자흐스탄",
+		"english": "Kazakhstan"
+	},
+	{
+		"stringID": 1098,
+		"korean": "카타르",
+		"english": "Qatar"
+	},
+	{
+		"stringID": 1099,
+		"korean": "캐나다",
+		"english": "Canada"
+	},
+	{
+		"stringID": 1100,
+		"korean": "케냐",
+		"english": "Kenya"
+	},
+	{
+		"stringID": 1101,
+		"korean": "코스타리카",
+		"english": "Costa Rica"
+	},
+	{
+		"stringID": 1102,
+		"korean": "코모로",
+		"english": "Comoros"
+	},
+	{
+		"stringID": 1103,
+		"korean": "콜롬비아",
+		"english": "Colombia"
+	},
+	{
+		"stringID": 1104,
+		"korean": "크로아티아",
+		"english": "Croatia"
+	},
+	{
+		"stringID": 1105,
+		"korean": "키르기스스탄",
+		"english": "Kyrgyzstan"
+	},
+	{
+		"stringID": 1106,
+		"korean": "키프로스",
+		"english": "Cyprus"
+	},
+	{
+		"stringID": 1107,
+		"korean": "타지키스탄",
+		"english": "Tajikistan"
+	},
+	{
+		"stringID": 1108,
+		"korean": "탄자니아",
+		"english": "Tanzania"
+	},
+	{
+		"stringID": 1109,
+		"korean": "태국",
+		"english": "Thailand"
+	},
+	{
+		"stringID": 1110,
+		"korean": "터키",
+		"english": "Turkey"
+	},
+	{
+		"stringID": 1111,
+		"korean": "투르크메니스탄",
+		"english": "Turkmenistan"
+	},
+	{
+		"stringID": 1112,
+		"korean": "파나마",
+		"english": "Panama"
+	},
+	{
+		"stringID": 1113,
+		"korean": "파키스탄",
+		"english": "Pakistan"
+	},
+	{
+		"stringID": 1114,
+		"korean": "팔레스타인",
+		"english": "Palestine"
+	},
+	{
+		"stringID": 1115,
+		"korean": "폴란드",
+		"english": "Poland"
+	},
+	{
+		"stringID": 1116,
+		"korean": "프랑스",
+		"english": "France"
+	},
+	{
+		"stringID": 1117,
+		"korean": "피지",
+		"english": "Fiji"
+	},
+	{
+		"stringID": 1118,
+		"korean": "필리핀",
+		"english": "Philippines"
+	},
+	{
+		"stringID": 1119,
+		"korean": "헝가리",
+		"english": "Hungary"
+	},
+	{
+		"stringID": 2000,
+		"korean": "고양이",
+		"english": "Cat"
+	},
+	{
+		"stringID": 2001,
+		"korean": "개",
+		"english": "Dog"
+	},
+	{
+		"stringID": 2002,
+		"korean": "호랑이",
+		"english": "Tiger"
+	},
+	{
+		"stringID": 2003,
+		"korean": "사자",
+		"english": "Lion"
+	},
+	{
+		"stringID": 2004,
+		"korean": "코끼리",
+		"english": "Elephant"
+	},
+	{
+		"stringID": 2005,
+		"korean": "기린",
+		"english": "Giraffe"
+	},
+	{
+		"stringID": 2006,
+		"korean": "말",
+		"english": "Horse"
+	},
+	{
+		"stringID": 2007,
+		"korean": "늑대",
+		"english": "Wolf"
+	},
+	{
+		"stringID": 2008,
+		"korean": "곰",
+		"english": "Bear"
+	},
+	{
+		"stringID": 2009,
+		"korean": "여우",
+		"english": "Fox"
+	},
+	{
+		"stringID": 2010,
+		"korean": "토끼",
+		"english": "Rabbit"
+	},
+	{
+		"stringID": 2011,
+		"korean": "다람쥐",
+		"english": "Squirrel"
+	},
+	{
+		"stringID": 2012,
+		"korean": "거북이",
+		"english": "Turtle"
+	},
+	{
+		"stringID": 2013,
+		"korean": "악어",
+		"english": "Crocodile"
+	},
+	{
+		"stringID": 2014,
+		"korean": "코알라",
+		"english": "Koala"
+	},
+	{
+		"stringID": 2015,
+		"korean": "판다",
+		"english": "Panda"
+	},
+	{
+		"stringID": 2016,
+		"korean": "고래",
+		"english": "Whale"
+	},
+	{
+		"stringID": 2017,
+		"korean": "상어",
+		"english": "Shark"
+	},
+	{
+		"stringID": 2018,
+		"korean": "오리",
+		"english": "Duck"
+	},
+	{
+		"stringID": 2019,
+		"korean": "펭귄",
+		"english": "Penguin"
+	},
+	{
+		"stringID": 2020,
+		"korean": "코뿔소",
+		"english": "Rhinoceros"
+	},
+	{
+		"stringID": 2021,
+		"korean": "하마",
+		"english": "Hippopotamus"
+	},
+	{
+		"stringID": 2022,
+		"korean": "사슴",
+		"english": "Deer"
+	},
+	{
+		"stringID": 2023,
+		"korean": "물소",
+		"english": "Buffalo"
+	},
+	{
+		"stringID": 2024,
+		"korean": "원숭이",
+		"english": "Monkey"
+	},
+	{
+		"stringID": 2025,
+		"korean": "너구리",
+		"english": "Raccoon"
+	},
+	{
+		"stringID": 2026,
+		"korean": "여우원숭이",
+		"english": "Marmoset"
+	},
+	{
+		"stringID": 2027,
+		"korean": "미어캣",
+		"english": "Meerkat"
+	},
+	{
+		"stringID": 2028,
+		"korean": "치타",
+		"english": "Cheetah"
+	},
+	{
+		"stringID": 2029,
+		"korean": "타조",
+		"english": "Ostrich"
+	},
+	{
+		"stringID": 2030,
+		"korean": "비버",
+		"english": "Beaver"
+	},
+	{
+		"stringID": 2031,
+		"korean": "하늘소",
+		"english": "Sky Beetle"
+	},
+	{
+		"stringID": 2032,
+		"korean": "스컹크",
+		"english": "Skunk"
+	},
+	{
+		"stringID": 2033,
+		"korean": "쥐",
+		"english": "Mouse"
+	},
+	{
+		"stringID": 2034,
+		"korean": "고슴도치",
+		"english": "Hedgehog"
+	},
+	{
+		"stringID": 2035,
+		"korean": "물개",
+		"english": "Seal"
+	},
+	{
+		"stringID": 2036,
+		"korean": "여우",
+		"english": "Fox"
+	},
+	{
+		"stringID": 2037,
+		"korean": "염소",
+		"english": "Goat"
+	},
+	{
+		"stringID": 2038,
+		"korean": "닭",
+		"english": "Chicken"
+	},
+	{
+		"stringID": 2039,
+		"korean": "오소리",
+		"english": "Badger"
+	},
+	{
+		"stringID": 2040,
+		"korean": "상어",
+		"english": "Shark"
+	},
+	{
+		"stringID": 2041,
+		"korean": "문어",
+		"english": "Octopus"
+	},
+	{
+		"stringID": 2042,
+		"korean": "전갈",
+		"english": "Scorpion"
+	},
+	{
+		"stringID": 2043,
+		"korean": "거미",
+		"english": "Spider"
+	},
+	{
+		"stringID": 2044,
+		"korean": "메뚜기",
+		"english": "Grasshopper"
+	},
+	{
+		"stringID": 2045,
+		"korean": "파리",
+		"english": "Fly"
+	},
+	{
+		"stringID": 2046,
+		"korean": "벌",
+		"english": "Bee"
+	},
+	{
+		"stringID": 2047,
+		"korean": "나비",
+		"english": "Butterfly"
+	},
+	{
+		"stringID": 2048,
+		"korean": "모기",
+		"english": "Mosquito"
+	},
+	{
+		"stringID": 2049,
+		"korean": "개미",
+		"english": "Ant"
+	},
+	{
+		"stringID": 2050,
+		"korean": "두더지",
+		"english": "Mole"
+	},
+	{
+		"stringID": 2051,
+		"korean": "말미잘",
+		"english": "Anemone"
+	},
+	{
+		"stringID": 2052,
+		"korean": "산호",
+		"english": "Coral"
+	},
+	{
+		"stringID": 2053,
+		"korean": "해파리",
+		"english": "Jellyfish"
 	}
 ]

@@ -1,3 +1,4 @@
+using ChvjUnityInfra;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
     private class Menu
     {
         public CommonEnum.ERouletteMenu menu;
-        public ButtonEx buttonEx;
+        public CHButton buttonEx;
     }
 
     [SerializeField] private List<GameObject> liMainSceneObj = new List<GameObject>();
@@ -27,19 +28,33 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
     [SerializeField] private CustomRandomScene _customRandomScene;
 
     private CommonEnum.ERouletteMenu _curScene = CommonEnum.ERouletteMenu.Menu;
+    private IRouletteBackButton _mainRouletteUI;
+
+    private void Update()
+    {
+        //# CHMUI 가 떠 있으면 ESC 는 패키지가 최상위 UI 를 닫음 → 여기선 처리하지 않음.
+        //# 떠 있는 UI 가 없을 때만 현재 서브 화면을 메뉴로 되돌린다(안드로이드 뒤로가기 대체).
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (CHMUI.Instance.CheckUI)
+                return;
+
+            _mainRouletteUI?.Close();
+        }
+    }
 
     private async void Start()
     {
-        //# ���� On
+        //# 배너 On
         GameManagement.Instance.ShowBanner();
 
-        //# �޴� ���� ��� �Ѱ���
+        //# 메뉴 매니저 접근 넘기기
         SetManagement();
 
-        //# �޴� ��ư ��� ����
+        //# 메뉴 버튼 바인딩
         SetMenuButton();
 
-        //# �޴� �� ������
+        //# 메뉴 화면 보여주기
         ShowScene(CommonEnum.ERouletteMenu.Menu);
     }
 
@@ -72,7 +87,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
         {
             case CommonEnum.ERouletteMenu.Menu:
                 {
-                    UIManager.Instance.ResetMainUI();
+                    _mainRouletteUI = null;
 
                     foreach (var obj in liMainSceneObj)
                     {
@@ -82,7 +97,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
                 break;
             case CommonEnum.ERouletteMenu.RandomNumber:
                 {
-                    UIManager.Instance.SetMainUI(_randomNumberScene);
+                    _mainRouletteUI = _randomNumberScene;
 
                     foreach (var obj in liMainSceneObj)
                     {
@@ -94,7 +109,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
                 break;
             case CommonEnum.ERouletteMenu.RandomFood:
                 {
-                    UIManager.Instance.SetMainUI(_randomFoodScene);
+                    _mainRouletteUI = _randomFoodScene;
 
                     foreach (var obj in liMainSceneObj)
                     {
@@ -106,7 +121,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
                 break;
             case CommonEnum.ERouletteMenu.CustomRandom:
                 {
-                    UIManager.Instance.SetMainUI(_customRandomScene);
+                    _mainRouletteUI = _customRandomScene;
 
                     foreach (var obj in liMainSceneObj)
                     {

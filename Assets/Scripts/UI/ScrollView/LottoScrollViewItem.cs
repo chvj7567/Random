@@ -1,3 +1,4 @@
+using ChvjUnityInfra;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class LottoScrollViewItem : MonoBehaviour
 {
     [SerializeField] private TMP_Text _roundText;
-    [SerializeField] List<ButtonEx> _liButtonEx = new List<ButtonEx>();
+    [SerializeField] List<CHButton> _liNumberButton = new List<CHButton>();
 
     int _index;
     LottoResponse _lottoResponse;
@@ -15,13 +16,13 @@ public class LottoScrollViewItem : MonoBehaviour
         _index = index;
         _lottoResponse = lottoResponse;
 
-        _roundText.SetText($"{lottoResponse.drwNo}È¸Â÷");
-        _liButtonEx[0].SetText($"{lottoResponse.drwtNo1}");
-        _liButtonEx[1].SetText($"{lottoResponse.drwtNo2}");
-        _liButtonEx[2].SetText($"{lottoResponse.drwtNo3}");
-        _liButtonEx[3].SetText($"{lottoResponse.drwtNo4}");
-        _liButtonEx[4].SetText($"{lottoResponse.drwtNo5}");
-        _liButtonEx[5].SetText($"{lottoResponse.drwtNo6}");
-        _liButtonEx[6].SetText($"{lottoResponse.bnusNo}");
+        _roundText.SetText($"{lottoResponse.drwNo}È¸ï¿½ï¿½");
+        _liNumberButton[0].SetText($"{lottoResponse.drwtNo1}");
+        _liNumberButton[1].SetText($"{lottoResponse.drwtNo2}");
+        _liNumberButton[2].SetText($"{lottoResponse.drwtNo3}");
+        _liNumberButton[3].SetText($"{lottoResponse.drwtNo4}");
+        _liNumberButton[4].SetText($"{lottoResponse.drwtNo5}");
+        _liNumberButton[5].SetText($"{lottoResponse.drwtNo6}");
+        _liNumberButton[6].SetText($"{lottoResponse.bnusNo}");
     }
 }

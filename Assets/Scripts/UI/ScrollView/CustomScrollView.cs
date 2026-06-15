@@ -1,7 +1,8 @@
+using ChvjUnityInfra;
 using TMPro;
 using UnityEngine;
 
-public class CustomScrollView : CHScrollView<CustomScrollViewItem, string>
+public class CustomScrollView : CHPoolingScrollView<CustomScrollViewItem, string>
 {
     public override void InitItem(CustomScrollViewItem obj, string info, int index)
     {

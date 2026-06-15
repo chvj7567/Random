@@ -1,9 +1,10 @@
+using ChvjUnityInfra;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public class Capture : MonoBehaviour
 {
-    [SerializeField] private ButtonEx _captureButton;
+    [SerializeField] private CHButton _captureButton;
 
     private void Awake()
     {
@@ -25,9 +26,9 @@ public class Capture : MonoBehaviour
         {
             if (success)
             {
-                UIManager.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
+                CHMUI.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
                 {
-                    alarmText = $"½ºÅ©¸° ¼¦ÀÌ ÀúÀåµÇ¾ú½À´Ï´Ù."
+                    alarmText = $"ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½."
                 });
             }
         });

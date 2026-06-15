@@ -1,16 +1,23 @@
+using ChvjUnityInfra;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomExampleScene : MonoBehaviour, IRouletteBackButton
 {
-    [SerializeField] private ButtonEx _menuButton;
+    [SerializeField] private CHButton _menuButton;
 
-    [SerializeField] private ButtonEx _randomNumberButton;
-    [SerializeField] private ButtonEx _randomYesNoButton;
-    [SerializeField] private ButtonEx _randomMonthButton;
-    [SerializeField] private ButtonEx _randomDayButton;
-    [SerializeField] private ButtonEx _randomAnimalButton;
-    [SerializeField] private ButtonEx _randomCountryButton;
+    [SerializeField] private CHButton _randomNumberButton;
+    [SerializeField] private CHButton _randomYesNoButton;
+    [SerializeField] private CHButton _randomMonthButton;
+    [SerializeField] private CHButton _randomDayButton;
+    [SerializeField] private CHButton _randomAnimalButton;
+    [SerializeField] private CHButton _randomCountryButton;
+
+    //# í‘œì‹œ ë¬¸ìžì—´ stringID (String.json)
+    private const int StringIdYes = 100;
+    private const int StringIdNo = 101;
+    private const int StringIdMonthStart = 110;
+    private const int StringIdDayFormat = 130;
 
     private IRouletteSceneAccess _rouletteSceneAccess;
 
@@ -24,171 +31,79 @@ public class RandomExampleScene : MonoBehaviour, IRouletteBackButton
         _randomNumberButton.OnClick(() =>
         {
             List<string> liNumber = new List<string>();
-            for (int i = 0; i < 10; i ++)
+            for (int i = 0; i < 10; i++)
             {
                 liNumber.Add($"{i}");
             }
 
-            UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
-            {
-                liText = liNumber
-            });
+            ShowRoulette(liNumber);
         });
 
         _randomYesNoButton.OnClick(() =>
         {
             List<string> liYesNo = new List<string>();
 
+            string yesText = JsonManager.Instance.GetStringData(StringIdYes);
+            string noText = JsonManager.Instance.GetStringData(StringIdNo);
+
             bool yes = true;
-
-            if (GameManagement.Instance.Language == SystemLanguage.Korean)
+            for (int i = 0; i < 8; i++)
             {
-                for (int i = 0; i < 8; i++)
+                if (yes)
                 {
-                    if (yes)
-                    {
-                        yes = false;
-                        liYesNo.Add("¿¹");
-                    }
-                    else
-                    {
-                        yes = true;
-                        liYesNo.Add("¾Æ´Ï¿À");
-                    }
+                    yes = false;
+                    liYesNo.Add(yesText);
                 }
-            }
-            else
-            {
-                for (int i = 0; i < 8; i++)
+                else
                 {
-                    if (yes)
-                    {
-                        yes = false;
-                        liYesNo.Add("Yes");
-                    }
-                    else
-                    {
-                        yes = true;
-                        liYesNo.Add("NO");
-                    }
+                    yes = true;
+                    liYesNo.Add(noText);
                 }
             }
 
-            UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
-            {
-                liText = liYesNo
-            });
+            ShowRoulette(liYesNo);
         });
 
         _randomMonthButton.OnClick(() =>
         {
             List<string> liMonth = new List<string>();
-
-            if (GameManagement.Instance.Language == SystemLanguage.Korean)
+            for (int i = 0; i < 12; i++)
             {
-                for (int i = 1; i <= 12; i++)
-                {
-                    liMonth.Add($"{i}¿ù");
-                }
-            }
-            else
-            {
-                liMonth.Add("January");
-                liMonth.Add("February");
-                liMonth.Add("March");
-                liMonth.Add("April");
-                liMonth.Add("May");
-                liMonth.Add("June");
-                liMonth.Add("July");
-                liMonth.Add("August");
-                liMonth.Add("September");
-                liMonth.Add("October");
-                liMonth.Add("November");
-                liMonth.Add("December");
+                liMonth.Add(JsonManager.Instance.GetStringData(StringIdMonthStart + i));
             }
 
-            UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
-            {
-                liText = liMonth
-            });
+            ShowRoulette(liMonth);
         });
 
         _randomDayButton.OnClick(() =>
         {
             List<string> liDay = new List<string>();
 
-            if (GameManagement.Instance.Language == SystemLanguage.Korean)
+            string dayFormat = JsonManager.Instance.GetStringData(StringIdDayFormat);
+            for (int i = 1; i <= 31; i++)
             {
-                for (int i = 1; i <= 31; i++)
-                {
-                    liDay.Add($"{i}ÀÏ");
-                }
+                liDay.Add(string.Format(dayFormat, i));
             }
-            else
-            {
-                for (int i = 1; i <= 31; i++)
-                {
-                    liDay.Add($"{i}th");
-                }
-            }
-            
 
-            UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
-            {
-                liText = liDay
-            });
+            ShowRoulette(liDay);
         });
 
         _randomAnimalButton.OnClick(() =>
         {
-            var liJsonData = JsonManager.Instance.GetAnimalDataList();
-
-            List<string> liAnimal = new List<string>();
-            if (GameManagement.Instance.Language == SystemLanguage.Korean)
-            {
-                foreach (var data in liJsonData)
-                {
-                    liAnimal.Add(data.korName);
-                }
-            }
-            else
-            {
-                foreach (var data in liJsonData)
-                {
-                    liAnimal.Add(data.engName);
-                }
-            }
-
-            UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
-            {
-                liText = liAnimal
-            });
+            ShowRoulette(JsonManager.Instance.GetAnimalNameList());
         });
 
         _randomCountryButton.OnClick(() =>
         {
-            var liJsonData = JsonManager.Instance.GetCountryDataList();
+            ShowRoulette(JsonManager.Instance.GetCountryNameList());
+        });
+    }
 
-            List<string> liCountry = new List<string>();
-            if (GameManagement.Instance.Language == SystemLanguage.Korean)
-            {
-                foreach (var data in liJsonData)
-                {
-                    liCountry.Add(data.korName);
-                }
-            }
-            else
-            {
-                foreach (var data in liJsonData)
-                {
-                    liCountry.Add(data.engName);
-                }
-            }
-
-            UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
-            {
-                liText = liCountry
-            });
+    private void ShowRoulette(List<string> liText)
+    {
+        CHMUI.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
+        {
+            liText = liText,
         });
     }
 

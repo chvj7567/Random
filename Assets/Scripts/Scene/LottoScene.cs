@@ -1,3 +1,4 @@
+using ChvjUnityInfra;
 using DG.Tweening;
 using System;
 using System.Collections;
@@ -41,7 +42,7 @@ public class LottoResponse
 [Serializable]
 public class NumberInfo
 {
-    public List<ButtonEx> liNumberButton;
+    public List<CHButton> liNumberButton;
 }
 
 public class LottoScene : MonoBehaviour
@@ -50,14 +51,14 @@ public class LottoScene : MonoBehaviour
     private const string Local_LottoDataFile = "lotto.json";
     private const int Fail_Rank = 6;
 
-    [SerializeField] private ButtonEx _menuButton;
+    [SerializeField] private CHButton _menuButton;
     [SerializeField] private GameObject _loadingObject;
     [SerializeField] private Image _rouletteImage;
-    [SerializeField] private ButtonEx _rouletteButton;
-    [SerializeField] private ButtonEx _customImageButton;
+    [SerializeField] private CHButton _rouletteButton;
+    [SerializeField] private CHButton _customImageButton;
     [SerializeField] private TMP_Text _saveLottoRoundText;
-    [SerializeField] private ButtonEx _lottoInfoUpdateButton;
-    [SerializeField] private ButtonEx _viewWinningNumberButton;
+    [SerializeField] private CHButton _lottoInfoUpdateButton;
+    [SerializeField] private CHButton _viewWinningNumberButton;
     [SerializeField] private NumberInfo _lotto1Info;
     [SerializeField] private NumberInfo _lotto2Info;
     [SerializeField] private NumberInfo _lotto3Info;
@@ -71,16 +72,16 @@ public class LottoScene : MonoBehaviour
 
     private async void Start()
     {
-        //# ±¤°í On
+        //# ï¿½ï¿½ï¿½ï¿½ On
         GameManagement.Instance.ShowBanner();
 
-        //# ¹öÆ° ±â´É ¼¼ÆÃ
+        //# ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         SetButton();
 
-        //# ÀÌ¹ÌÁö ¼¼ÆÃ
+        //# ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         SetImage();
 
-        //# ½ÇÁ¦ ·Î¶Ç ¹øÈ£ ¼¼ÆÃ
+        //# ï¿½ï¿½ï¿½ï¿½ ï¿½Î¶ï¿½ ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½
         await GetLottoInfo(false);
     }
 
@@ -121,7 +122,7 @@ public class LottoScene : MonoBehaviour
         {
             if (_lilottoResponse.Count > 0)
             {
-                UIManager.Instance.ShowUI(CommonEnum.EUI.UILotto, new UILottoArg
+                CHMUI.Instance.ShowUI(CommonEnum.EUI.UILotto, new UILottoArg
                 {
                     liLottoResponse = _lilottoResponse,
                 });
@@ -131,8 +132,8 @@ public class LottoScene : MonoBehaviour
 
     private void SetImage()
     {
-        //# ÀÌ¹ÌÁö ¼³Á¤
-        //# »ç¿ëÀÚ°¡ Ä¿½ºÅÒÇÑ ÀÌ¹ÌÁö°¡ ÀÖÀ¸¸é ¹Ù·Î ¼³Á¤
+        //# ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        //# ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½
         var path = PlayerPrefs.GetString(Image_Path, string.Empty);
         if (path != string.Empty)
         {
@@ -158,7 +159,7 @@ public class LottoScene : MonoBehaviour
             };
 
             callback.PermissionDenied += msg => {
-                Debug.Log($"{msg} °ÅÀý");
+                Debug.Log($"{msg} ï¿½ï¿½ï¿½ï¿½");
             };
 
             Permission.RequestUserPermission(Permission.ExternalStorageRead, callback);
@@ -217,14 +218,14 @@ public class LottoScene : MonoBehaviour
             {
                 LottoJson json = JsonUtility.FromJson<LottoJson>(File.ReadAllText(localLottoPath));
                 _lilottoResponse = json.liLottoInfo;
-                _saveLottoRoundText.text = $"ÃÖ±Ù È¸Â÷ : {_lilottoResponse.Count}È¸Â÷";
+                _saveLottoRoundText.text = $"ï¿½Ö±ï¿½ È¸ï¿½ï¿½ : {_lilottoResponse.Count}È¸ï¿½ï¿½";
             }
             else
             {
                 var lottoText = Resources.Load<TextAsset>($"lotto");
                 LottoJson json = JsonUtility.FromJson<LottoJson>(lottoText.text);
                 _lilottoResponse = json.liLottoInfo;
-                _saveLottoRoundText.text = $"ÃÖ±Ù È¸Â÷ : {_lilottoResponse.Count}È¸Â÷";
+                _saveLottoRoundText.text = $"ï¿½Ö±ï¿½ È¸ï¿½ï¿½ : {_lilottoResponse.Count}È¸ï¿½ï¿½";
             }
         }
         else
@@ -233,7 +234,7 @@ public class LottoScene : MonoBehaviour
             {
                 if (await GetWebLottoNumbers(i) == false)
                 {
-                    _saveLottoRoundText.text = $"ÃÖ±Ù È¸Â÷ : {_lilottoResponse.Count}È¸Â÷";
+                    _saveLottoRoundText.text = $"ï¿½Ö±ï¿½ È¸ï¿½ï¿½ : {_lilottoResponse.Count}È¸ï¿½ï¿½";
                     break;
                 }
             }
@@ -248,7 +249,7 @@ public class LottoScene : MonoBehaviour
 
     private void StartRoulette(NumberInfo lottoInfo)
     {
-        _rouletteButton.Interatable = false;
+        _rouletteButton.Interactable = false;
 
         List<int> liMyNumber = new List<int>(6);
 
@@ -281,7 +282,7 @@ public class LottoScene : MonoBehaviour
             .SetLoops(5)
             .OnComplete(() =>
             {
-                _rouletteButton.Interatable = true;
+                _rouletteButton.Interactable = true;
 
                 for (int i = 0; i < liMyNumber.Count; i++)
                 {

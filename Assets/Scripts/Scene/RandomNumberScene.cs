@@ -1,16 +1,18 @@
-using NUnit.Framework;
+using ChvjUnityInfra;
 using System.Collections.Generic;
 using TMPro;
-using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class RandomNumberScene : MonoBehaviour, IRouletteBackButton
 {
-    [SerializeField] private ButtonEx _menuButton;
+    [SerializeField] private CHButton _menuButton;
     [SerializeField] private TMP_InputField _startNumberInput;
     [SerializeField] private TMP_InputField _endNumberInput;
-    [SerializeField] private ButtonEx _randomButton;
+    [SerializeField] private CHButton _randomButton;
+
+    //# í‘œì‹œ ë¬¸ìžì—´ stringID (String.json)
+    private const int StringIdInputError = 140;
+    private const int StringIdRangeError = 141;
 
     private IRouletteSceneAccess _rouletteSceneAccess;
 
@@ -30,30 +32,16 @@ public class RandomNumberScene : MonoBehaviour, IRouletteBackButton
 
         _randomButton.OnClick(() =>
         {
-            var startNumber = CheckInteger(_startNumberInput);
-            var endNubmer = CheckInteger(_endNumberInput);
+            (bool, int) startNumber = CheckInteger(_startNumberInput);
+            (bool, int) endNubmer = CheckInteger(_endNumberInput);
 
             if (startNumber.Item1 == false || endNubmer.Item1 == false)
             {
-                if (GameManagement.Instance.Language == SystemLanguage.Korean)
-                {
-                    _randomButton.SetText("¼ýÀÚ ÀÔ·Â È®ÀÎ");
-                }
-                else
-                {
-                    _randomButton.SetText("Failed");
-                }
+                _randomButton.SetText(JsonManager.Instance.GetStringData(StringIdInputError));
             }
             else if (startNumber.Item2 > endNubmer.Item2)
             {
-                if (GameManagement.Instance.Language == SystemLanguage.Korean)
-                {
-                    _randomButton.SetText("¼ýÀÚ ¹üÀ§ È®ÀÎ");
-                }
-                else
-                {
-                    _randomButton.SetText("Failed");
-                }
+                _randomButton.SetText(JsonManager.Instance.GetStringData(StringIdRangeError));
             }
             else
             {
@@ -66,7 +54,7 @@ public class RandomNumberScene : MonoBehaviour, IRouletteBackButton
                     liText.Add($"{i}");
                 }
 
-                UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
+                CHMUI.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
                 {
                     liText = liText
                 });

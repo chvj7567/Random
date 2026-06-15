@@ -1,3 +1,4 @@
+using ChvjUnityInfra;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
@@ -8,11 +9,11 @@ using System.Linq;
 public class CustomRandomScene : MonoBehaviour, IRouletteBackButton
 {
     [SerializeField] private TMP_InputField _customInput;
-    [SerializeField] private ButtonEx _menuButton;
+    [SerializeField] private CHButton _menuButton;
     [SerializeField] private CustomScrollView scrollView;
-    [SerializeField] private ButtonEx _plusButton;
-    [SerializeField] private ButtonEx _minusButton;
-    [SerializeField] private ButtonEx _resultButton;
+    [SerializeField] private CHButton _plusButton;
+    [SerializeField] private CHButton _minusButton;
+    [SerializeField] private CHButton _resultButton;
 
     private ReactiveCollection<string> _liCustomText = new ReactiveCollection<string>();
     private IRouletteSceneAccess _rouletteSceneAccess;
@@ -46,7 +47,7 @@ public class CustomRandomScene : MonoBehaviour, IRouletteBackButton
         {
             if (_liCustomText.Count > 0)
             {
-                UIManager.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
+                CHMUI.Instance.ShowUI(CommonEnum.EUI.UIRoulette, new UIRouletteArg
                 {
                     liText = _liCustomText.ToList(),
                 });

@@ -1,3 +1,4 @@
+using ChvjUnityInfra;
 using TMPro;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ public class Lotto2Scene : MonoBehaviour
     [SerializeField] private NumberInfo _lotto3Info;
     [SerializeField] private NumberInfo _lotto4Info;
     [SerializeField] private NumberInfo _lotto5Info;
-    [SerializeField] private ButtonEx _rouletteButton;
+    [SerializeField] private CHButton _rouletteButton;
 
     private ILottoMenuSceneAccess _lottoMenuSceneAccess;
 
@@ -38,11 +39,11 @@ public class Lotto2Scene : MonoBehaviour
 
     private void StartRoulette(TMP_Text joText, NumberInfo lottoInfo)
     {
-        joText.text = $"{Random.Range(1, 6)}Á¶";
+        joText.text = $"{Random.Range(1, 6)}ï¿½ï¿½";
 
-        foreach (var buttonEx in lottoInfo.liNumberButton)
+        foreach (CHButton button in lottoInfo.liNumberButton)
         {
-            buttonEx.SetText($"{Random.Range(0, 10)}");
+            button.SetText($"{Random.Range(0, 10)}");
         }
     }
 }

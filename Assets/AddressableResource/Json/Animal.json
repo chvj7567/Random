@@ -1,56 +1,164 @@
 [
-	{"korName": "고양이", "engName": "Cat"},
-	{"korName": "개", "engName": "Dog"},
-	{"korName": "호랑이", "engName": "Tiger"},
-	{"korName": "사자", "engName": "Lion"},
-	{"korName": "코끼리", "engName": "Elephant"},
-	{"korName": "기린", "engName": "Giraffe"},
-	{"korName": "말", "engName": "Horse"},
-	{"korName": "늑대", "engName": "Wolf"},
-	{"korName": "곰", "engName": "Bear"},
-	{"korName": "여우", "engName": "Fox"},
-	{"korName": "토끼", "engName": "Rabbit"},
-	{"korName": "다람쥐", "engName": "Squirrel"},
-	{"korName": "거북이", "engName": "Turtle"},
-	{"korName": "악어", "engName": "Crocodile"},
-	{"korName": "코알라", "engName": "Koala"},
-	{"korName": "판다", "engName": "Panda"},
-	{"korName": "고래", "engName": "Whale"},
-	{"korName": "상어", "engName": "Shark"},
-	{"korName": "오리", "engName": "Duck"},
-	{"korName": "펭귄", "engName": "Penguin"},
-	{"korName": "코뿔소", "engName": "Rhinoceros"},
-	{"korName": "하마", "engName": "Hippopotamus"},
-	{"korName": "사슴", "engName": "Deer"},
-	{"korName": "물소", "engName": "Buffalo"},
-	{"korName": "원숭이", "engName": "Monkey"},
-	{"korName": "너구리", "engName": "Raccoon"},
-	{"korName": "여우원숭이", "engName": "Marmoset"},
-	{"korName": "미어캣", "engName": "Meerkat"},
-	{"korName": "치타", "engName": "Cheetah"},
-	{"korName": "타조", "engName": "Ostrich"},
-	{"korName": "비버", "engName": "Beaver"},
-	{"korName": "하늘소", "engName": "Sky Beetle"},
-	{"korName": "스컹크", "engName": "Skunk"},
-	{"korName": "쥐", "engName": "Mouse"},
-	{"korName": "고슴도치", "engName": "Hedgehog"},
-	{"korName": "물개", "engName": "Seal"},
-	{"korName": "여우", "engName": "Fox"},
-	{"korName": "염소", "engName": "Goat"},
-	{"korName": "닭", "engName": "Chicken"},
-	{"korName": "오소리", "engName": "Badger"},
-	{"korName": "상어", "engName": "Shark"},
-	{"korName": "문어", "engName": "Octopus"},
-	{"korName": "전갈", "engName": "Scorpion"},
-	{"korName": "거미", "engName": "Spider"},
-	{"korName": "메뚜기", "engName": "Grasshopper"},
-	{"korName": "파리", "engName": "Fly"},
-	{"korName": "벌", "engName": "Bee"},
-	{"korName": "나비", "engName": "Butterfly"},
-	{"korName": "모기", "engName": "Mosquito"},
-	{"korName": "개미", "engName": "Ant"},
-	{"korName": "두더지", "engName": "Mole"},
-	{"korName": "말미잘", "engName": "Anemone"},
-	{"korName": "산호", "engName": "Coral"},
-	{"korName": "해파리", "engName": "Jellyfish"}
+	{
+		"stringID": 2000
+	},
+	{
+		"stringID": 2001
+	},
+	{
+		"stringID": 2002
+	},
+	{
+		"stringID": 2003
+	},
+	{
+		"stringID": 2004
+	},
+	{
+		"stringID": 2005
+	},
+	{
+		"stringID": 2006
+	},
+	{
+		"stringID": 2007
+	},
+	{
+		"stringID": 2008
+	},
+	{
+		"stringID": 2009
+	},
+	{
+		"stringID": 2010
+	},
+	{
+		"stringID": 2011
+	},
+	{
+		"stringID": 2012
+	},
+	{
+		"stringID": 2013
+	},
+	{
+		"stringID": 2014
+	},
+	{
+		"stringID": 2015
+	},
+	{
+		"stringID": 2016
+	},
+	{
+		"stringID": 2017
+	},
+	{
+		"stringID": 2018
+	},
+	{
+		"stringID": 2019
+	},
+	{
+		"stringID": 2020
+	},
+	{
+		"stringID": 2021
+	},
+	{
+		"stringID": 2022
+	},
+	{
+		"stringID": 2023
+	},
+	{
+		"stringID": 2024
+	},
+	{
+		"stringID": 2025
+	},
+	{
+		"stringID": 2026
+	},
+	{
+		"stringID": 2027
+	},
+	{
+		"stringID": 2028
+	},
+	{
+		"stringID": 2029
+	},
+	{
+		"stringID": 2030
+	},
+	{
+		"stringID": 2031
+	},
+	{
+		"stringID": 2032
+	},
+	{
+		"stringID": 2033
+	},
+	{
+		"stringID": 2034
+	},
+	{
+		"stringID": 2035
+	},
+	{
+		"stringID": 2036
+	},
+	{
+		"stringID": 2037
+	},
+	{
+		"stringID": 2038
+	},
+	{
+		"stringID": 2039
+	},
+	{
+		"stringID": 2040
+	},
+	{
+		"stringID": 2041
+	},
+	{
+		"stringID": 2042
+	},
+	{
+		"stringID": 2043
+	},
+	{
+		"stringID": 2044
+	},
+	{
+		"stringID": 2045
+	},
+	{
+		"stringID": 2046
+	},
+	{
+		"stringID": 2047
+	},
+	{
+		"stringID": 2048
+	},
+	{
+		"stringID": 2049
+	},
+	{
+		"stringID": 2050
+	},
+	{
+		"stringID": 2051
+	},
+	{
+		"stringID": 2052
+	},
+	{
+		"stringID": 2053
+	}
 ]

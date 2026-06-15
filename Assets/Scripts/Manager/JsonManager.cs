@@ -1,3 +1,4 @@
+using ChvjUnityInfra;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -15,18 +16,16 @@ public class StringData
 [Serializable]
 public class CountryData
 {
-    public string korName;
-    public string engName;
+    public int stringID;
 }
 
 [Serializable]
 public class AnimalData
 {
-    public string korName;
-    public string engName;
+    public int stringID;
 }
 
-public partial class JsonManager : SingletoneStatic<JsonManager>
+public partial class JsonManager : CHSingletonStatic<JsonManager>
 {
     [Serializable]
     private class JsonData
@@ -92,9 +91,16 @@ public partial class JsonManager : SingletoneStatic<JsonManager>
         Action<TextAsset> callback;
         _liStringData.Clear();
 
-        ResourceManager.Instance.LoadJson(CommonEnum.EJson.String, callback = (TextAsset textAsset) =>
+        CHMResource.Instance.Load<TextAsset>(CommonEnum.EJson.String, callback = (TextAsset textAsset) =>
         {
-            var jsonData = JsonUtility.FromJson<JsonData>("{\"arrStringData\":" + textAsset.text + "}");
+            if (textAsset == null)
+            {
+                Debug.LogError("[JsonManager] String json load failed (textAsset null)");
+                taskCompletionSource.SetResult(null);
+                return;
+            }
+
+            JsonData jsonData = JsonUtility.FromJson<JsonData>("{\"arrStringData\":" + textAsset.text + "}");
             foreach (var data in jsonData.arrStringData)
             {
                 _liStringData.Add(data);
@@ -114,9 +120,16 @@ public partial class JsonManager : SingletoneStatic<JsonManager>
         Action<TextAsset> callback;
         _liCountryData.Clear();
 
-        ResourceManager.Instance.LoadJson(CommonEnum.EJson.Country, callback = (TextAsset textAsset) =>
+        CHMResource.Instance.Load<TextAsset>(CommonEnum.EJson.Country, callback = (TextAsset textAsset) =>
         {
-            var jsonData = JsonUtility.FromJson<JsonData>("{\"arrCountryData\":" + textAsset.text + "}");
+            if (textAsset == null)
+            {
+                Debug.LogError("[JsonManager] Country json load failed (textAsset null)");
+                taskCompletionSource.SetResult(null);
+                return;
+            }
+
+            JsonData jsonData = JsonUtility.FromJson<JsonData>("{\"arrCountryData\":" + textAsset.text + "}");
             foreach (var data in jsonData.arrCountryData)
             {
                 _liCountryData.Add(data);
@@ -136,9 +149,16 @@ public partial class JsonManager : SingletoneStatic<JsonManager>
         Action<TextAsset> callback;
         _liAnimalData.Clear();
 
-        ResourceManager.Instance.LoadJson(CommonEnum.EJson.Animal, callback = (TextAsset textAsset) =>
+        CHMResource.Instance.Load<TextAsset>(CommonEnum.EJson.Animal, callback = (TextAsset textAsset) =>
         {
-            var jsonData = JsonUtility.FromJson<JsonData>("{\"arrAnimalData\":" + textAsset.text + "}");
+            if (textAsset == null)
+            {
+                Debug.LogError("[JsonManager] Animal json load failed (textAsset null)");
+                taskCompletionSource.SetResult(null);
+                return;
+            }
+
+            JsonData jsonData = JsonUtility.FromJson<JsonData>("{\"arrAnimalData\":" + textAsset.text + "}");
             foreach (var data in jsonData.arrAnimalData)
             {
                 _liAnimalData.Add(data);
@@ -156,8 +176,8 @@ public partial class JsonManager
 {
     public string GetStringData(int stringID)
     {
-        var liString = GetStringDataList();
-        var findData = liString.Find(_ => _.stringID == stringID);
+        List<StringData> liString = GetStringDataList();
+        StringData findData = liString.Find(_ => _.stringID == stringID);
         if (findData == null)
             return string.Empty;
 
@@ -169,5 +189,28 @@ public partial class JsonManager
         {
             return findData.english;
         }
+    }
+
+    //# Country/Animal 데이터의 stringID 를 현재 언어 표시 문자열로 변환해 반환
+    public List<string> GetCountryNameList()
+    {
+        List<string> result = new List<string>();
+        foreach (CountryData data in GetCountryDataList())
+        {
+            result.Add(GetStringData(data.stringID));
+        }
+
+        return result;
+    }
+
+    public List<string> GetAnimalNameList()
+    {
+        List<string> result = new List<string>();
+        foreach (AnimalData data in GetAnimalDataList())
+        {
+            result.Add(GetStringData(data.stringID));
+        }
+
+        return result;
     }
 }

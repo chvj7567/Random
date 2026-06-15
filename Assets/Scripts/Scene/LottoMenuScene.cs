@@ -1,3 +1,4 @@
+using ChvjUnityInfra;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class LottoMenuScene : MonoBehaviour, ILottoMenuSceneAccess
     private class Menu
     {
         public CommonEnum.ELottoMenu menu;
-        public ButtonEx buttonEx;
+        public CHButton buttonEx;
     }
 
     [SerializeField] private List<GameObject> liMainSceneObj = new List<GameObject>();
@@ -25,16 +26,16 @@ public class LottoMenuScene : MonoBehaviour, ILottoMenuSceneAccess
 
     private void Start()
     {
-        //# ±¤°í On
+        //# ï¿½ï¿½ï¿½ï¿½ On
         GameManagement.Instance.ShowBanner();
 
-        //# ¸Þ´º °ü¸® ±â´É ³Ñ°ÜÁÜ
+        //# ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ñ°ï¿½ï¿½ï¿½
         SetManagement();
 
-        //# ¸Þ´º ¹öÆ° ±â´É ¼¼ÆÃ
+        //# ï¿½Þ´ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         SetMenuButton();
 
-        //# ¸Þ´º ¾À º¸¿©ÁÜ
+        //# ï¿½Þ´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         ShowScene(CommonEnum.ELottoMenu.Menu);
     }
 

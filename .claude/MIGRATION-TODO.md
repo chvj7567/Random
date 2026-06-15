@@ -130,7 +130,8 @@ Assets/Scripts/
 4. ~~테스트 인프라~~ → **결정: 나중에 신설** (지금은 project.md 권장 경로만 유지, 첫 테스트 시 test-engineer 가 셋업)
 5. ~~superpowers 흐름~~ → **결정·완료: `uses_superpowers: false`** (brainstorming/writing-plans 생략, 간이 흐름 — game-designer 부터 시작)
 6. ~~ChvjPackage 물리 등록~~ → **결정·완료: 임베드 복사** (`Packages/com.chvj.unityinfra/`)
-   - ⚠️ **모듈 트림**: 임베드 사본에서 `Runtime/Iap`(Unity Purchasing 미설치)·`Runtime/Social`(GPGS 미설치) 제거 — 미설치 SDK 참조로 패키지 전체 컴파일이 깨지기 때문. 남은 모듈: **Ads · Audio · Core · Pool · Resource · UI** (Ads 는 GoogleMobileAds DLL 존재로 OK). IAP/GPGS 가 필요해지면 해당 SDK 설치 후 `D:\ChvjPackage` 에서 모듈 재복사.
+   - ✅ **모듈 구성(정정)**: 8개 모듈 전부 임베드 (Ads·Audio·Core·Iap·Pool·Resource·Social·UI). Ads/Iap/Social 은 각자 자체 asmdef + `defineConstraints`(`UNITY_INFRA_ADS`/`_IAP`/`_SOCIAL`)로 게이트 → define 미설정 시 컴파일 대상에서 제외되어 **빌드를 깨지 않음**(휴면). 필요 시 해당 SDK 설치 + Tools/ChvjUnityInfra/Settings 에서 define 활성화로 켠다.
+     - ⚠️ 정정 경위: 처음엔 "단일 asmdef"로 오판해 Iap/Social 을 삭제했으나, 실제로는 모듈별 asmdef define 게이트라 삭제가 불필요했음 → 소스에서 복원 완료.
    - ⚠️ **컴파일 미검증**: Unity 에디터로 임포트/컴파일 실제 확인 필요(이 환경에서 에디터 실행 불가).
    - ⚠️ **코드 중복**: Random 은 이미 자체 infra(전역 `UIBase`·`UIArg`·`ResourceManager`·`AudioManager`·`CHScrollView`·`PoolingScrollViewItem` 등)를 들고 있고, 패키지는 `ChvjUnityInfra.*` 로 격리됨 → 컴파일 충돌은 없으나 **기능 중복**. 실제로 패키지 API(`CHMResource`/`CHMUI`/`CHMPool` 등)로 갈아끼우고 자체 사본을 제거하는 **코드 마이그레이션은 별도 큰 작업**(미착수). `using ChvjUnityInfra;` 추가 시 `UIBase`/`UIArg` 등 이름 모호성 주의.
 7. ~~stage/stage_goal/concept_doc~~ → **결정·완료: 안 맞는 키 삭제** (concept_doc·stage_goal·concept_sections 제거)
