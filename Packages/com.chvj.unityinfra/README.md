@@ -1,0 +1,305 @@
+# UnityInfra
+
+Unity 게임용 인프라 패키지. 싱글톤 베이스, Addressables 리소스 로더, UI 매니저, GameObject 풀, 사운드, 옵트인 광고/IAP/소셜 모듈을 한 패키지에 통합.
+
+핵심 모듈은 **외부 라이브러리 의존 없음** (Unity 기본만). 광고/IAP/소셜은 옵트인 모듈이라 안 쓰는 프로젝트는 해당 의존성 임포트 안 해도 됨.
+
+---
+
+## 설치
+
+### 1. 임베디드 복사 (가장 빠름)
+`Packages/com.chvj.unityinfra/` 폴더 자체를 다른 프로젝트의 같은 위치에 복사. Unity가 자동 인식.
+
+### 2. 로컬 경로 참조 (한 머신 동시 개발)
+대상 프로젝트의 `Packages/manifest.json`:
+```json
+{
+  "dependencies": {
+    "com.chvj.unityinfra": "file:../../이패키지가-있는-프로젝트/Packages/com.chvj.unityinfra"
+  }
+}
+```
+
+### 3. Git URL (정공법, 협업/배포)
+```json
+{
+  "dependencies": {
+    "com.chvj.unityinfra": "https://github.com/chvj7567/unityinfra.git#v2.0.5"
+  }
+}
+```
+
+---
+
+## 빠른 시작
+
+### 1) 게임별 enum 정의 (게임 측 코드)
+```csharp
+public enum EUI    { UIMain, UIShop, UISettings }
+public enum EAudio { None, BGM, Click, Coin }    // "None"/"Max"는 skip, BGM은 Init에 명시
+public enum EJson  { Items, Stages }
+```
+
+### 2) Addressables 라벨 셋업
+- 모든 리소스(UI 프리팹, 사운드, JSON, 폰트, 스프라이트 등)에 Addressables 라벨 **"Resource"** 부여
+- 파일명은 enum 항목명과 **정확히 일치** (예: `EUI.UIShop` → `UIShop.prefab`)
+
+### 3) 게임 부팅 코드 — hook/Provider 설정 후 `ChvjUnityInfraSDK.Initialize` 호출
+```csharp
+using ChvjUnityInfra;
+
+public async Task InitManager()
+{
+    // 1. 오디오 + UI hook/Provider 설정 (SDK에 묶이지 않음 — 필요한 것만)
+    CHMSound.Instance.Init<EAudio>(EAudio.BGM);   // BGM 키 명시 (params, 0~N개)
+    CHButton.ClickSoundHook  = () => CHMSound.Instance.Play(EAudio.Click);
+    CHToggle.ChangeSoundHook = CHButton.ClickSoundHook;
+    CHText.StringProvider    = new GameStringProvider();
+    CHText.FontProvider      = new GameFontProvider();
+
+    // 2. 코어 초기화
+    await ChvjUnityInfraSDK.Initialize(async () =>
+    {
+        // CHMResource.Init 직후 / CHMUI.Init 이전에 실행할 게임 측 작업 (JSON 로드, 폰트 로드 등)
+        await MyJsonLoader.LoadAllAsync();
+        await LoadFontAsync();
+    });
+}
+```
+
+`Initialize` 내부 진행 순서:
+1. `CHMResource.Init` — Addressables "Resource" 라벨 키 매핑
+2. `afterResourceInit` — 게임 측 추가 로드 (null이면 skip)
+3. `CHMUI.Init`
+4. 옵트인 모듈 init hook 호출 — `Tools/ChvjUnityInfra/Settings`에서 켜져 어셈블리가 컴파일된 모듈만:
+   - Use Admob ✓ → `CHMAdmob.Init` (AdConfig 자동 로드)
+   - Use IAP ✓ → `CHMIAP.Init` (IAPProductConfig 자동 로드)
+   - Use GPGS는 명시 Init 없음 — `CHMGPGS.Login` 시 자동 초기화
+
+옵트인 모듈의 init hook은 각 모듈 어셈블리가 `RuntimeInitializeOnLoadMethod`로 스스로 등록하므로 게임 코드에서 직접 건드릴 일 없음.
+
+### 4) Provider 구현체 (CHText의 i18n/폰트 쓰는 경우)
+```csharp
+public class GameStringProvider : IStringProvider
+{
+    public string GetString(int stringID) => MyStringTable.Get(stringID);
+}
+
+public class GameFontProvider : IFontProvider
+{
+    public TMP_FontAsset GetFont()          => _font;
+    public Material      GetFontMaterial()  => _fontMaterial;
+}
+```
+
+---
+
+## 모듈 가이드
+
+### Core
+- `CHSingletonStatic<T>` — 일반 클래스 싱글톤, `T.Instance`로 접근
+- `CHSingleton<T>` — MonoBehaviour 싱글톤, 자동 GameObject 생성
+- `CHUtil` — `List<T>.IsNullOrEmpty()`, `GameObject.GetOrAddComponent<T>()`, `FindChild<T>()`
+- `CompositeDisposable` — IDisposable 묶음 관리
+- `JsonArrayUtility.FromJsonArray<T>(json)` — `JsonUtility`로 최상위 배열 파싱
+- `ReadOnlyAttribute` — Inspector ReadOnly 마커
+
+### Resource (Addressables 래퍼)
+```csharp
+await CHMResource.Instance.Init();   // 기본 라벨 "Resource" 키 매핑 (라벨 인자로 변경 가능)
+
+CHMResource.Instance.Load<AudioClip>(EAudio.Click, clip => ...);
+CHMResource.Instance.Load<Material>($"{EFont.Main}Material", mat => ...);  // string 오버로드
+CHMResource.Instance.Instantiate<GameObject>(EUI.UIShop, ui => ...);
+
+await CHMResource.Instance.PreloadByLabelAsync("Stage1", (progress, key) => ...);  // 라벨 단위 선로드
+CHMResource.Instance.Unload(EAudio.Click);   // 개별 해제
+CHMResource.Instance.UnloadAll();            // 전체 해제
+```
+
+### Pool
+```csharp
+CHMPool.Instance.Init();
+CHMPool.Instance.CreatePool(prefab, count: 10);
+var instance = CHMPool.Instance.Pop(prefab, parent);
+CHMPool.Instance.Push(instance.GetComponent<CHPoolable>());
+```
+
+### Audio
+```csharp
+CHMSound.Instance.Init<EAudio>(EAudio.BGM);  // BGM 키 명시 (params, 0~N개)
+CHMSound.Instance.Play(EAudio.BGM);          // loop=true (명시했으므로)
+CHMSound.Instance.Play(EAudio.Click);        // PlayOneShot
+CHMSound.Instance.Stop(EAudio.BGM);          // 개별 정지 (StopAllBGM / PauseAll / UnPauseAll도 제공)
+CHMSound.Instance.SetBGMVolume(0.7f);        // PlayerPrefs에 영구 저장 (Effect/Master도 동일)
+```
+
+### UI
+```csharp
+// 표시 (콜백 / await 두 가지)
+CHMUI.Instance.ShowUI(EUI.UIShop, new UIShopArg { ... }, ui => { /* 콜백 */ });
+var ui = await CHMUI.Instance.ShowUIAsync(EUI.UIShop, new UIShopArg { ... });
+
+// 닫기
+Close();                              // UIBase 안에서
+CHMUI.Instance.CloseUI(EUI.UIShop);   // 밖에서
+CHMUI.Instance.CloseTopUI();          // 최상위 UI 닫기 (ESC와 동일 동작)
+
+// UIBase 상속
+public class UIShop : UIBase
+{
+    public override void InitUI(UIArg arg) { ... }
+}
+
+// 인자 전달
+public class UIShopArg : UIArg { public int category; }
+```
+
+**캔버스 확보 우선순위** (ShowUI 시 자동, EventSystem 없으면 같이 생성):
+1. `CHMUI.Instance.SetRoot(transform)`로 명시 지정한 루트
+2. 씬에서 Tag가 `UICanvas`인 Canvas
+3. 씬의 아무 Canvas
+4. 없으면 Canvas + CanvasScaler + GraphicRaycaster 자동 생성
+
+**ESC 자동 닫기**: Legacy Input Manager(`ENABLE_LEGACY_INPUT_MANAGER`)에서만 동작. Input System Only 프로젝트는 InputAction 콜백에서 `CloseTopUI()`를 직접 호출.
+
+씬 전환 시 캔버스/UI 캐시는 자동 초기화됨 — 다음 `ShowUI`에서 새 캔버스를 다시 확보.
+
+**UI 컴포넌트**:
+- `CHButton` — 클릭 SFX 자동 (`ClickSoundHook`), `OnClick(callback, disposable)` API
+- `CHText` — stringID 기반 i18n + 폰트 자동 (Provider 주입)
+- `CHPoolingScrollView<TItem, TData>` — 풀링 스크롤뷰 (서브클래스에서 `InitItem` 구현)
+- `CHToggle` — 토글 SFX 자동
+- `CHDebugLog` — 게임 내 로그 표시기
+
+### Ads (옵트인 — `UNITY_INFRA_ADS`)
+1. **선결**: Google Mobile Ads Unity Plugin **8.x+ (UMP 모듈 포함)** 임포트. UMP가 없는 구버전은 컴파일 에러.
+2. **활성화**: `Tools/ChvjUnityInfra/Settings` → Ads 탭 → `Use Admob` ✓
+3. **설정**: 같은 탭에서 "AdConfig 에셋 편집" 클릭 → Inspector에서 광고 ID 입력
+4. **호출**:
+```csharp
+CHMAdmob.Instance.ShowBanner(AdPosition.Bottom);
+CHMAdmob.Instance.ShowInterstitialAd();
+CHMAdmob.Instance.ShowRewardedAd();
+CHMAdmob.Instance.AcquireReward += () => { /* 리워드 지급 */ };
+```
+
+**안전장치**:
+- 에디터 빌드는 항상 테스트 광고 (UseTestAds 무관)
+- 프로덕션 ID 비어있으면 디바이스 빌드에서도 테스트 광고 fallback
+- AdConfig 에셋 없으면 경고 + 기본 테스트 광고
+
+**스토어 정책 자동 처리**:
+- UMP(GDPR) 동의 폼 → iOS ATT → MobileAds 초기화 순으로 자동 실행
+- iOS 빌드 시 `Info.plist`에 `NSUserTrackingUsageDescription` 자동 주입 (Player Settings에서 미리 채우면 우선 적용)
+- Android 빌드 시 `AndroidManifest.xml`에 `com.google.android.gms.permission.AD_ID` 자동 주입
+- `Plugins/iOS/PrivacyInfo.xcprivacy` 포함 (App Store 제출용)
+- 키즈 앱은 `AdConfig.ChildDirectedTreatment = True`로 설정
+
+### IAP (옵트인 — `UNITY_INFRA_IAP`)
+1. **선결**: Window > Package Manager에서 "In-App Purchasing" 패키지 설치 (5.0.0+ 권장)
+2. **활성화**: Settings → IAP 탭 → `Use IAP` ✓
+3. **설정**: "IAPProductConfig 에셋 편집" → Inspector에서 Products 추가
+   - productName: 게임 코드 식별자 (예: `"RemoveAD"`)
+   - productID: 스토어 등록 ID (예: `"com.yourgame.removead"`)
+   - productType: Consumable / NonConsumable / Subscription
+4. **호출**:
+```csharp
+CHMIAP.Instance.purchaseState += result =>
+{
+    if (result.state == EPurchase.Success)
+    {
+        // 지급 처리
+        CHMIAP.Instance.ConfirmPending(result.productName); // 지급 후 필수 호출
+    }
+};
+CHMIAP.Instance.Init();
+CHMIAP.Instance.Purchase("RemoveAD");
+
+// 조회/복원 유틸
+bool owned = CHMIAP.Instance.HadPurchased("RemoveAD");   // NonConsumable 보유 여부
+decimal price = CHMIAP.Instance.GetPrice("com.yourgame.removead");
+CHMIAP.Instance.RestorePurchase();                       // iOS 구매 복원
+```
+
+**중요**: `ProcessPurchase`는 Pending 패턴으로 동작. `ConfirmPending(productName)`을 호출하지 않으면 다음 Init 시 같은 구매가 재진입되어 콜백이 다시 발생 → 더블 지급 위험.
+
+**영수증 검증 (선택, `UNITY_INFRA_IAP_VALIDATE`)**:
+1. Editor에서 `Window > Unity IAP > Receipt Validation Obfuscator` 실행해 Tangle 파일 생성
+2. ProjectSettings의 Scripting Define Symbols에 `UNITY_INFRA_IAP_VALIDATE` 추가
+3. 자동으로 `CrossPlatformValidator`가 ProcessPurchase에서 영수증 검증. 위조 영수증은 Failure 통지.
+
+### Social — Google Play Games (옵트인 — `UNITY_INFRA_SOCIAL`, Android only)
+1. **선결**: Google Play Games Plugin for Unity 임포트
+2. **활성화**: Settings → Social 탭 → `Use GPGS` ✓
+3. **호출** (Android only):
+```csharp
+#if UNITY_INFRA_SOCIAL && UNITY_ANDROID
+CHMGPGS.Instance.Login((success, user) => { ... });          // 자동 로그인 (실패 시 ManuallyLogin)
+CHMGPGS.Instance.SaveCloud("save.dat", json, ok => { ... }); // LoadCloud / DeleteCloud도 제공
+CHMGPGS.Instance.UnlockAchievement("gpgs_id_string");        // IncrementAchievement / ShowAchievementUI
+CHMGPGS.Instance.ReportLeaderboard("leaderboard_id", score); // Load*Leaderboard* / Show*LeaderboardUI
+CHMGPGS.Instance.IncrementEvent("event_id", 1);              // GPGS 이벤트 (LoadEvent / LoadAllEvent)
+#endif
+```
+
+---
+
+## 에디터 툴: `Tools/ChvjUnityInfra/Settings`
+
+상단 탭 3개(Ads / IAP / Social) + 각 탭에 모듈 토글 + Config 에셋 편집 버튼 + 사용 스텝 가이드.
+
+토글 클릭 시 ProjectSettings의 ScriptingDefineSymbols에 `UNITY_INFRA_*`가 추가/제거되어 옵트인 모듈의 어셈블리 컴파일 여부를 결정.
+
+---
+
+## 샘플
+
+Package Manager > UnityInfra > Samples > **Demos** 임포트 — 매니저별 사용 예시 스크립트 (Core / Resource / Pool / Audio / UI / Ads / IAP / Social / Bootstrap).
+
+---
+
+## 외부 의존성
+
+| 모듈 | 외부 라이브러리 | 활성 조건 |
+|---|---|---|
+| Core/Resource/Pool/Audio/UI | Unity Addressables, TextMeshPro | 항상 |
+| Ads | Google Mobile Ads Unity Plugin | `UNITY_INFRA_ADS` |
+| IAP | Unity In-App Purchasing (Registry) | `UNITY_INFRA_IAP` |
+| Social | Google Play Games Plugin (Android) | `UNITY_INFRA_SOCIAL` |
+
+---
+
+## 주요 컨벤션
+
+- **enum 이름 = Addressables 파일명**: `EUI.UIShop` → `UIShop.prefab`
+- **"None"/"Max" 항목**: 자동 skip (AudioSource 안 만듦, 보편적 sentinel 컨벤션)
+- **BGM 채널**: `CHMSound.Init<EAudio>(EAudio.MyBGM)`처럼 키 명시 (params, 0~N개). 이름 자유
+- **suffix 패턴**: enum 키 + 접미사가 필요하면 string 오버로드 — `Load<Material>($"{EFont.Main}Material", cb)`
+- **using 한 줄**: `using ChvjUnityInfra;` — 모든 타입을 단일 namespace에서 접근
+
+---
+
+## 테스트
+
+EditMode 테스트:
+- **Test Runner** (Window > General > Test Runner) > EditMode 탭
+- `JsonArrayUtilityTests` — `FromJsonArray<T>` 3종 (정상/빈/null)
+
+---
+
+## 자주 하는 실수
+
+- ❌ Addressables 라벨 "Resource" 안 붙임 → `[CHMResource] Asset key not found` 경고
+- ❌ enum 이름과 파일명 불일치 → 같은 경고
+- ❌ `Init<TAudio>()` 호출 안 함 → `[CHMSound] AudioSource not found` 경고
+- ❌ `CHText.StringProvider` 등록 안 함 → stringID 텍스트 비어 보임
+- ❌ `Use Admob` 켜놓고 `AdConfig` 미설정 → 경고 + 임시 테스트 광고로 자동 fallback
+
+---
+
+## 라이선스 / 작성
+
+작성: chvj7567
+대상: 본인 Unity 게임 프로젝트들의 공통 인프라
