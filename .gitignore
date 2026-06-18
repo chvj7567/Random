@@ -72,3 +72,20 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 *.keystore
+
+# MCP auth token (secret — never commit)
+/[Aa]ssets/.mcp_auth_token
+/[Aa]ssets/.mcp_auth_token.meta
+
+# UI 목업(game-designer HTML 프리뷰) · MCP 스크린샷 — 런타임 산출물, 커밋 안 함
+/.mockups/
+/.screenshots/
+
+# realvirtual MCP (Unity 브리지 — 개발 툴링, 커밋 안 함)
+/.mcp.json
+/[Pp]ackages/io.realvirtual.mcp/
+/[Aa]ssets/[Ss]treamingAssets/realvirtual-MCP/
+/[Aa]ssets/[Ss]treamingAssets/realvirtual-MCP.meta
+
+# Claude 에이전트 세션 레지스트리 (런타임 스크래치)
+/.claude/.active-sessions.md
