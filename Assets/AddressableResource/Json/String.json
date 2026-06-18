@@ -165,6 +165,46 @@
 		"english": "Failed"
 	},
 	{
+		"stringID": 142,
+		"korean": "앞면",
+		"english": "Heads"
+	},
+	{
+		"stringID": 143,
+		"korean": "뒷면",
+		"english": "Tails"
+	},
+	{
+		"stringID": 144,
+		"korean": "앞면 {0}",
+		"english": "Heads {0}"
+	},
+	{
+		"stringID": 145,
+		"korean": "뒷면 {0}",
+		"english": "Tails {0}"
+	},
+	{
+		"stringID": 146,
+		"korean": "던지기",
+		"english": "Flip"
+	},
+	{
+		"stringID": 147,
+		"korean": "동전 던지기",
+		"english": "Coin Flip"
+	},
+	{
+		"stringID": 148,
+		"korean": "선택: {0}회",
+		"english": "Selected: {0}"
+	},
+	{
+		"stringID": 149,
+		"korean": "{0} / {1}",
+		"english": "{0} / {1}"
+	},
+	{
 		"stringID": 1000,
 		"korean": "가나",
 		"english": "Ghana"

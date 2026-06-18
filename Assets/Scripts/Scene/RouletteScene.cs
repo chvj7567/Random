@@ -26,6 +26,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
     [SerializeField] private RandomNumberScene _randomNumberScene;
     [SerializeField] private RandomExampleScene _randomFoodScene;
     [SerializeField] private CustomRandomScene _customRandomScene;
+    [SerializeField] private CoinFlipScene _coinFlipScene;
 
     private CommonEnum.ERouletteMenu _curScene = CommonEnum.ERouletteMenu.Menu;
     private IRouletteBackButton _mainRouletteUI;
@@ -75,6 +76,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
         _randomNumberScene.SetRouletteSceneAccess(this);
         _randomFoodScene.SetRouletteSceneAccess(this);
         _customRandomScene.SetRouletteSceneAccess(this);
+        _coinFlipScene.SetRouletteSceneAccess(this);
     }
 
     public void ShowScene(CommonEnum.ERouletteMenu sceneType)
@@ -82,6 +84,7 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
         _randomNumberScene.gameObject.SetActive(false);
         _randomFoodScene.gameObject.SetActive(false);
         _customRandomScene.gameObject.SetActive(false);
+        _coinFlipScene.gameObject.SetActive(false);
 
         switch (sceneType)
         {
@@ -129,6 +132,18 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
                     }
 
                     _customRandomScene.gameObject.SetActive(true);
+                }
+                break;
+            case CommonEnum.ERouletteMenu.CoinFlip:
+                {
+                    _mainRouletteUI = _coinFlipScene;
+
+                    foreach (var obj in liMainSceneObj)
+                    {
+                        obj.SetActive(false);
+                    }
+
+                    _coinFlipScene.gameObject.SetActive(true);
                 }
                 break;
         }

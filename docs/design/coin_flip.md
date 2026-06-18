@@ -72,10 +72,12 @@
 ### 5.2 구성
 
 - 상단: 메뉴(뒤로) 버튼 `CHButton`
-- 중앙: 동전 이미지 (`Image` — 앞/뒷면 스프라이트 스왑)
+- 중앙: 동전 이미지 (`Image`) — 던지기 시 24프레임 토스 시퀀스 재생, 멈추면 결과 이미지(앞=골드/뒤=실버)로 교체
 - 하단: 연속 횟수 토글 그룹(`CHToggle` ×4) + 던지기 `CHButton`
-- 결과 영역: 결과 라벨 `CHText` (+ 연속 시 리스트/요약) — Dark UI 패널 위에 배치
-- **상태 리셋**: `OnEnable` 에서 동전 기본면·결과 라벨·토글(1) 초기화 (서브씬 재진입 시 이전 결과 잔존 방지).
+- **선택 횟수 표시**(`CHText`, 토글 위): 현재 고른 횟수를 "선택: N회" 로 상시 표시. 토글 변경 시 실시간 갱신(`Update` 에서 `GetSelectedCount` 변동 감지).
+- **진행 횟수 표시**(`CHText`, 코인 아래): **2회 이상** 던질 때만 "현재 / 전체"(예 "3 / 5") 표시. 1회면 미표시. 종료 시 비우고 요약으로 전환.
+- 결과 영역: 결과 라벨 `CHText` — **단일(1회)** 던지기 때 "앞면/뒷면", 연속 종료 시 "앞면 X / 뒷면 Y" 요약. (연속 진행 중에는 회차 라벨 미표시 — 코인 면 + 진행표시로 갈음.)
+- **상태 리셋**: `OnEnable` 에서 동전 기본면·결과 라벨·진행표시·토글(1) 초기화 (서브씬 재진입 시 이전 결과 잔존 방지).
 
 ---
 
@@ -86,14 +88,19 @@
 | 종류 | 키 | 비고 |
 |---|---|---|
 | 메뉴 항목 | `CommonEnum.ERouletteMenu.CoinFlip` (신규 추가) | 호스트 메뉴 진입 키 |
-| 앞면 스프라이트 | `Assets/AddressableResource/Prefab/` 또는 UI 스프라이트 — `CoinHead` | Addressables 라벨 "Resource" |
-| 뒷면 스프라이트 | `CoinTail` | 〃 |
+| 토스 애니메이션 프레임 | `Assets/Sprites/CoinToss/CoinToss_00~23.png` (24프레임) | `CoinFlipScene._tossFrames` 인스펙터 배열. 던지기 연출(직접 참조, 비-Addressable) |
+| 결과 이미지 (앞면) | `Assets/Sprites/CoinToss/CoinToss_23_gold.png` | `_headResultSprite`. 골드 착지 코인 |
+| 결과 이미지 (뒷면) | `Assets/Sprites/CoinToss/CoinToss_23_silver.png` | `_tailResultSprite`. 실버 착지 코인 |
+| 동전 스프라이트 (폴백) | `Assets/AddressableResource/Sprite/Coin.png` — `CommonEnum.ECoin.Coin` | `_tossFrames` 미와이어링 시 폴백용(틴트 방식). Addressables "Resource" |
 | 클릭/던지기 사운드 | `CommonEnum.EAudio.Click` (기존 재사용) | 신규 flip 사운드 원하면 `EAudio.Coin` 추가 검토 |
 | 폰트 | `CommonEnum.EFont.Jua` (기존 재사용) | 모든 `CHText` 에 적용 — 현재 UI 풍 |
 | 시각 테마 | `Assets/Dark UI/` 패널·버튼 스타일 (기존 재사용) | 신규 에셋 최소화, 기존 톤 유지 |
-| 표시 문자열 | String.json 신규 stringID 할당 — "앞면" / "뒷면" / "앞면 {0}" / "뒷면 {0}" | **다음 빈 ID 부터 순차 할당**(RandomNumber 가 140·141 사용 중) |
+| 표시 문자열 | String.json — 142 "앞면" / 143 "뒷면" / 144 "앞면 {0}" / 145 "뒷면 {0}" / 146 "던지기" / 147 "동전 던지기" / 148 "선택: {0}회" / 149 "{0} / {1}"(진행) | RandomNumber 가 140·141 사용 중 → 142 부터 순차 할당 |
 
-- 동전 면 표현은 스프라이트 2종으로 충분. 별도 프리팹 불필요(단일 Image 스왑). 단, 연속 결과 셀은 Cell.prefab 1종 필요(풀링 사용 시).
+- **던지기 연출 = 24프레임 토스 시퀀스**(동전이 튀어올라 회전하다 착지). 재생 중에는 색을 바꾸지 않고 프레임 자연색 그대로.
+- **앞/뒷면 결과는 착지 시 실제 이미지 교체로 구분** — 앞면=`CoinToss_23_gold`(골드), 뒷면=`CoinToss_23_silver`(실버). (색 틴트 방식에서 변경된 디자인 결정, 2026-06-17. 사용자 요구: 애니메이션 종료 시 골드/실버 결과 이미지 노출.) 진입 기본 표시도 골드(앞면) 이미지.
+- **폴백**: `_tossFrames` 미와이어링 시 단일 `Coin` 스프라이트 + 색 틴트(앞 금/뒤 은) + DOTween 회전으로 하위호환 동작.
+- 연속 결과 셀(`CHPoolingScrollView`)은 미구현 — 현재 앞/뒤 카운트 요약 텍스트로 동작(§4 참조). 리스트 셀 풀링은 추후 확장.
 
 ---
 

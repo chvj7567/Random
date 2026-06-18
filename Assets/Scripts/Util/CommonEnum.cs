@@ -23,6 +23,13 @@ public class CommonEnum
         RandomNumber,
         RandomFood,
         CustomRandom,
+        CoinFlip,
+    }
+
+    //# 동전 스프라이트 에셋 키 — 값명 = 에셋 파일명 (Coin.png). 앞/뒷면은 단일 스프라이트 + 색 틴트로 구분.
+    public enum ECoin
+    {
+        Coin,
     }
 
     public enum ELottoMenu

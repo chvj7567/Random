@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: AllResource
   m_GUID: 03e845186fe860246917fa15b0500d3d
   m_SerializeEntries:
+  - m_GUID: a699818231981243c18dc97d7042428c
+    m_Address: Assets/AddressableResource/Sprite/Coin.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 00e8e00c0ee9040499caccce44ac8980
     m_Address: Assets/AddressableResource/UIRoulette.prefab
     m_ReadOnly: 0
