@@ -15,6 +15,24 @@ MonoBehaviour:
   m_GroupName: AllResource
   m_GUID: 03e845186fe860246917fa15b0500d3d
   m_SerializeEntries:
+  - m_GUID: 6cfbc29497e893b213ab6bff38ff0bb6
+    m_Address: Assets/AddressableResource/Sprite/MenuNumber.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9d8e991530ca013eae103c954145c2c8
+    m_Address: Assets/AddressableResource/Sprite/MenuFood.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4f3a04fc9a60591577b435878499725
+    m_Address: Assets/AddressableResource/Sprite/MenuShuffle.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a699818231981243c18dc97d7042428c
     m_Address: Assets/AddressableResource/Sprite/Coin.png
     m_ReadOnly: 0

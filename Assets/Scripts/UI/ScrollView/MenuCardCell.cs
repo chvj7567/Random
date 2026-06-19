@@ -14,6 +14,7 @@ public class MenuCardCell : MonoBehaviour
     //# 현재 셀이 표시 중인 데이터. 클릭 람다가 이 값을 읽어 진입(stale 캡처 방지).
     private MenuCardData _data;
     private IRandomSceneAccess _access;
+    private bool _clickBound;
 
     private void OnEnable()
     {
@@ -22,14 +23,20 @@ public class MenuCardCell : MonoBehaviour
             _icon.enabled = false;
     }
 
-    //# 클릭 핸들러 1회 등록 (InitPoolingObject 경유). CHButton.OnClick 은 RemoveListener 가 없어
-    //# 매 Bind 등록 시 리스너가 누적되므로, 셀당 1회만 등록하고 _data 를 런타임에 읽는다.
+    //# 클릭 핸들러 셀당 1회만 등록. CHButton.OnClick 은 RemoveListener 가 없어 매번 등록 시 누적되므로
+    //# _clickBound 가드로 1회만 등록하고, 클릭 시점에 _data 를 읽어 진입한다(풀 재사용 안전).
+    //# InitItem 경유로 호출 — origin 셀은 InitPoolingObject 를 받지 않으므로 InitItem 에서 등록해야 누락이 없다.
     public void SetupClick(IRandomSceneAccess access)
     {
         _access = access;
 
+        if (_clickBound)
+            return;
+
         if (_button == null)
             return;
+
+        _clickBound = true;
 
         _button.OnClick(() =>
         {

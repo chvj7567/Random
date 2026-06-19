@@ -20,13 +20,15 @@ public class MenuCardPoolingScrollView : CHPoolingScrollView<MenuCardCell, MenuC
         _access = access;
     }
 
-    //# 풀 재사용 시마다 호출 — 표시 갱신만. 클릭 바인딩은 InitPoolingObject 1회 (리스너 누적 방지).
+    //# 풀 재사용 시마다 호출 — 표시 갱신 + 클릭 등록(셀이 가드로 1회만 실제 등록).
+    //# origin 셀은 InitPoolingObject 를 받지 않으므로 클릭 등록을 여기서도 해야 누락이 없다.
     public override void InitItem(MenuCardCell item, MenuCardData data, int index)
     {
+        item.SetupClick(_access);
         item.Bind(data);
     }
 
-    //# 풀링 오브젝트 생성 시 1회 — 클릭 핸들러를 여기서 등록(셀의 현재 data 를 읽음).
+    //# 풀링 오브젝트(클론) 생성 시 1회 — 클릭 핸들러 선등록. (origin 은 여기로 안 옴 → InitItem 이 보완)
     public override void InitPoolingObject(MenuCardCell item)
     {
         item.SetupClick(_access);
