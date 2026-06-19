@@ -5,7 +5,7 @@ public class CommonEnum
     public enum EScene
     {
         Start,
-        Roulette,
+        Random,
         Lotto
     }
 
@@ -29,6 +29,16 @@ public class CommonEnum
     //# 동전 스프라이트 에셋 키 — 값명 = 에셋 파일명 (Coin.png). 앞/뒷면은 단일 스프라이트 + 색 틴트로 구분.
     public enum ECoin
     {
+        Coin,
+    }
+
+    //# 메뉴 카드 아이콘 에셋 키 — 값명 = Sprite 폴더 파일명 (Rule 03 §2). Dark UI 원본을 식별자 안전 이름으로 복사.
+    //# MenuNumber←White A1 / MenuFood←White Apple / MenuShuffle←White Cycle / Coin←기존 Coin.png.
+    public enum EMenuIcon
+    {
+        MenuNumber,
+        MenuFood,
+        MenuShuffle,
         Coin,
     }
 

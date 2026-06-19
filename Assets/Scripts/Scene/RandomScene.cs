@@ -1,5 +1,4 @@
 using ChvjUnityInfra;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,28 +6,20 @@ public interface IRouletteBackButton
 {
     public void Close();
 }
-public interface IRouletteSceneAccess
+public interface IRandomSceneAccess
 {
     public void ShowScene(CommonEnum.ERouletteMenu sceneType);
 }
 
-public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
+public class RandomScene : MonoBehaviour, IRandomSceneAccess
 {
-    [Serializable]
-    private class Menu
-    {
-        public CommonEnum.ERouletteMenu menu;
-        public CHButton buttonEx;
-    }
-
     [SerializeField] private List<GameObject> liMainSceneObj = new List<GameObject>();
-    [SerializeField] private List<Menu> _liMenu = new List<Menu>();
+    [SerializeField] private MenuPanel _menuPanel;
     [SerializeField] private RandomNumberScene _randomNumberScene;
     [SerializeField] private RandomExampleScene _randomFoodScene;
     [SerializeField] private CustomRandomScene _customRandomScene;
     [SerializeField] private CoinFlipScene _coinFlipScene;
 
-    private CommonEnum.ERouletteMenu _curScene = CommonEnum.ERouletteMenu.Menu;
     private IRouletteBackButton _mainRouletteUI;
 
     private void Update()
@@ -52,31 +43,20 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
         //# 메뉴 매니저 접근 넘기기
         SetManagement();
 
-        //# 메뉴 버튼 바인딩
-        SetMenuButton();
+        //# 메뉴 카드 리스트 구성 (데이터 주도) — 진입 경로 주입 + 카드 데이터 채우기.
+        if (_menuPanel != null)
+            _menuPanel.Setup(this);
 
         //# 메뉴 화면 보여주기
         ShowScene(CommonEnum.ERouletteMenu.Menu);
     }
 
-    private void SetMenuButton()
-    {
-        foreach (var menuInfo in _liMenu)
-        {
-            menuInfo.buttonEx.OnClick(() =>
-            {
-                _curScene = menuInfo.menu;
-                ShowScene(menuInfo.menu);
-            });
-        }
-    }
-
     private void SetManagement()
     {
-        _randomNumberScene.SetRouletteSceneAccess(this);
-        _randomFoodScene.SetRouletteSceneAccess(this);
-        _customRandomScene.SetRouletteSceneAccess(this);
-        _coinFlipScene.SetRouletteSceneAccess(this);
+        _randomNumberScene.SetRandomSceneAccess(this);
+        _randomFoodScene.SetRandomSceneAccess(this);
+        _customRandomScene.SetRandomSceneAccess(this);
+        _coinFlipScene.SetRandomSceneAccess(this);
     }
 
     public void ShowScene(CommonEnum.ERouletteMenu sceneType)
@@ -96,6 +76,10 @@ public class RouletteScene : MonoBehaviour, IRouletteSceneAccess
                     {
                         obj.SetActive(true);
                     }
+
+                    //# 메뉴 복귀 시 스크롤 상단 리셋 (기획서 §8).
+                    if (_menuPanel != null)
+                        _menuPanel.ResetScroll();
                 }
                 break;
             case CommonEnum.ERouletteMenu.RandomNumber:

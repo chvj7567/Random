@@ -60,7 +60,7 @@ public class CoinFlipScene : MonoBehaviour, IRouletteBackButton
     private static readonly Color HeadColor = new Color(1f, 0.84f, 0.30f);
     private static readonly Color TailColor = new Color(0.78f, 0.80f, 0.85f);
 
-    private IRouletteSceneAccess _rouletteSceneAccess;
+    private IRandomSceneAccess _randomSceneAccess;
 
     private Sprite _coinSprite;
 
@@ -393,15 +393,15 @@ public class CoinFlipScene : MonoBehaviour, IRouletteBackButton
         }
     }
 
-    public void SetRouletteSceneAccess(IRouletteSceneAccess rouletteSceneAccess)
+    public void SetRandomSceneAccess(IRandomSceneAccess randomSceneAccess)
     {
-        _rouletteSceneAccess = rouletteSceneAccess;
+        _randomSceneAccess = randomSceneAccess;
     }
 
     public void Close()
     {
         gameObject.SetActive(false);
-        _rouletteSceneAccess.ShowScene(CommonEnum.ERouletteMenu.Menu);
+        _randomSceneAccess.ShowScene(CommonEnum.ERouletteMenu.Menu);
     }
 
     //# === 결과 산출 (연출과 분리한 순수 로직 — test-engineer 진입점) ===

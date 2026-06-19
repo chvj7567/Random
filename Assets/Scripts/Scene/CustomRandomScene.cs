@@ -16,7 +16,7 @@ public class CustomRandomScene : MonoBehaviour, IRouletteBackButton
     [SerializeField] private CHButton _resultButton;
 
     private ReactiveCollection<string> _liCustomText = new ReactiveCollection<string>();
-    private IRouletteSceneAccess _rouletteSceneAccess;
+    private IRandomSceneAccess _randomSceneAccess;
 
     private void Start()
     {
@@ -55,14 +55,14 @@ public class CustomRandomScene : MonoBehaviour, IRouletteBackButton
         });
     }
 
-    public void SetRouletteSceneAccess(IRouletteSceneAccess rouletteSceneAccess)
+    public void SetRandomSceneAccess(IRandomSceneAccess randomSceneAccess)
     {
-        _rouletteSceneAccess = rouletteSceneAccess;
+        _randomSceneAccess = randomSceneAccess;
     }
 
     public void Close()
     {
         gameObject.SetActive(false);
-        _rouletteSceneAccess.ShowScene(CommonEnum.ERouletteMenu.Menu);
+        _randomSceneAccess.ShowScene(CommonEnum.ERouletteMenu.Menu);
     }
 }

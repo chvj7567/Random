@@ -205,6 +205,56 @@
 		"english": "{0} / {1}"
 	},
 	{
+		"stringID": 150,
+		"korean": "랜덤 도구",
+		"english": "Random Tools"
+	},
+	{
+		"stringID": 151,
+		"korean": "무엇을 정해볼까요?",
+		"english": "What shall we decide?"
+	},
+	{
+		"stringID": 152,
+		"korean": "랜덤 숫자",
+		"english": "Random Number"
+	},
+	{
+		"stringID": 153,
+		"korean": "범위 내 추첨",
+		"english": "Draw within a range"
+	},
+	{
+		"stringID": 154,
+		"korean": "예시 룰렛",
+		"english": "Example Roulette"
+	},
+	{
+		"stringID": 155,
+		"korean": "음식·동물·나라 목록에서 뽑기",
+		"english": "Pick from food, animal, country lists"
+	},
+	{
+		"stringID": 156,
+		"korean": "커스텀 랜덤",
+		"english": "Custom Random"
+	},
+	{
+		"stringID": 157,
+		"korean": "직접 입력한 항목 뽑기",
+		"english": "Pick from your own items"
+	},
+	{
+		"stringID": 158,
+		"korean": "동전 던지기",
+		"english": "Coin Flip"
+	},
+	{
+		"stringID": 159,
+		"korean": "앞/뒤 빠른 양자택일",
+		"english": "Quick heads-or-tails"
+	},
+	{
 		"stringID": 1000,
 		"korean": "가나",
 		"english": "Ghana"

@@ -14,7 +14,7 @@ public class RandomNumberScene : MonoBehaviour, IRouletteBackButton
     private const int StringIdInputError = 140;
     private const int StringIdRangeError = 141;
 
-    private IRouletteSceneAccess _rouletteSceneAccess;
+    private IRandomSceneAccess _randomSceneAccess;
 
     private void OnEnable()
     {
@@ -62,15 +62,15 @@ public class RandomNumberScene : MonoBehaviour, IRouletteBackButton
         });
     }
 
-    public void SetRouletteSceneAccess(IRouletteSceneAccess rouletteSceneAccess)
+    public void SetRandomSceneAccess(IRandomSceneAccess randomSceneAccess)
     {
-        _rouletteSceneAccess = rouletteSceneAccess;
+        _randomSceneAccess = randomSceneAccess;
     }
 
     public void Close()
     {
         gameObject.SetActive(false);
-        _rouletteSceneAccess.ShowScene(CommonEnum.ERouletteMenu.Menu);
+        _randomSceneAccess.ShowScene(CommonEnum.ERouletteMenu.Menu);
     }
 
     private (bool, int) CheckInteger(TMP_InputField input)

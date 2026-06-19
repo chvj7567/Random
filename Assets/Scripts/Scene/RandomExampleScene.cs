@@ -19,7 +19,7 @@ public class RandomExampleScene : MonoBehaviour, IRouletteBackButton
     private const int StringIdMonthStart = 110;
     private const int StringIdDayFormat = 130;
 
-    private IRouletteSceneAccess _rouletteSceneAccess;
+    private IRandomSceneAccess _randomSceneAccess;
 
     private void Start()
     {
@@ -107,14 +107,14 @@ public class RandomExampleScene : MonoBehaviour, IRouletteBackButton
         });
     }
 
-    public void SetRouletteSceneAccess(IRouletteSceneAccess rouletteSceneAccess)
+    public void SetRandomSceneAccess(IRandomSceneAccess randomSceneAccess)
     {
-        _rouletteSceneAccess = rouletteSceneAccess;
+        _randomSceneAccess = randomSceneAccess;
     }
 
     public void Close()
     {
         gameObject.SetActive(false);
-        _rouletteSceneAccess.ShowScene(CommonEnum.ERouletteMenu.Menu);
+        _randomSceneAccess.ShowScene(CommonEnum.ERouletteMenu.Menu);
     }
 }
