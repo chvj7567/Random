@@ -19,6 +19,8 @@ public class RandomScene : MonoBehaviour, IRandomSceneAccess
     [SerializeField] private RandomExampleScene _randomFoodScene;
     [SerializeField] private CustomRandomScene _customRandomScene;
     [SerializeField] private CoinFlipScene _coinFlipScene;
+    [SerializeField] private LottoScene _lottoScene;
+    [SerializeField] private Lotto2Scene _lotto2Scene;
 
     private IRouletteBackButton _mainRouletteUI;
 
@@ -57,6 +59,8 @@ public class RandomScene : MonoBehaviour, IRandomSceneAccess
         _randomFoodScene.SetRandomSceneAccess(this);
         _customRandomScene.SetRandomSceneAccess(this);
         _coinFlipScene.SetRandomSceneAccess(this);
+        _lottoScene.SetRandomSceneAccess(this);
+        _lotto2Scene.SetRandomSceneAccess(this);
     }
 
     public void ShowScene(CommonEnum.ERouletteMenu sceneType)
@@ -65,6 +69,8 @@ public class RandomScene : MonoBehaviour, IRandomSceneAccess
         _randomFoodScene.gameObject.SetActive(false);
         _customRandomScene.gameObject.SetActive(false);
         _coinFlipScene.gameObject.SetActive(false);
+        _lottoScene.gameObject.SetActive(false);
+        _lotto2Scene.gameObject.SetActive(false);
 
         switch (sceneType)
         {
@@ -128,6 +134,30 @@ public class RandomScene : MonoBehaviour, IRandomSceneAccess
                     }
 
                     _coinFlipScene.gameObject.SetActive(true);
+                }
+                break;
+            case CommonEnum.ERouletteMenu.Lotto1:
+                {
+                    _mainRouletteUI = _lottoScene;
+
+                    foreach (GameObject obj in liMainSceneObj)
+                    {
+                        obj.SetActive(false);
+                    }
+
+                    _lottoScene.gameObject.SetActive(true);
+                }
+                break;
+            case CommonEnum.ERouletteMenu.Lotto2:
+                {
+                    _mainRouletteUI = _lotto2Scene;
+
+                    foreach (GameObject obj in liMainSceneObj)
+                    {
+                        obj.SetActive(false);
+                    }
+
+                    _lotto2Scene.gameObject.SetActive(true);
                 }
                 break;
         }

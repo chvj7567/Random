@@ -28,7 +28,7 @@ public class Capture : MonoBehaviour
             {
                 CHMUI.Instance.ShowUI(CommonEnum.EUI.UIAlarm, new UIAlarmArg
                 {
-                    alarmText = $"��ũ�� ���� ����Ǿ����ϴ�."
+                    alarmText = $"스크린 샷이 저장되었습니다."
                 });
             }
         });

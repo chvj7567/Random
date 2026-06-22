@@ -21,6 +21,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Resource
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b985c189c254d6d921ba101dca78b636
+    m_Address: Assets/AddressableResource/Sprite/MenuLotto1.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f25fd7819bac8c8b8c726324134a04e3
+    m_Address: Assets/AddressableResource/Sprite/MenuLotto2.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9d8e991530ca013eae103c954145c2c8
     m_Address: Assets/AddressableResource/Sprite/MenuFood.png
     m_ReadOnly: 0

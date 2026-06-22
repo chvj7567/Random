@@ -11,8 +11,8 @@
 	},
 	{
 		"stringID": 3,
-		"korean": "랜덤 룰렛",
-		"english": "Random\nRoulette"
+		"korean": "랜덤",
+		"english": "Random"
 	},
 	{
 		"stringID": 4,
@@ -1123,5 +1123,40 @@
 		"stringID": 2053,
 		"korean": "해파리",
 		"english": "Jellyfish"
+	},
+	{
+		"stringID": 2054,
+		"korean": "최근 회차 : {0}회차",
+		"english": "Latest round : {0}"
+	},
+	{
+		"stringID": 2055,
+		"korean": "{0}조",
+		"english": "Group {0}"
+	},
+	{
+		"stringID": 2056,
+		"korean": "{0}회차",
+		"english": "Round {0}"
+	},
+	{
+		"stringID": 2057,
+		"korean": "로또 6/45",
+		"english": "Lotto 6/45"
+	},
+	{
+		"stringID": 2058,
+		"korean": "로또 번호 추첨",
+		"english": "Draw lotto numbers"
+	},
+	{
+		"stringID": 2059,
+		"korean": "연금복권",
+		"english": "Pension lottery"
+	},
+	{
+		"stringID": 2060,
+		"korean": "연금복권 번호 추첨",
+		"english": "Draw pension numbers"
 	}
 ]

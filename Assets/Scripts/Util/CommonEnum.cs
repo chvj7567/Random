@@ -5,8 +5,7 @@ public class CommonEnum
     public enum EScene
     {
         Start,
-        Random,
-        Lotto
+        Random
     }
 
     public enum EUI
@@ -24,6 +23,8 @@ public class CommonEnum
         RandomFood,
         CustomRandom,
         CoinFlip,
+        Lotto1,
+        Lotto2,
     }
 
     //# 동전 스프라이트 에셋 키 — 값명 = 에셋 파일명 (Coin.png). 앞/뒷면은 단일 스프라이트 + 색 틴트로 구분.
@@ -40,13 +41,8 @@ public class CommonEnum
         MenuFood,
         MenuShuffle,
         Coin,
-    }
-
-    public enum ELottoMenu
-    {
-        Menu = 0,
-        Lotto,
-        Lotto2,
+        MenuLotto1,
+        MenuLotto2,
     }
 
     public enum EAudio

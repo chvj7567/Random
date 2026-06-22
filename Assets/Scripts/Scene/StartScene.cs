@@ -8,7 +8,7 @@ public class StartScene : MonoBehaviour
 
     private async void Start()
     {
-        //# �Ŵ����� �ʱ�ȭ
+        //# 매니저들 초기화
         await GameManagement.Instance.InitManager();
 
 #if UNITY_EDITOR

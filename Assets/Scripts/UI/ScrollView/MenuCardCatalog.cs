@@ -4,7 +4,7 @@ using System.Collections.Generic;
 //# MonoBehaviour 와 분리해 테스트 가능하게 둠 — 표시 책임은 MenuPanel, 정의 책임은 본 클래스.
 public static class MenuCardCatalog
 {
-    //# 이번 빌드 4종 (기획서 §5.3 확정값). 순서 = 화면 노출 순서.
+    //# 이번 빌드 5종 (4종=기획서 §5.3 확정값 + 로또=사용자 요구 직접 추가). 순서 = 화면 노출 순서.
     public static List<MenuCardData> BuildMenuCards()
     {
         return new List<MenuCardData>
@@ -36,6 +36,20 @@ public static class MenuCardCatalog
                 iconKey = CommonEnum.EMenuIcon.Coin,
                 titleStringID = 158,
                 descStringID = 159,
+            },
+            new MenuCardData
+            {
+                menu = CommonEnum.ERouletteMenu.Lotto1,
+                iconKey = CommonEnum.EMenuIcon.MenuLotto1,
+                titleStringID = 2057,
+                descStringID = 2058,
+            },
+            new MenuCardData
+            {
+                menu = CommonEnum.ERouletteMenu.Lotto2,
+                iconKey = CommonEnum.EMenuIcon.MenuLotto2,
+                titleStringID = 2059,
+                descStringID = 2060,
             },
         };
     }

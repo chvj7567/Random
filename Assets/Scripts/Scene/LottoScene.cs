@@ -4,13 +4,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.IO;
 using UniRx;
-using UnityEngine.SceneManagement;
 
 #if PLATFORM_ANDROID
 using UnityEngine.Android;
@@ -45,7 +43,7 @@ public class NumberInfo
     public List<CHButton> liNumberButton;
 }
 
-public class LottoScene : MonoBehaviour
+public class LottoScene : MonoBehaviour, IRouletteBackButton
 {
     private const string Image_Path = "Lotto";
     private const string Local_LottoDataFile = "lotto.json";
@@ -56,7 +54,7 @@ public class LottoScene : MonoBehaviour
     [SerializeField] private Image _rouletteImage;
     [SerializeField] private CHButton _rouletteButton;
     [SerializeField] private CHButton _customImageButton;
-    [SerializeField] private TMP_Text _saveLottoRoundText;
+    [SerializeField] private CHText _saveLottoRoundText;
     [SerializeField] private CHButton _lottoInfoUpdateButton;
     [SerializeField] private CHButton _viewWinningNumberButton;
     [SerializeField] private NumberInfo _lotto1Info;
@@ -65,37 +63,47 @@ public class LottoScene : MonoBehaviour
     [SerializeField] private NumberInfo _lotto4Info;
     [SerializeField] private NumberInfo _lotto5Info;
 
-    private ILottoMenuSceneAccess _lottoMenuSceneAccess;
+    private IRandomSceneAccess _randomSceneAccess;
     private string _lottoURL = "www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=";
     private List<LottoResponse> _lilottoResponse = new List<LottoResponse>();
     private string path = string.Empty;
 
     private async void Start()
     {
-        //# ���� On
+        //# 광고 On
         GameManagement.Instance.ShowBanner();
 
-        //# ��ư ��� ����
+        //# 버튼 기능 세팅
         SetButton();
 
-        //# �̹��� ����
+        //# 이미지 세팅
         SetImage();
 
-        //# ���� �ζ� ��ȣ ����
+        //# 실제 로또 번호 세팅
         await GetLottoInfo(false);
     }
 
-    public void SetLottoMenuSceneAccess(ILottoMenuSceneAccess lottoMenuSceneAccess)
+    public void SetRandomSceneAccess(IRandomSceneAccess randomSceneAccess)
     {
-        _lottoMenuSceneAccess = lottoMenuSceneAccess;
+        _randomSceneAccess = randomSceneAccess;
+    }
+
+    public void Close()
+    {
+        gameObject.SetActive(false);
+        _randomSceneAccess.ShowScene(CommonEnum.ERouletteMenu.Menu);
     }
 
     private void SetButton()
     {
-        _menuButton.OnClick(() =>
+        //# _menuButton 미와이어링 시 등록 건너뜀 (크래시 방지)
+        if (_menuButton != null)
         {
-            SceneManager.LoadScene(0);
-        });
+            _menuButton.OnClick(() =>
+            {
+                Close();
+            });
+        }
 
         _rouletteButton.OnClick(() =>
         {
@@ -113,9 +121,18 @@ public class LottoScene : MonoBehaviour
 
         _lottoInfoUpdateButton.OnClick(async () =>
         {
-            _loadingObject.SetActive(true);
+            //# UILoading 미동반 붙여넣기 시 null 가능 → 가드.
+            if (_loadingObject != null)
+            {
+                _loadingObject.SetActive(true);
+            }
+
             await GetLottoInfo(true);
-            _loadingObject.SetActive(false);
+
+            if (_loadingObject != null)
+            {
+                _loadingObject.SetActive(false);
+            }
         });
 
         _viewWinningNumberButton.OnClick(() =>
@@ -132,8 +149,8 @@ public class LottoScene : MonoBehaviour
 
     private void SetImage()
     {
-        //# �̹��� ����
-        //# ����ڰ� Ŀ������ �̹����� ������ �ٷ� ����
+        //# 이미지 설정
+        //# 사용자가 커스텀한 이미지가 있으면 바로 설정
         var path = PlayerPrefs.GetString(Image_Path, string.Empty);
         if (path != string.Empty)
         {
@@ -159,7 +176,7 @@ public class LottoScene : MonoBehaviour
             };
 
             callback.PermissionDenied += msg => {
-                Debug.Log($"{msg} ����");
+                Debug.Log($"{msg} 거절");
             };
 
             Permission.RequestUserPermission(Permission.ExternalStorageRead, callback);
@@ -218,14 +235,14 @@ public class LottoScene : MonoBehaviour
             {
                 LottoJson json = JsonUtility.FromJson<LottoJson>(File.ReadAllText(localLottoPath));
                 _lilottoResponse = json.liLottoInfo;
-                _saveLottoRoundText.text = $"�ֱ� ȸ�� : {_lilottoResponse.Count}ȸ��";
+                _saveLottoRoundText.SetText(_lilottoResponse.Count);
             }
             else
             {
                 var lottoText = Resources.Load<TextAsset>($"lotto");
                 LottoJson json = JsonUtility.FromJson<LottoJson>(lottoText.text);
                 _lilottoResponse = json.liLottoInfo;
-                _saveLottoRoundText.text = $"�ֱ� ȸ�� : {_lilottoResponse.Count}ȸ��";
+                _saveLottoRoundText.SetText(_lilottoResponse.Count);
             }
         }
         else
@@ -234,7 +251,7 @@ public class LottoScene : MonoBehaviour
             {
                 if (await GetWebLottoNumbers(i) == false)
                 {
-                    _saveLottoRoundText.text = $"�ֱ� ȸ�� : {_lilottoResponse.Count}ȸ��";
+                    _saveLottoRoundText.SetText(_lilottoResponse.Count);
                     break;
                 }
             }

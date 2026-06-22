@@ -1,11 +1,10 @@
 using ChvjUnityInfra;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class LottoScrollViewItem : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _roundText;
+    [SerializeField] private CHText _roundText;
     [SerializeField] List<CHButton> _liNumberButton = new List<CHButton>();
 
     int _index;
@@ -16,7 +15,7 @@ public class LottoScrollViewItem : MonoBehaviour
         _index = index;
         _lottoResponse = lottoResponse;
 
-        _roundText.SetText($"{lottoResponse.drwNo}ȸ��");
+        _roundText.SetText(lottoResponse.drwNo);
         _liNumberButton[0].SetText($"{lottoResponse.drwtNo1}");
         _liNumberButton[1].SetText($"{lottoResponse.drwtNo2}");
         _liNumberButton[2].SetText($"{lottoResponse.drwtNo3}");
