@@ -222,6 +222,7 @@ public class LadderScene : MonoBehaviour, IRouletteBackButton
             return;
 
         list.Add(name);
+        input.text = string.Empty;
     }
 
     private void RemoveLast(ReactiveCollection<string> list)

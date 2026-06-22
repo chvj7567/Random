@@ -32,7 +32,11 @@ public class CustomRandomScene : MonoBehaviour, IRouletteBackButton
 
         _plusButton.OnClick(() =>
         {
+            if (string.IsNullOrWhiteSpace(_customInput.text))
+                return;
+
             _liCustomText.Add(_customInput.text);
+            _customInput.text = string.Empty;
         });
 
         _minusButton.OnClick(() =>

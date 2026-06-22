@@ -12667,7 +12667,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\uAC00\uC774\uB4DC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 210005fb241dc734bb3a5fef7177c59b, type: 2}
   m_sharedMaterial: {fileID: 1054146971164732455, guid: 210005fb241dc734bb3a5fef7177c59b, type: 2}
@@ -12694,8 +12694,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
