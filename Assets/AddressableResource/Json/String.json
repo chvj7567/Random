@@ -1158,5 +1158,50 @@
 		"stringID": 2060,
 		"korean": "연금복권 번호 추첨",
 		"english": "Draw pension numbers"
+	},
+	{
+		"stringID": 2061,
+		"korean": "사다리타기",
+		"english": "Ladder"
+	},
+	{
+		"stringID": 2062,
+		"korean": "사다리를 타고 결과 매칭",
+		"english": "Match results by ladder"
+	},
+	{
+		"stringID": 2063,
+		"korean": "그리기",
+		"english": "Draw"
+	},
+	{
+		"stringID": 2064,
+		"korean": "참가자와 결과 수를 맞춰주세요",
+		"english": "Match the number of players and results"
+	},
+	{
+		"stringID": 2065,
+		"korean": "최소 2명이 필요해요",
+		"english": "At least 2 players are required"
+	},
+	{
+		"stringID": 2066,
+		"korean": "{0} → {1}",
+		"english": "{0} → {1}"
+	},
+	{
+		"stringID": 2067,
+		"korean": "결과 보기",
+		"english": "View result"
+	},
+	{
+		"stringID": 2068,
+		"korean": "참가자",
+		"english": "Player"
+	},
+	{
+		"stringID": 2069,
+		"korean": "결과",
+		"english": "Result"
 	}
 ]
