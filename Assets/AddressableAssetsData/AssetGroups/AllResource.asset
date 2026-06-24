@@ -39,6 +39,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Resource
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a3e9c1b4d2f08a6e5b9c3d70f184a2e
+    m_Address: Assets/AddressableResource/Sprite/MenuTeamSplit.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9d8e991530ca013eae103c954145c2c8
     m_Address: Assets/AddressableResource/Sprite/MenuFood.png
     m_ReadOnly: 0

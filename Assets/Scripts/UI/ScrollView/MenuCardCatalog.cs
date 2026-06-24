@@ -58,6 +58,13 @@ public static class MenuCardCatalog
                 titleStringID = 2061,
                 descStringID = 2062,
             },
+            new MenuCardData
+            {
+                menu = CommonEnum.ERouletteMenu.TeamSplit,
+                iconKey = CommonEnum.EMenuIcon.MenuTeamSplit,
+                titleStringID = 2078,
+                descStringID = 2079,
+            },
         };
     }
 }

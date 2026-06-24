@@ -22,6 +22,7 @@ public class RandomScene : MonoBehaviour, IRandomSceneAccess
     [SerializeField] private LottoScene _lottoScene;
     [SerializeField] private Lotto2Scene _lotto2Scene;
     [SerializeField] private LadderScene _ladderScene;
+    [SerializeField] private TeamSplitScene _teamSplitScene;
 
     private IRouletteBackButton _mainRouletteUI;
 
@@ -63,6 +64,7 @@ public class RandomScene : MonoBehaviour, IRandomSceneAccess
         _lottoScene.SetRandomSceneAccess(this);
         _lotto2Scene.SetRandomSceneAccess(this);
         _ladderScene.SetRandomSceneAccess(this);
+        _teamSplitScene.SetRandomSceneAccess(this);
     }
 
     public void ShowScene(CommonEnum.ERouletteMenu sceneType)
@@ -74,6 +76,7 @@ public class RandomScene : MonoBehaviour, IRandomSceneAccess
         _lottoScene.gameObject.SetActive(false);
         _lotto2Scene.gameObject.SetActive(false);
         _ladderScene.gameObject.SetActive(false);
+        _teamSplitScene.gameObject.SetActive(false);
 
         switch (sceneType)
         {
@@ -173,6 +176,18 @@ public class RandomScene : MonoBehaviour, IRandomSceneAccess
                     }
 
                     _ladderScene.gameObject.SetActive(true);
+                }
+                break;
+            case CommonEnum.ERouletteMenu.TeamSplit:
+                {
+                    _mainRouletteUI = _teamSplitScene;
+
+                    foreach (GameObject obj in liMainSceneObj)
+                    {
+                        obj.SetActive(false);
+                    }
+
+                    _teamSplitScene.gameObject.SetActive(true);
                 }
                 break;
         }

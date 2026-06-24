@@ -1203,5 +1203,55 @@
 		"stringID": 2069,
 		"korean": "결과",
 		"english": "Result"
+	},
+	{
+		"stringID": 2070,
+		"korean": "나누기",
+		"english": "Split"
+	},
+	{
+		"stringID": 2071,
+		"korean": "{0}명 → {1}팀 × {2}명",
+		"english": "{0} → {1} teams × {2}"
+	},
+	{
+		"stringID": 2072,
+		"korean": "{0}명 → {1}팀 {2}명 · {3}팀 {4}명",
+		"english": "{0}: {1} teams of {2}, {3} teams of {4}"
+	},
+	{
+		"stringID": 2073,
+		"korean": "{0}팀",
+		"english": "Team {0}"
+	},
+	{
+		"stringID": 2074,
+		"korean": "{0}명",
+		"english": "{0}"
+	},
+	{
+		"stringID": 2075,
+		"korean": "참가자를 입력하고\n나누기를 누르세요",
+		"english": "Enter players and\ntap Split"
+	},
+	{
+		"stringID": 2076,
+		"korean": "팀 나누기",
+		"english": "Team Split"
+	},
+	{
+		"stringID": 2077,
+		"korean": "{0} / {1}",
+		"english": "{0} / {1}"
+	},
+	{
+		"stringID": 2078,
+		"korean": "팀 나누기",
+		"english": "Team Split"
+	},
+	{
+		"stringID": 2079,
+		"korean": "무작위로 팀 편성",
+		"english": "Random team split"
 	}
 ]
