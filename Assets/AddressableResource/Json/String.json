@@ -1253,5 +1253,30 @@
 		"stringID": 2079,
 		"korean": "무작위로 팀 편성",
 		"english": "Random team split"
+	},
+	{
+		"stringID": 2080,
+		"korean": "섞기",
+		"english": "Shuffle"
+	},
+	{
+		"stringID": 2081,
+		"korean": "{0}. {1}",
+		"english": "{0}. {1}"
+	},
+	{
+		"stringID": 2082,
+		"korean": "이름을 입력하고\n섞기를 누르세요",
+		"english": "Enter names and\ntap Shuffle"
+	},
+	{
+		"stringID": 2083,
+		"korean": "순서 정하기",
+		"english": "Order Shuffle"
+	},
+	{
+		"stringID": 2084,
+		"korean": "무작위로 순서 배정",
+		"english": "Random order assignment"
 	}
 ]

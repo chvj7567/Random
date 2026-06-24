@@ -27,6 +27,7 @@ public class CommonEnum
         Lotto2,
         Ladder,
         TeamSplit,
+        OrderShuffle,
     }
 
     //# 동전 스프라이트 에셋 키 — 값명 = 에셋 파일명 (Coin.png). 앞/뒷면은 단일 스프라이트 + 색 틴트로 구분.
@@ -47,6 +48,7 @@ public class CommonEnum
         MenuLotto2,
         MenuLadder,
         MenuTeamSplit,
+        MenuOrderShuffle,
     }
 
     public enum EAudio

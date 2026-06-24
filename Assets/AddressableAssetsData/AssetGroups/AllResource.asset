@@ -15,54 +15,6 @@ MonoBehaviour:
   m_GroupName: AllResource
   m_GUID: 03e845186fe860246917fa15b0500d3d
   m_SerializeEntries:
-  - m_GUID: 6cfbc29497e893b213ab6bff38ff0bb6
-    m_Address: Assets/AddressableResource/Sprite/MenuNumber.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Resource
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b985c189c254d6d921ba101dca78b636
-    m_Address: Assets/AddressableResource/Sprite/MenuLotto1.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Resource
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f25fd7819bac8c8b8c726324134a04e3
-    m_Address: Assets/AddressableResource/Sprite/MenuLotto2.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Resource
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 261a118e85cc89981ee6be5deb7d02e0
-    m_Address: Assets/AddressableResource/Sprite/MenuLadder.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Resource
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7a3e9c1b4d2f08a6e5b9c3d70f184a2e
-    m_Address: Assets/AddressableResource/Sprite/MenuTeamSplit.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Resource
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9d8e991530ca013eae103c954145c2c8
-    m_Address: Assets/AddressableResource/Sprite/MenuFood.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Resource
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c4f3a04fc9a60591577b435878499725
-    m_Address: Assets/AddressableResource/Sprite/MenuShuffle.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Resource
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a699818231981243c18dc97d7042428c
-    m_Address: Assets/AddressableResource/Sprite/Coin.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Resource
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 00e8e00c0ee9040499caccce44ac8980
     m_Address: Assets/AddressableResource/UIRoulette.prefab
     m_ReadOnly: 0
@@ -93,6 +45,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Resource
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 24d8406194e23e04fb4973c614bffb0a
+    m_Address: OrderCell
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 261a118e85cc89981ee6be5deb7d02e0
+    m_Address: Assets/AddressableResource/Sprite/MenuLadder.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6405ba6d0c534644abe1c73cd77b8dd0
     m_Address: Assets/AddressableResource/Json/String.json
     m_ReadOnly: 0
@@ -105,8 +69,38 @@ MonoBehaviour:
     m_SerializedLabels:
     - Resource
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6cfbc29497e893b213ab6bff38ff0bb6
+    m_Address: Assets/AddressableResource/Sprite/MenuNumber.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a3e9c1b4d2f08a6e5b9c3d70f184a2e
+    m_Address: Assets/AddressableResource/Sprite/MenuTeamSplit.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83b29ef94b6d4ea4b95eae4f21a03a15
+    m_Address: MenuOrderShuffle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9a4a9fef19de847409c319ffd49ca22c
     m_Address: Assets/AddressableResource/UILotto.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9d8e991530ca013eae103c954145c2c8
+    m_Address: Assets/AddressableResource/Sprite/MenuFood.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a699818231981243c18dc97d7042428c
+    m_Address: Assets/AddressableResource/Sprite/Coin.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Resource
@@ -117,14 +111,32 @@ MonoBehaviour:
     m_SerializedLabels:
     - Resource
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b985c189c254d6d921ba101dca78b636
+    m_Address: Assets/AddressableResource/Sprite/MenuLotto1.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b9efc365f1adb26469d9a404634afdce
     m_Address: Assets/AddressableResource/Json/Country.json
     m_ReadOnly: 0
     m_SerializedLabels:
     - Resource
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4f3a04fc9a60591577b435878499725
+    m_Address: Assets/AddressableResource/Sprite/MenuShuffle.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c826f79c0daa00344b3364c31786500d
     m_Address: Assets/AddressableResource/UICanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Resource
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f25fd7819bac8c8b8c726324134a04e3
+    m_Address: Assets/AddressableResource/Sprite/MenuLotto2.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Resource
