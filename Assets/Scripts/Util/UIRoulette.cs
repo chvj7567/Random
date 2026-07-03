@@ -49,8 +49,6 @@ public class UIRoulette : UIBase
         _circleRoulette.SetActive(false);
         _scrollRoulette.SetActive(false);
 
-        ++GameManagement.Instance.RouletteCount;
-
         //# 항목 수 10개 이하면 원형 룰렛
         //# 항목 수 10개 초과면 스크롤 룰렛
         if (_arg.liText.Count <= 10)
@@ -77,12 +75,6 @@ public class UIRoulette : UIBase
         foreach (GameObject obj in _copyObjects)
         {
             Destroy(obj);
-        }
-
-        if (GameManagement.Instance.RouletteCount > 0 &&
-            GameManagement.Instance.RouletteCount % 2 == 0)
-        {
-            AdmobManager.Instance.ShowInterstitialAd();
         }
     }
 

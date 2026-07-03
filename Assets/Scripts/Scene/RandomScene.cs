@@ -81,6 +81,12 @@ public class RandomScene : MonoBehaviour, IRandomSceneAccess
         _teamSplitScene.gameObject.SetActive(false);
         _orderShuffleScene.gameObject.SetActive(false);
 
+        //# 메뉴 복귀(및 앱 진입)를 제외한 모든 하위 도구 진입 시 전면 광고 노출.
+        if (sceneType != CommonEnum.ERouletteMenu.Menu)
+        {
+            AdmobManager.Instance.ShowInterstitialAd();
+        }
+
         switch (sceneType)
         {
             case CommonEnum.ERouletteMenu.Menu:

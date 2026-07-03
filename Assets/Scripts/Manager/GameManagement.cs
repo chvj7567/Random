@@ -8,7 +8,6 @@ public class GameManagement : CHSingletonStatic<GameManagement>
     public SystemLanguage Language { get; set; }
     public bool Initialize { get; private set; } = false;
     public TMP_FontAsset FontAsset { get; private set; }
-    public int RouletteCount { get; set; }
 
     public async Task InitManager()
     {
